@@ -1,0 +1,6 @@
+@{ ViewData["Title"] = "Sayfa bulunamadı"; }
+<div class="empty">
+    <h1>Aradığınız sayfa burada değil</h1>
+    <p>Bağlantı eski olabilir ya da kayıt silinmiş olabilir.</p>
+    <a class="btn btn-primary" href="@(User.Identity?.IsAuthenticated == true ? "/panel" : "/")">Panele dön</a>
+</div>

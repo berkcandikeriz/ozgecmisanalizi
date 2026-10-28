@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/OzgecmisAnalizi.Core/OzgecmisAnalizi.Core.csproj" />
+    <Project Path="src/OzgecmisAnalizi.Entities/OzgecmisAnalizi.Entities.csproj" />
+    <Project Path="src/OzgecmisAnalizi.DataAccess/OzgecmisAnalizi.DataAccess.csproj" />
+    <Project Path="src/OzgecmisAnalizi.Business/OzgecmisAnalizi.Business.csproj" />
+    <Project Path="src/OzgecmisAnalizi.API/OzgecmisAnalizi.API.csproj" />
+    <Project Path="src/OzgecmisAnalizi.WebUI/OzgecmisAnalizi.WebUI.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="README.md" />
+  </Folder>
+</Solution>

@@ -1,0 +1,8 @@
+@model ErrorViewModel
+@{ ViewData["Title"] = "Bir sorun oluştu"; }
+<div class="empty">
+    <h1>Bu sayfa şu anda açılamıyor</h1>
+    <p>İsteğiniz işlenirken beklenmeyen bir hata oluştu (kod @(Model?.StatusCode ?? 500)). Sayfayı yenileyin; sorun sürerse aşağıdaki kimlikle bize ulaşın.</p>
+    @if (!string.IsNullOrEmpty(Model?.RequestId)) { <p class="xs muted">İstek kimliği: <code>@Model.RequestId</code></p> }
+    <a class="btn btn-primary" href="/">Ana sayfaya dön</a>
+</div>

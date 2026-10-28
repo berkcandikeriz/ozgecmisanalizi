@@ -1,0 +1,6917 @@
+[
+ {
+  "code": "backend-dotnet",
+  "name": "Backend Geliştirici (.NET)",
+  "category": "Yazılım ve Bilişim",
+  "description": "C# ve .NET ile sunucu tarafı uygulamalar, API'ler ve servisler geliştirir.",
+  "keywords": [
+   "backend developer",
+   ".net developer",
+   "c# developer"
+  ],
+  "juniorFactor": 1.9,
+  "seniorFactor": 5.0,
+  "careerTitles": [
+   "Stajyer Backend Geliştirici",
+   "Junior Backend Geliştirici",
+   "Backend Geliştirici",
+   "Kıdemli Backend Geliştirici",
+   "Yazılım Mimarı"
+  ],
+  "core": [
+   {
+    "name": "C#",
+    "aliases": [
+     "c#",
+     "csharp",
+     "c sharp"
+    ],
+    "hint": "Microsoft Learn C# yolu"
+   },
+   {
+    "name": ".NET",
+    "aliases": [
+     ".net core",
+     "dotnet",
+     "asp.net",
+     "asp.net core"
+    ],
+    "hint": "Microsoft Learn ASP.NET Core modülleri"
+   },
+   {
+    "name": "SQL",
+    "aliases": [
+     "t-sql",
+     "tsql",
+     "mssql",
+     "sql server"
+    ],
+    "hint": "SQL Server ile sorgu ve indeks pratiği"
+   },
+   {
+    "name": "REST API",
+    "aliases": [
+     "rest",
+     "restful",
+     "web api"
+    ],
+    "hint": "Kendi küçük API projenizi yayınlayın"
+   }
+  ],
+  "important": [
+   {
+    "name": "Entity Framework",
+    "aliases": [
+     "ef core",
+     "entity framework core",
+     "efcore"
+    ],
+    "hint": "EF Core code-first ile örnek proje"
+   },
+   {
+    "name": "Git",
+    "aliases": [
+     "github",
+     "gitlab"
+    ],
+    "hint": "Git dallanma stratejileri"
+   },
+   {
+    "name": "Unit Test",
+    "aliases": [
+     "xunit",
+     "nunit",
+     "birim test",
+     "unit testing"
+    ],
+    "hint": "xUnit ile test yazımı"
+   },
+   {
+    "name": "Docker",
+    "aliases": [
+     "container",
+     "konteyner"
+    ],
+    "hint": "Docker resmi başlangıç rehberi"
+   },
+   {
+    "name": "LINQ",
+    "aliases": [],
+    "hint": "LINQ sorgu alıştırmaları"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Azure",
+    "aliases": [
+     "microsoft azure"
+    ],
+    "hint": "AZ-204 sertifikası"
+   },
+   {
+    "name": "Redis",
+    "aliases": [],
+    "hint": "Önbellekleme senaryoları"
+   },
+   {
+    "name": "RabbitMQ",
+    "aliases": [
+     "kafka",
+     "message queue",
+     "mesaj kuyruğu"
+    ],
+    "hint": "Asenkron mesajlaşma"
+   },
+   {
+    "name": "Mikroservis",
+    "aliases": [
+     "microservices",
+     "microservice"
+    ],
+    "hint": "Mikroservis mimarisi kitapları"
+   },
+   {
+    "name": "CI/CD",
+    "aliases": [
+     "azure devops",
+     "github actions",
+     "jenkins"
+    ],
+    "hint": "Pipeline kurulumu"
+   }
+  ]
+ },
+ {
+  "code": "backend-java",
+  "name": "Backend Geliştirici (Java)",
+  "category": "Yazılım ve Bilişim",
+  "description": "Java ve Spring ekosistemiyle kurumsal sunucu uygulamaları geliştirir.",
+  "keywords": [
+   "java developer",
+   "spring boot developer",
+   "backend developer"
+  ],
+  "juniorFactor": 1.9,
+  "seniorFactor": 5.0,
+  "careerTitles": [
+   "Stajyer Java Geliştirici",
+   "Junior Java Geliştirici",
+   "Java Geliştirici",
+   "Kıdemli Java Geliştirici",
+   "Yazılım Mimarı"
+  ],
+  "core": [
+   {
+    "name": "Java",
+    "aliases": [],
+    "hint": "Oracle Java eğitimleri"
+   },
+   {
+    "name": "Spring Boot",
+    "aliases": [
+     "spring",
+     "spring framework"
+    ],
+    "hint": "Spring resmi rehberleri"
+   },
+   {
+    "name": "SQL",
+    "aliases": [
+     "postgresql",
+     "oracle",
+     "mysql"
+    ],
+    "hint": "Veritabanı tasarımı"
+   },
+   {
+    "name": "REST API",
+    "aliases": [
+     "rest",
+     "restful"
+    ],
+    "hint": "API tasarım prensipleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "Hibernate",
+    "aliases": [
+     "jpa"
+    ],
+    "hint": "JPA ile ilişkisel eşleme"
+   },
+   {
+    "name": "Maven",
+    "aliases": [
+     "gradle"
+    ],
+    "hint": "Derleme araçları"
+   },
+   {
+    "name": "Git",
+    "aliases": [],
+    "hint": "Git iş akışları"
+   },
+   {
+    "name": "JUnit",
+    "aliases": [
+     "mockito",
+     "unit test"
+    ],
+    "hint": "Test güdümlü geliştirme"
+   },
+   {
+    "name": "Docker",
+    "aliases": [],
+    "hint": "Konteynerleştirme"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Kubernetes",
+    "aliases": [
+     "k8s"
+    ],
+    "hint": "CKAD sertifikası"
+   },
+   {
+    "name": "Kafka",
+    "aliases": [
+     "rabbitmq"
+    ],
+    "hint": "Olay güdümlü mimari"
+   },
+   {
+    "name": "Mikroservis",
+    "aliases": [
+     "microservices"
+    ],
+    "hint": "Mikroservis desenleri"
+   },
+   {
+    "name": "AWS",
+    "aliases": [
+     "amazon web services"
+    ],
+    "hint": "AWS Developer Associate"
+   }
+  ]
+ },
+ {
+  "code": "backend-python",
+  "name": "Backend Geliştirici (Python)",
+  "category": "Yazılım ve Bilişim",
+  "description": "Python ile web servisleri, otomasyon ve veri odaklı uygulamalar geliştirir.",
+  "keywords": [
+   "python developer",
+   "django developer",
+   "backend developer"
+  ],
+  "juniorFactor": 1.8,
+  "seniorFactor": 4.8,
+  "careerTitles": [
+   "Stajyer Python Geliştirici",
+   "Junior Python Geliştirici",
+   "Python Geliştirici",
+   "Kıdemli Python Geliştirici",
+   "Python Geliştirici Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "Python",
+    "aliases": [],
+    "hint": "Python resmi tutorial"
+   },
+   {
+    "name": "Django",
+    "aliases": [
+     "fastapi",
+     "flask"
+    ],
+    "hint": "Django veya FastAPI ile proje"
+   },
+   {
+    "name": "SQL",
+    "aliases": [
+     "postgresql",
+     "mysql"
+    ],
+    "hint": "SQL pratiği"
+   },
+   {
+    "name": "REST API",
+    "aliases": [
+     "rest"
+    ],
+    "hint": "API tasarımı"
+   }
+  ],
+  "important": [
+   {
+    "name": "Git",
+    "aliases": [],
+    "hint": "Git temelleri"
+   },
+   {
+    "name": "Pytest",
+    "aliases": [
+     "unit test",
+     "birim test"
+    ],
+    "hint": "Test yazımı"
+   },
+   {
+    "name": "Docker",
+    "aliases": [],
+    "hint": "Docker temelleri"
+   },
+   {
+    "name": "Celery",
+    "aliases": [
+     "asenkron görev"
+    ],
+    "hint": "Arka plan görevleri"
+   }
+  ],
+  "nice": [
+   {
+    "name": "AWS",
+    "aliases": [
+     "gcp",
+     "azure"
+    ],
+    "hint": "Bulut sertifikaları"
+   },
+   {
+    "name": "Redis",
+    "aliases": [],
+    "hint": "Önbellek"
+   },
+   {
+    "name": "Linux",
+    "aliases": [
+     "bash"
+    ],
+    "hint": "Linux komut satırı"
+   }
+  ]
+ },
+ {
+  "code": "frontend",
+  "name": "Frontend Geliştirici",
+  "category": "Yazılım ve Bilişim",
+  "description": "Kullanıcı arayüzlerini modern web teknolojileriyle geliştirir.",
+  "keywords": [
+   "frontend developer",
+   "react developer",
+   "angular developer"
+  ],
+  "juniorFactor": 1.7,
+  "seniorFactor": 4.5,
+  "careerTitles": [
+   "Stajyer Frontend Geliştirici",
+   "Junior Frontend Geliştirici",
+   "Frontend Geliştirici",
+   "Kıdemli Frontend Geliştirici",
+   "Frontend Geliştirici Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "JavaScript",
+    "aliases": [
+     "js",
+     "es6",
+     "ecmascript"
+    ],
+    "hint": "javascript.info"
+   },
+   {
+    "name": "HTML",
+    "aliases": [
+     "html5"
+    ],
+    "hint": "MDN HTML rehberi"
+   },
+   {
+    "name": "CSS",
+    "aliases": [
+     "css3",
+     "sass",
+     "scss"
+    ],
+    "hint": "MDN CSS ve Flexbox/Grid"
+   },
+   {
+    "name": "React",
+    "aliases": [
+     "react.js",
+     "reactjs",
+     "angular",
+     "vue"
+    ],
+    "hint": "Bir framework'ü derinlemesine öğrenin"
+   }
+  ],
+  "important": [
+   {
+    "name": "TypeScript",
+    "aliases": [
+     "ts"
+    ],
+    "hint": "TypeScript Handbook"
+   },
+   {
+    "name": "Responsive Tasarım",
+    "aliases": [
+     "responsive",
+     "mobil uyumlu"
+    ],
+    "hint": "Mobil öncelikli tasarım"
+   },
+   {
+    "name": "Git",
+    "aliases": [],
+    "hint": "Git temelleri"
+   },
+   {
+    "name": "REST API",
+    "aliases": [
+     "rest",
+     "api entegrasyonu"
+    ],
+    "hint": "Fetch/axios ile API tüketimi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Next.js",
+    "aliases": [
+     "nextjs"
+    ],
+    "hint": "Next.js öğrenme yolu"
+   },
+   {
+    "name": "Test",
+    "aliases": [
+     "jest",
+     "cypress",
+     "playwright"
+    ],
+    "hint": "Uçtan uca test"
+   },
+   {
+    "name": "Erişilebilirlik",
+    "aliases": [
+     "a11y",
+     "wcag"
+    ],
+    "hint": "WCAG 2.2 temel kriterleri"
+   },
+   {
+    "name": "Figma",
+    "aliases": [],
+    "hint": "Tasarımdan koda aktarım"
+   }
+  ]
+ },
+ {
+  "code": "fullstack",
+  "name": "Full Stack Geliştirici",
+  "category": "Yazılım ve Bilişim",
+  "description": "Hem istemci hem sunucu tarafını uçtan uca geliştirir.",
+  "keywords": [
+   "full stack developer",
+   "fullstack developer"
+  ],
+  "juniorFactor": 1.9,
+  "seniorFactor": 5.0,
+  "careerTitles": [
+   "Stajyer Full Stack Geliştirici",
+   "Junior Full Stack Geliştirici",
+   "Full Stack Geliştirici",
+   "Kıdemli Full Stack Geliştirici",
+   "Teknik Lider"
+  ],
+  "core": [
+   {
+    "name": "JavaScript",
+    "aliases": [
+     "js",
+     "typescript"
+    ],
+    "hint": "Modern JS"
+   },
+   {
+    "name": "Backend",
+    "aliases": [
+     "node.js",
+     "nodejs",
+     ".net",
+     "java",
+     "python"
+    ],
+    "hint": "Bir backend dili"
+   },
+   {
+    "name": "SQL",
+    "aliases": [
+     "postgresql",
+     "mysql",
+     "mssql",
+     "mongodb"
+    ],
+    "hint": "Veritabanı tasarımı"
+   },
+   {
+    "name": "React",
+    "aliases": [
+     "angular",
+     "vue"
+    ],
+    "hint": "Bir frontend framework'ü"
+   }
+  ],
+  "important": [
+   {
+    "name": "REST API",
+    "aliases": [
+     "rest"
+    ],
+    "hint": "API tasarımı"
+   },
+   {
+    "name": "Git",
+    "aliases": [],
+    "hint": "Git"
+   },
+   {
+    "name": "Docker",
+    "aliases": [],
+    "hint": "Docker"
+   },
+   {
+    "name": "HTML/CSS",
+    "aliases": [
+     "html",
+     "css"
+    ],
+    "hint": "Arayüz temelleri"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Bulut",
+    "aliases": [
+     "aws",
+     "azure",
+     "gcp"
+    ],
+    "hint": "Bulut temelleri"
+   },
+   {
+    "name": "CI/CD",
+    "aliases": [
+     "github actions"
+    ],
+    "hint": "Otomatik dağıtım"
+   },
+   {
+    "name": "GraphQL",
+    "aliases": [],
+    "hint": "GraphQL temelleri"
+   }
+  ]
+ },
+ {
+  "code": "mobile",
+  "name": "Mobil Uygulama Geliştirici",
+  "category": "Yazılım ve Bilişim",
+  "description": "iOS ve Android için yerel veya çapraz platform uygulamalar geliştirir.",
+  "keywords": [
+   "mobile developer",
+   "flutter developer",
+   "ios developer",
+   "android developer"
+  ],
+  "juniorFactor": 1.8,
+  "seniorFactor": 4.8,
+  "careerTitles": [
+   "Stajyer Mobil Geliştirici",
+   "Junior Mobil Geliştirici",
+   "Mobil Geliştirici",
+   "Kıdemli Mobil Geliştirici",
+   "Mobil Geliştirici Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "Flutter",
+    "aliases": [
+     "dart",
+     "react native",
+     "swift",
+     "kotlin"
+    ],
+    "hint": "Bir mobil framework'ü seçin"
+   },
+   {
+    "name": "Mobil UI",
+    "aliases": [
+     "ui/ux",
+     "arayüz"
+    ],
+    "hint": "Platform tasarım kılavuzları"
+   },
+   {
+    "name": "REST API",
+    "aliases": [
+     "rest",
+     "api"
+    ],
+    "hint": "API entegrasyonu"
+   },
+   {
+    "name": "Git",
+    "aliases": [],
+    "hint": "Git"
+   }
+  ],
+  "important": [
+   {
+    "name": "State Management",
+    "aliases": [
+     "bloc",
+     "provider",
+     "redux",
+     "riverpod"
+    ],
+    "hint": "Durum yönetimi desenleri"
+   },
+   {
+    "name": "Firebase",
+    "aliases": [],
+    "hint": "Firebase temel servisleri"
+   },
+   {
+    "name": "App Store",
+    "aliases": [
+     "google play",
+     "mağaza yayını"
+    ],
+    "hint": "Uygulama yayınlama süreci"
+   }
+  ],
+  "nice": [
+   {
+    "name": "CI/CD",
+    "aliases": [
+     "fastlane",
+     "codemagic"
+    ],
+    "hint": "Mobil otomasyon"
+   },
+   {
+    "name": "Test",
+    "aliases": [
+     "unit test",
+     "widget test"
+    ],
+    "hint": "Mobil test"
+   },
+   {
+    "name": "Swift",
+    "aliases": [
+     "swiftui"
+    ],
+    "hint": "iOS yerel geliştirme"
+   },
+   {
+    "name": "Kotlin",
+    "aliases": [
+     "jetpack compose"
+    ],
+    "hint": "Android yerel geliştirme"
+   }
+  ]
+ },
+ {
+  "code": "devops",
+  "name": "DevOps Mühendisi",
+  "category": "Yazılım ve Bilişim",
+  "description": "Altyapı otomasyonu, sürekli entegrasyon ve dağıtım süreçlerini yönetir.",
+  "keywords": [
+   "devops engineer",
+   "site reliability engineer",
+   "platform engineer"
+  ],
+  "juniorFactor": 2.0,
+  "seniorFactor": 5.5,
+  "careerTitles": [
+   "Stajyer DevOps Mühendisi",
+   "Junior DevOps Mühendisi",
+   "DevOps Mühendisi",
+   "Kıdemli DevOps Mühendisi",
+   "Platform Lideri"
+  ],
+  "core": [
+   {
+    "name": "Linux",
+    "aliases": [
+     "bash",
+     "shell"
+    ],
+    "hint": "Linux sistem yönetimi"
+   },
+   {
+    "name": "Docker",
+    "aliases": [
+     "container"
+    ],
+    "hint": "Docker"
+   },
+   {
+    "name": "Kubernetes",
+    "aliases": [
+     "k8s",
+     "openshift"
+    ],
+    "hint": "CKA sertifikası"
+   },
+   {
+    "name": "CI/CD",
+    "aliases": [
+     "jenkins",
+     "gitlab ci",
+     "github actions",
+     "azure devops"
+    ],
+    "hint": "Pipeline kurulumu"
+   }
+  ],
+  "important": [
+   {
+    "name": "Terraform",
+    "aliases": [
+     "iac",
+     "ansible",
+     "pulumi"
+    ],
+    "hint": "Kod olarak altyapı"
+   },
+   {
+    "name": "Bulut",
+    "aliases": [
+     "aws",
+     "azure",
+     "gcp"
+    ],
+    "hint": "Bulut sertifikası"
+   },
+   {
+    "name": "İzleme",
+    "aliases": [
+     "prometheus",
+     "grafana",
+     "elk",
+     "monitoring"
+    ],
+    "hint": "Gözlemlenebilirlik"
+   },
+   {
+    "name": "Git",
+    "aliases": [],
+    "hint": "Git"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Python",
+    "aliases": [
+     "go",
+     "golang"
+    ],
+    "hint": "Otomasyon betikleri"
+   },
+   {
+    "name": "Güvenlik",
+    "aliases": [
+     "devsecops"
+    ],
+    "hint": "Güvenli pipeline"
+   },
+   {
+    "name": "Helm",
+    "aliases": [],
+    "hint": "Kubernetes paket yönetimi"
+   }
+  ]
+ },
+ {
+  "code": "data-scientist",
+  "name": "Veri Bilimci",
+  "category": "Yazılım ve Bilişim",
+  "description": "Veriden öngörü çıkarır, makine öğrenmesi modelleri kurar.",
+  "keywords": [
+   "data scientist",
+   "veri bilimci",
+   "machine learning"
+  ],
+  "juniorFactor": 2.0,
+  "seniorFactor": 5.5,
+  "careerTitles": [
+   "Stajyer Veri Bilimci",
+   "Junior Veri Bilimci",
+   "Veri Bilimci",
+   "Kıdemli Veri Bilimci",
+   "Veri Bilimi Lideri"
+  ],
+  "core": [
+   {
+    "name": "Python",
+    "aliases": [
+     "r"
+    ],
+    "hint": "Python veri ekosistemi"
+   },
+   {
+    "name": "Makine Öğrenmesi",
+    "aliases": [
+     "machine learning",
+     "ml",
+     "scikit-learn"
+    ],
+    "hint": "Andrew Ng ML kursu"
+   },
+   {
+    "name": "İstatistik",
+    "aliases": [
+     "statistics",
+     "olasılık"
+    ],
+    "hint": "Uygulamalı istatistik"
+   },
+   {
+    "name": "SQL",
+    "aliases": [],
+    "hint": "Analitik SQL"
+   }
+  ],
+  "important": [
+   {
+    "name": "Pandas",
+    "aliases": [
+     "numpy"
+    ],
+    "hint": "Veri işleme"
+   },
+   {
+    "name": "Görselleştirme",
+    "aliases": [
+     "matplotlib",
+     "seaborn",
+     "plotly",
+     "power bi",
+     "tableau"
+    ],
+    "hint": "Veri görselleştirme"
+   },
+   {
+    "name": "Derin Öğrenme",
+    "aliases": [
+     "deep learning",
+     "tensorflow",
+     "pytorch",
+     "keras"
+    ],
+    "hint": "fast.ai"
+   },
+   {
+    "name": "Jupyter",
+    "aliases": [],
+    "hint": "Notebook pratikleri"
+   }
+  ],
+  "nice": [
+   {
+    "name": "MLOps",
+    "aliases": [
+     "mlflow"
+    ],
+    "hint": "Model yaşam döngüsü"
+   },
+   {
+    "name": "Spark",
+    "aliases": [
+     "pyspark",
+     "big data",
+     "büyük veri"
+    ],
+    "hint": "Büyük veri işleme"
+   },
+   {
+    "name": "NLP",
+    "aliases": [
+     "doğal dil işleme",
+     "llm"
+    ],
+    "hint": "Hugging Face kursu"
+   }
+  ]
+ },
+ {
+  "code": "data-analyst",
+  "name": "Veri Analisti",
+  "category": "Yazılım ve Bilişim",
+  "description": "İş verilerini analiz eder, raporlar ve panolar hazırlar.",
+  "keywords": [
+   "data analyst",
+   "veri analisti",
+   "business intelligence"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 3.8,
+  "careerTitles": [
+   "Stajyer Veri Analisti",
+   "Junior Veri Analisti",
+   "Veri Analisti",
+   "Kıdemli Veri Analisti",
+   "Veri Analisti Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "SQL",
+    "aliases": [
+     "t-sql",
+     "mysql",
+     "postgresql"
+    ],
+    "hint": "SQL ile analitik sorgular"
+   },
+   {
+    "name": "Excel",
+    "aliases": [
+     "ms excel",
+     "pivot",
+     "düşeyara",
+     "vlookup"
+    ],
+    "hint": "İleri Excel"
+   },
+   {
+    "name": "Power BI",
+    "aliases": [
+     "tableau",
+     "qlik",
+     "looker"
+    ],
+    "hint": "Bir BI aracı"
+   },
+   {
+    "name": "Raporlama",
+    "aliases": [
+     "reporting",
+     "dashboard",
+     "pano"
+    ],
+    "hint": "Etkili pano tasarımı"
+   }
+  ],
+  "important": [
+   {
+    "name": "Python",
+    "aliases": [
+     "r",
+     "pandas"
+    ],
+    "hint": "Python ile veri analizi"
+   },
+   {
+    "name": "İstatistik",
+    "aliases": [
+     "statistics"
+    ],
+    "hint": "Temel istatistik"
+   },
+   {
+    "name": "Veri Görselleştirme",
+    "aliases": [
+     "visualization"
+    ],
+    "hint": "Görselleştirme ilkeleri"
+   }
+  ],
+  "nice": [
+   {
+    "name": "ETL",
+    "aliases": [
+     "ssis",
+     "data pipeline"
+    ],
+    "hint": "Veri hattı"
+   },
+   {
+    "name": "Google Analytics",
+    "aliases": [
+     "ga4"
+    ],
+    "hint": "GA4 sertifikası"
+   },
+   {
+    "name": "DAX",
+    "aliases": [],
+    "hint": "Power BI DAX"
+   }
+  ]
+ },
+ {
+  "code": "data-engineer",
+  "name": "Veri Mühendisi",
+  "category": "Yazılım ve Bilişim",
+  "description": "Veri hatları, veri ambarları ve büyük veri altyapısı kurar.",
+  "keywords": [
+   "data engineer",
+   "veri mühendisi",
+   "etl developer"
+  ],
+  "juniorFactor": 2.0,
+  "seniorFactor": 5.3,
+  "careerTitles": [
+   "Stajyer Veri Mühendisi",
+   "Junior Veri Mühendisi",
+   "Veri Mühendisi",
+   "Kıdemli Veri Mühendisi",
+   "Veri Mühendisi Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "SQL",
+    "aliases": [],
+    "hint": "İleri SQL"
+   },
+   {
+    "name": "Python",
+    "aliases": [
+     "scala",
+     "java"
+    ],
+    "hint": "Python"
+   },
+   {
+    "name": "ETL",
+    "aliases": [
+     "elt",
+     "data pipeline",
+     "veri hattı",
+     "ssis"
+    ],
+    "hint": "Veri hattı tasarımı"
+   },
+   {
+    "name": "Veri Ambarı",
+    "aliases": [
+     "data warehouse",
+     "dwh",
+     "snowflake",
+     "bigquery"
+    ],
+    "hint": "Boyutsal modelleme"
+   }
+  ],
+  "important": [
+   {
+    "name": "Spark",
+    "aliases": [
+     "pyspark",
+     "databricks"
+    ],
+    "hint": "Spark"
+   },
+   {
+    "name": "Airflow",
+    "aliases": [
+     "orchestration"
+    ],
+    "hint": "İş akışı orkestrasyonu"
+   },
+   {
+    "name": "Bulut",
+    "aliases": [
+     "aws",
+     "azure",
+     "gcp"
+    ],
+    "hint": "Bulut veri servisleri"
+   },
+   {
+    "name": "Kafka",
+    "aliases": [
+     "streaming"
+    ],
+    "hint": "Akış verisi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "dbt",
+    "aliases": [],
+    "hint": "dbt Learn"
+   },
+   {
+    "name": "Docker",
+    "aliases": [],
+    "hint": "Docker"
+   },
+   {
+    "name": "NoSQL",
+    "aliases": [
+     "mongodb",
+     "cassandra"
+    ],
+    "hint": "NoSQL modelleme"
+   }
+  ]
+ },
+ {
+  "code": "ml-engineer",
+  "name": "Yapay Zeka / ML Mühendisi",
+  "category": "Yazılım ve Bilişim",
+  "description": "Makine öğrenmesi ve büyük dil modeli çözümlerini üretime taşır.",
+  "keywords": [
+   "machine learning engineer",
+   "ai engineer",
+   "yapay zeka mühendisi"
+  ],
+  "juniorFactor": 2.2,
+  "seniorFactor": 6.0,
+  "careerTitles": [
+   "Stajyer ML Mühendisi",
+   "Junior ML Mühendisi",
+   "ML Mühendisi",
+   "Kıdemli ML Mühendisi",
+   "Yapay Zeka Lideri"
+  ],
+  "core": [
+   {
+    "name": "Python",
+    "aliases": [],
+    "hint": "Python"
+   },
+   {
+    "name": "Makine Öğrenmesi",
+    "aliases": [
+     "machine learning",
+     "ml"
+    ],
+    "hint": "ML temelleri"
+   },
+   {
+    "name": "Derin Öğrenme",
+    "aliases": [
+     "pytorch",
+     "tensorflow",
+     "deep learning"
+    ],
+    "hint": "PyTorch tutorial"
+   },
+   {
+    "name": "LLM",
+    "aliases": [
+     "büyük dil modeli",
+     "gpt",
+     "rag",
+     "prompt"
+    ],
+    "hint": "LLM uygulama geliştirme"
+   }
+  ],
+  "important": [
+   {
+    "name": "MLOps",
+    "aliases": [
+     "mlflow",
+     "kubeflow"
+    ],
+    "hint": "Model servisleme"
+   },
+   {
+    "name": "Docker",
+    "aliases": [],
+    "hint": "Docker"
+   },
+   {
+    "name": "Bulut",
+    "aliases": [
+     "aws",
+     "azure",
+     "gcp"
+    ],
+    "hint": "Bulut ML servisleri"
+   },
+   {
+    "name": "Vektör Veritabanı",
+    "aliases": [
+     "pinecone",
+     "qdrant",
+     "pgvector"
+    ],
+    "hint": "RAG mimarisi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "CUDA",
+    "aliases": [
+     "gpu"
+    ],
+    "hint": "GPU programlama"
+   },
+   {
+    "name": "Bilgisayarlı Görü",
+    "aliases": [
+     "computer vision",
+     "opencv"
+    ],
+    "hint": "OpenCV"
+   },
+   {
+    "name": "NLP",
+    "aliases": [
+     "doğal dil işleme"
+    ],
+    "hint": "NLP"
+   }
+  ]
+ },
+ {
+  "code": "qa",
+  "name": "Test / QA Mühendisi",
+  "category": "Yazılım ve Bilişim",
+  "description": "Yazılım kalitesini manuel ve otomasyon testleriyle güvence altına alır.",
+  "keywords": [
+   "qa engineer",
+   "test engineer",
+   "test otomasyon"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 4.0,
+  "careerTitles": [
+   "Stajyer Test Mühendisi",
+   "Junior Test Mühendisi",
+   "Test Mühendisi",
+   "Kıdemli Test Mühendisi",
+   "QA Lideri"
+  ],
+  "core": [
+   {
+    "name": "Test Senaryosu",
+    "aliases": [
+     "test case",
+     "test senaryoları",
+     "test planı"
+    ],
+    "hint": "ISTQB Foundation"
+   },
+   {
+    "name": "Test Otomasyonu",
+    "aliases": [
+     "selenium",
+     "cypress",
+     "playwright",
+     "appium"
+    ],
+    "hint": "Bir otomasyon aracı"
+   },
+   {
+    "name": "Hata Takibi",
+    "aliases": [
+     "jira",
+     "bug tracking"
+    ],
+    "hint": "Hata raporlama"
+   },
+   {
+    "name": "API Testi",
+    "aliases": [
+     "postman",
+     "rest assured"
+    ],
+    "hint": "Postman ile API testi"
+   }
+  ],
+  "important": [
+   {
+    "name": "SQL",
+    "aliases": [],
+    "hint": "Temel SQL"
+   },
+   {
+    "name": "Agile",
+    "aliases": [
+     "scrum",
+     "çevik"
+    ],
+    "hint": "Scrum Guide"
+   },
+   {
+    "name": "Git",
+    "aliases": [],
+    "hint": "Git"
+   },
+   {
+    "name": "Performans Testi",
+    "aliases": [
+     "jmeter",
+     "k6",
+     "load test"
+    ],
+    "hint": "JMeter"
+   }
+  ],
+  "nice": [
+   {
+    "name": "CI/CD",
+    "aliases": [
+     "jenkins"
+    ],
+    "hint": "Pipeline'da test"
+   },
+   {
+    "name": "ISTQB",
+    "aliases": [],
+    "hint": "ISTQB sertifikası"
+   },
+   {
+    "name": "BDD",
+    "aliases": [
+     "cucumber",
+     "gherkin"
+    ],
+    "hint": "Davranış güdümlü test"
+   }
+  ]
+ },
+ {
+  "code": "cybersecurity",
+  "name": "Siber Güvenlik Uzmanı",
+  "category": "Yazılım ve Bilişim",
+  "description": "Sistemleri tehditlere karşı korur, güvenlik açıklarını tespit eder.",
+  "keywords": [
+   "cyber security",
+   "siber güvenlik",
+   "security analyst",
+   "soc analyst"
+  ],
+  "juniorFactor": 2.0,
+  "seniorFactor": 5.5,
+  "careerTitles": [
+   "Stajyer Siber Güvenlik Uzmanı",
+   "SOC Analisti Siber Güvenlik Uzmanı",
+   "Siber Güvenlik Uzmanı",
+   "Kıdemli Siber Güvenlik Uzmanı",
+   "Güvenlik Lideri"
+  ],
+  "core": [
+   {
+    "name": "Ağ Güvenliği",
+    "aliases": [
+     "network security",
+     "firewall",
+     "güvenlik duvarı"
+    ],
+    "hint": "CompTIA Security+"
+   },
+   {
+    "name": "SIEM",
+    "aliases": [
+     "splunk",
+     "qradar",
+     "soc"
+    ],
+    "hint": "SIEM kullanımı"
+   },
+   {
+    "name": "Zafiyet Analizi",
+    "aliases": [
+     "vulnerability",
+     "pentest",
+     "sızma testi"
+    ],
+    "hint": "OWASP Top 10"
+   },
+   {
+    "name": "Linux",
+    "aliases": [],
+    "hint": "Linux"
+   }
+  ],
+  "important": [
+   {
+    "name": "Olay Müdahale",
+    "aliases": [
+     "incident response"
+    ],
+    "hint": "Olay müdahale süreçleri"
+   },
+   {
+    "name": "ISO 27001",
+    "aliases": [
+     "kvkk",
+     "gdpr"
+    ],
+    "hint": "Bilgi güvenliği yönetimi"
+   },
+   {
+    "name": "Python",
+    "aliases": [
+     "scripting"
+    ],
+    "hint": "Güvenlik otomasyonu"
+   }
+  ],
+  "nice": [
+   {
+    "name": "CEH",
+    "aliases": [
+     "oscp",
+     "cissp"
+    ],
+    "hint": "Sertifikalar"
+   },
+   {
+    "name": "Bulut Güvenliği",
+    "aliases": [
+     "cloud security"
+    ],
+    "hint": "Bulut güvenlik temelleri"
+   },
+   {
+    "name": "Kriptografi",
+    "aliases": [
+     "şifreleme"
+    ],
+    "hint": "Uygulamalı kriptografi"
+   }
+  ]
+ },
+ {
+  "code": "sysadmin",
+  "name": "Sistem Yöneticisi",
+  "category": "Yazılım ve Bilişim",
+  "description": "Sunucu, ağ ve kullanıcı altyapısını kurar ve işletir.",
+  "keywords": [
+   "system administrator",
+   "sistem yöneticisi",
+   "it specialist"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.5,
+  "careerTitles": [
+   "Stajyer Sistem Yöneticisi",
+   "Sistem Uzman Yardımcısı Sistem Yöneticisi",
+   "Sistem Yöneticisi",
+   "Kıdemli Sistem Yöneticisi",
+   "BT Altyapı Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Windows Server",
+    "aliases": [
+     "active directory",
+     "ad",
+     "gpo"
+    ],
+    "hint": "Microsoft sertifikaları"
+   },
+   {
+    "name": "Linux",
+    "aliases": [
+     "red hat",
+     "ubuntu",
+     "centos"
+    ],
+    "hint": "RHCSA"
+   },
+   {
+    "name": "Ağ",
+    "aliases": [
+     "network",
+     "tcp/ip",
+     "dns",
+     "dhcp"
+    ],
+    "hint": "CCNA"
+   },
+   {
+    "name": "Sanallaştırma",
+    "aliases": [
+     "vmware",
+     "hyper-v"
+    ],
+    "hint": "VMware temelleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "Yedekleme",
+    "aliases": [
+     "backup",
+     "veeam"
+    ],
+    "hint": "Yedekleme stratejileri"
+   },
+   {
+    "name": "PowerShell",
+    "aliases": [
+     "bash",
+     "scripting"
+    ],
+    "hint": "Otomasyon betikleri"
+   },
+   {
+    "name": "Microsoft 365",
+    "aliases": [
+     "office 365",
+     "exchange"
+    ],
+    "hint": "M365 yönetimi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Bulut",
+    "aliases": [
+     "azure",
+     "aws"
+    ],
+    "hint": "Bulut altyapısı"
+   },
+   {
+    "name": "ITIL",
+    "aliases": [],
+    "hint": "ITIL Foundation"
+   },
+   {
+    "name": "Güvenlik Duvarı",
+    "aliases": [
+     "firewall",
+     "fortigate"
+    ],
+    "hint": "Güvenlik cihazları"
+   }
+  ]
+ },
+ {
+  "code": "network",
+  "name": "Ağ Mühendisi",
+  "category": "Yazılım ve Bilişim",
+  "description": "Kurumsal ağları tasarlar, kurar ve yönetir.",
+  "keywords": [
+   "network engineer",
+   "ağ mühendisi"
+  ],
+  "juniorFactor": 1.6,
+  "seniorFactor": 4.2,
+  "careerTitles": [
+   "Stajyer Ağ Mühendisi",
+   "Junior Ağ Mühendisi",
+   "Ağ Mühendisi",
+   "Kıdemli Ağ Mühendisi",
+   "Ağ Mühendisi Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "TCP/IP",
+    "aliases": [
+     "ip",
+     "subnetting"
+    ],
+    "hint": "Ağ temelleri"
+   },
+   {
+    "name": "Yönlendirme",
+    "aliases": [
+     "routing",
+     "switching",
+     "bgp",
+     "ospf"
+    ],
+    "hint": "CCNA/CCNP"
+   },
+   {
+    "name": "Cisco",
+    "aliases": [
+     "juniper",
+     "huawei"
+    ],
+    "hint": "Üretici sertifikaları"
+   },
+   {
+    "name": "Güvenlik Duvarı",
+    "aliases": [
+     "firewall",
+     "fortigate",
+     "palo alto"
+    ],
+    "hint": "Firewall yönetimi"
+   }
+  ],
+  "important": [
+   {
+    "name": "VPN",
+    "aliases": [
+     "ipsec"
+    ],
+    "hint": "VPN kurulumları"
+   },
+   {
+    "name": "Kablosuz Ağ",
+    "aliases": [
+     "wifi",
+     "wireless"
+    ],
+    "hint": "Kablosuz ağ tasarımı"
+   },
+   {
+    "name": "İzleme",
+    "aliases": [
+     "prtg",
+     "zabbix",
+     "monitoring"
+    ],
+    "hint": "Ağ izleme"
+   }
+  ],
+  "nice": [
+   {
+    "name": "SD-WAN",
+    "aliases": [],
+    "hint": "SD-WAN"
+   },
+   {
+    "name": "Python",
+    "aliases": [
+     "otomasyon",
+     "ansible"
+    ],
+    "hint": "Ağ otomasyonu"
+   },
+   {
+    "name": "Bulut Ağları",
+    "aliases": [
+     "aws vpc",
+     "azure network"
+    ],
+    "hint": "Bulut ağ"
+   }
+  ]
+ },
+ {
+  "code": "uiux",
+  "name": "UI/UX Tasarımcı",
+  "category": "Yazılım ve Bilişim",
+  "description": "Kullanıcı deneyimi araştırması yapar, arayüz tasarlar ve prototipler.",
+  "keywords": [
+   "ui ux designer",
+   "product designer",
+   "ux designer"
+  ],
+  "juniorFactor": 1.6,
+  "seniorFactor": 4.2,
+  "careerTitles": [
+   "Stajyer UI/UX Tasarımcı",
+   "Junior UI/UX Tasarımcı",
+   "UI/UX Tasarımcı",
+   "Kıdemli UI/UX Tasarımcı",
+   "Tasarım Lideri"
+  ],
+  "core": [
+   {
+    "name": "Figma",
+    "aliases": [
+     "sketch",
+     "adobe xd"
+    ],
+    "hint": "Figma eğitimleri"
+   },
+   {
+    "name": "Kullanıcı Araştırması",
+    "aliases": [
+     "user research",
+     "kullanıcı testi",
+     "usability"
+    ],
+    "hint": "Kullanıcı görüşmesi teknikleri"
+   },
+   {
+    "name": "Prototipleme",
+    "aliases": [
+     "prototype",
+     "wireframe"
+    ],
+    "hint": "Hızlı prototipleme"
+   },
+   {
+    "name": "Tasarım Sistemi",
+    "aliases": [
+     "design system",
+     "component library"
+    ],
+    "hint": "Tasarım sistemi kurma"
+   }
+  ],
+  "important": [
+   {
+    "name": "Etkileşim Tasarımı",
+    "aliases": [
+     "interaction design"
+    ],
+    "hint": "Mikro etkileşimler"
+   },
+   {
+    "name": "Erişilebilirlik",
+    "aliases": [
+     "wcag",
+     "a11y"
+    ],
+    "hint": "WCAG"
+   },
+   {
+    "name": "Bilgi Mimarisi",
+    "aliases": [
+     "information architecture"
+    ],
+    "hint": "Kart sıralama"
+   }
+  ],
+  "nice": [
+   {
+    "name": "HTML/CSS",
+    "aliases": [
+     "html",
+     "css"
+    ],
+    "hint": "Temel ön yüz"
+   },
+   {
+    "name": "Hareket Tasarımı",
+    "aliases": [
+     "motion design",
+     "after effects"
+    ],
+    "hint": "Animasyon"
+   },
+   {
+    "name": "Analitik",
+    "aliases": [
+     "hotjar",
+     "google analytics"
+    ],
+    "hint": "Davranış analitiği"
+   }
+  ]
+ },
+ {
+  "code": "product-manager",
+  "name": "Ürün Yöneticisi",
+  "category": "Yazılım ve Bilişim",
+  "description": "Ürün vizyonunu belirler, yol haritası ve önceliklendirmeyi yönetir.",
+  "keywords": [
+   "product manager",
+   "ürün yöneticisi",
+   "product owner"
+  ],
+  "juniorFactor": 2.2,
+  "seniorFactor": 6.0,
+  "careerTitles": [
+   "Ürün Asistanı",
+   "Associate Ürün Yöneticisi",
+   "Ürün Yöneticisi",
+   "Kıdemli Ürün Yöneticisi",
+   "Ürün Direktörü"
+  ],
+  "core": [
+   {
+    "name": "Ürün Yönetimi",
+    "aliases": [
+     "product management",
+     "product owner"
+    ],
+    "hint": "Inspired (Marty Cagan)"
+   },
+   {
+    "name": "Yol Haritası",
+    "aliases": [
+     "roadmap",
+     "önceliklendirme"
+    ],
+    "hint": "Önceliklendirme çerçeveleri"
+   },
+   {
+    "name": "Kullanıcı Araştırması",
+    "aliases": [
+     "user research",
+     "customer discovery"
+    ],
+    "hint": "Müşteri keşfi"
+   },
+   {
+    "name": "Agile",
+    "aliases": [
+     "scrum",
+     "kanban",
+     "çevik"
+    ],
+    "hint": "Scrum PO sertifikası"
+   }
+  ],
+  "important": [
+   {
+    "name": "Veri Analizi",
+    "aliases": [
+     "analytics",
+     "sql",
+     "a/b test"
+    ],
+    "hint": "Ürün analitiği"
+   },
+   {
+    "name": "Paydaş Yönetimi",
+    "aliases": [
+     "stakeholder"
+    ],
+    "hint": "İletişim"
+   },
+   {
+    "name": "Jira",
+    "aliases": [
+     "confluence"
+    ],
+    "hint": "Araç kullanımı"
+   }
+  ],
+  "nice": [
+   {
+    "name": "UX",
+    "aliases": [
+     "ui/ux"
+    ],
+    "hint": "Tasarım temelleri"
+   },
+   {
+    "name": "Teknik Bilgi",
+    "aliases": [
+     "api",
+     "yazılım"
+    ],
+    "hint": "Teknik okuryazarlık"
+   },
+   {
+    "name": "OKR",
+    "aliases": [],
+    "hint": "OKR ile hedef yönetimi"
+   }
+  ]
+ },
+ {
+  "code": "business-analyst",
+  "name": "İş Analisti",
+  "category": "Yazılım ve Bilişim",
+  "description": "İş ihtiyaçlarını analiz eder, gereksinimleri dokümante eder.",
+  "keywords": [
+   "business analyst",
+   "iş analisti"
+  ],
+  "juniorFactor": 1.6,
+  "seniorFactor": 4.2,
+  "careerTitles": [
+   "Stajyer İş Analisti",
+   "Junior İş Analisti",
+   "İş Analisti",
+   "Kıdemli İş Analisti",
+   "İş Analisti Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "Gereksinim Analizi",
+    "aliases": [
+     "requirements",
+     "analiz dokümanı",
+     "user story"
+    ],
+    "hint": "BABOK"
+   },
+   {
+    "name": "Süreç Modelleme",
+    "aliases": [
+     "bpmn",
+     "süreç analizi"
+    ],
+    "hint": "BPMN 2.0"
+   },
+   {
+    "name": "SQL",
+    "aliases": [],
+    "hint": "Temel SQL"
+   },
+   {
+    "name": "Dokümantasyon",
+    "aliases": [
+     "confluence"
+    ],
+    "hint": "Analiz dokümanı yazımı"
+   }
+  ],
+  "important": [
+   {
+    "name": "UML",
+    "aliases": [],
+    "hint": "UML diyagramları"
+   },
+   {
+    "name": "Agile",
+    "aliases": [
+     "scrum"
+    ],
+    "hint": "Scrum"
+   },
+   {
+    "name": "Jira",
+    "aliases": [],
+    "hint": "Jira"
+   },
+   {
+    "name": "Paydaş Yönetimi",
+    "aliases": [
+     "stakeholder"
+    ],
+    "hint": "Toplantı yönetimi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Power BI",
+    "aliases": [
+     "tableau"
+    ],
+    "hint": "BI araçları"
+   },
+   {
+    "name": "CBAP",
+    "aliases": [
+     "ecba"
+    ],
+    "hint": "IIBA sertifikası"
+   },
+   {
+    "name": "Test",
+    "aliases": [
+     "uat"
+    ],
+    "hint": "Kabul testleri"
+   }
+  ]
+ },
+ {
+  "code": "erp-consultant",
+  "name": "ERP / SAP Danışmanı",
+  "category": "Yazılım ve Bilişim",
+  "description": "Kurumsal kaynak planlama sistemlerini kurar ve uyarlar.",
+  "keywords": [
+   "sap consultant",
+   "erp danışmanı",
+   "sap abap"
+  ],
+  "juniorFactor": 2.0,
+  "seniorFactor": 5.5,
+  "careerTitles": [
+   "Stajyer ERP Danışmanı",
+   "Junior ERP Danışmanı",
+   "ERP Danışmanı",
+   "Kıdemli ERP Danışmanı",
+   "ERP Proje Yöneticisi"
+  ],
+  "core": [
+   {
+    "name": "SAP",
+    "aliases": [
+     "s/4hana",
+     "sap fi",
+     "sap mm",
+     "sap sd"
+    ],
+    "hint": "SAP Learning Hub"
+   },
+   {
+    "name": "ERP",
+    "aliases": [
+     "logo",
+     "netsis",
+     "microsoft dynamics",
+     "oracle erp"
+    ],
+    "hint": "ERP modülleri"
+   },
+   {
+    "name": "İş Süreçleri",
+    "aliases": [
+     "süreç analizi"
+    ],
+    "hint": "Uçtan uca süreçler"
+   },
+   {
+    "name": "SQL",
+    "aliases": [],
+    "hint": "SQL"
+   }
+  ],
+  "important": [
+   {
+    "name": "ABAP",
+    "aliases": [],
+    "hint": "ABAP programlama"
+   },
+   {
+    "name": "Proje Yönetimi",
+    "aliases": [
+     "activate"
+    ],
+    "hint": "SAP Activate"
+   },
+   {
+    "name": "Eğitim Verme",
+    "aliases": [
+     "kullanıcı eğitimi"
+    ],
+    "hint": "Son kullanıcı eğitimi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "SAP Sertifikası",
+    "aliases": [],
+    "hint": "SAP sertifikası"
+   },
+   {
+    "name": "Fiori",
+    "aliases": [],
+    "hint": "SAP Fiori"
+   },
+   {
+    "name": "Entegrasyon",
+    "aliases": [
+     "api",
+     "idoc"
+    ],
+    "hint": "Sistem entegrasyonu"
+   }
+  ]
+ },
+ {
+  "code": "game-developer",
+  "name": "Oyun Geliştirici",
+  "category": "Yazılım ve Bilişim",
+  "description": "Oyun motorlarıyla oyun mekanikleri ve sistemleri geliştirir.",
+  "keywords": [
+   "game developer",
+   "unity developer",
+   "oyun geliştirici"
+  ],
+  "juniorFactor": 1.6,
+  "seniorFactor": 4.5,
+  "careerTitles": [
+   "Stajyer Oyun Geliştirici",
+   "Junior Oyun Geliştirici",
+   "Oyun Geliştirici",
+   "Kıdemli Oyun Geliştirici",
+   "Oyun Geliştirici Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "Unity",
+    "aliases": [
+     "unreal",
+     "unreal engine",
+     "godot"
+    ],
+    "hint": "Unity Learn"
+   },
+   {
+    "name": "C#",
+    "aliases": [
+     "c++"
+    ],
+    "hint": "Oyun programlama dili"
+   },
+   {
+    "name": "Oyun Mekaniği",
+    "aliases": [
+     "gameplay",
+     "game design"
+    ],
+    "hint": "Oyun tasarımı temelleri"
+   },
+   {
+    "name": "Matematik",
+    "aliases": [
+     "vektör",
+     "fizik"
+    ],
+    "hint": "Oyun matematiği"
+   }
+  ],
+  "important": [
+   {
+    "name": "Git",
+    "aliases": [
+     "perforce"
+    ],
+    "hint": "Sürüm kontrol"
+   },
+   {
+    "name": "Optimizasyon",
+    "aliases": [
+     "profiling",
+     "performans"
+    ],
+    "hint": "Performans profilleme"
+   },
+   {
+    "name": "Mobil Oyun",
+    "aliases": [
+     "ios",
+     "android"
+    ],
+    "hint": "Mobil platformlar"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Shader",
+    "aliases": [
+     "hlsl",
+     "glsl"
+    ],
+    "hint": "Shader programlama"
+   },
+   {
+    "name": "Çok Oyunculu",
+    "aliases": [
+     "multiplayer",
+     "netcode"
+    ],
+    "hint": "Ağ kodu"
+   },
+   {
+    "name": "Monetizasyon",
+    "aliases": [
+     "reklam",
+     "iap"
+    ],
+    "hint": "Gelir modelleri"
+   }
+  ]
+ },
+ {
+  "code": "database-admin",
+  "name": "Veritabanı Yöneticisi",
+  "category": "Yazılım ve Bilişim",
+  "description": "Veritabanlarının performansını, güvenliğini ve sürekliliğini sağlar.",
+  "keywords": [
+   "database administrator",
+   "dba",
+   "veritabanı yöneticisi"
+  ],
+  "juniorFactor": 1.8,
+  "seniorFactor": 5.0,
+  "careerTitles": [
+   "Stajyer Veritabanı Yöneticisi",
+   "Junior Veritabanı Yöneticisi",
+   "Veritabanı Yöneticisi",
+   "Kıdemli Veritabanı Yöneticisi",
+   "Veritabanı Yöneticisi Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "SQL Server",
+    "aliases": [
+     "mssql",
+     "oracle",
+     "postgresql",
+     "mysql"
+    ],
+    "hint": "Üretici DBA eğitimleri"
+   },
+   {
+    "name": "Performans Ayarı",
+    "aliases": [
+     "tuning",
+     "indeks",
+     "index"
+    ],
+    "hint": "Sorgu planı okuma"
+   },
+   {
+    "name": "Yedekleme",
+    "aliases": [
+     "backup",
+     "restore",
+     "disaster recovery"
+    ],
+    "hint": "Felaket kurtarma"
+   },
+   {
+    "name": "SQL",
+    "aliases": [
+     "t-sql",
+     "pl/sql"
+    ],
+    "hint": "İleri SQL"
+   }
+  ],
+  "important": [
+   {
+    "name": "Yüksek Erişilebilirlik",
+    "aliases": [
+     "always on",
+     "replication",
+     "cluster"
+    ],
+    "hint": "HA çözümleri"
+   },
+   {
+    "name": "Güvenlik",
+    "aliases": [
+     "yetkilendirme"
+    ],
+    "hint": "Veritabanı güvenliği"
+   },
+   {
+    "name": "Betikleme",
+    "aliases": [
+     "powershell",
+     "bash"
+    ],
+    "hint": "Otomasyon"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Bulut Veritabanı",
+    "aliases": [
+     "azure sql",
+     "rds"
+    ],
+    "hint": "Bulut DB"
+   },
+   {
+    "name": "NoSQL",
+    "aliases": [
+     "mongodb",
+     "redis"
+    ],
+    "hint": "NoSQL"
+   },
+   {
+    "name": "Linux",
+    "aliases": [],
+    "hint": "Linux"
+   }
+  ]
+ },
+ {
+  "code": "mechanical-engineer",
+  "name": "Makine Mühendisi",
+  "category": "Mühendislik",
+  "description": "Mekanik sistemleri tasarlar, üretim ve bakım süreçlerini yönetir.",
+  "keywords": [
+   "makine mühendisi",
+   "mechanical engineer"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 4.0,
+  "careerTitles": [
+   "Stajyer Makine Mühendisi",
+   "Yeni Mezun Makine Mühendisi",
+   "Makine Mühendisi",
+   "Kıdemli Makine Mühendisi",
+   "Mühendislik Müdürü"
+  ],
+  "core": [
+   {
+    "name": "AutoCAD",
+    "aliases": [
+     "cad"
+    ],
+    "hint": "AutoCAD temelleri"
+   },
+   {
+    "name": "SolidWorks",
+    "aliases": [
+     "catia",
+     "nx",
+     "creo",
+     "inventor"
+    ],
+    "hint": "3B modelleme"
+   },
+   {
+    "name": "Teknik Resim",
+    "aliases": [
+     "technical drawing",
+     "gd&t"
+    ],
+    "hint": "GD&T"
+   },
+   {
+    "name": "Üretim Yöntemleri",
+    "aliases": [
+     "imalat",
+     "manufacturing"
+    ],
+    "hint": "İmalat teknolojileri"
+   }
+  ],
+  "important": [
+   {
+    "name": "Analiz",
+    "aliases": [
+     "ansys",
+     "fea",
+     "sonlu elemanlar"
+    ],
+    "hint": "Sonlu elemanlar analizi"
+   },
+   {
+    "name": "Kalite",
+    "aliases": [
+     "iso 9001",
+     "fmea",
+     "8d"
+    ],
+    "hint": "Kalite araçları"
+   },
+   {
+    "name": "Proje Yönetimi",
+    "aliases": [],
+    "hint": "Proje yönetimi"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "Teknik İngilizce"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Yalın Üretim",
+    "aliases": [
+     "lean",
+     "kaizen",
+     "5s"
+    ],
+    "hint": "Yalın üretim"
+   },
+   {
+    "name": "ERP",
+    "aliases": [
+     "sap"
+    ],
+    "hint": "ERP kullanımı"
+   },
+   {
+    "name": "Altı Sigma",
+    "aliases": [
+     "six sigma"
+    ],
+    "hint": "Six Sigma Green Belt"
+   }
+  ]
+ },
+ {
+  "code": "electrical-engineer",
+  "name": "Elektrik-Elektronik Mühendisi",
+  "category": "Mühendislik",
+  "description": "Elektrik ve elektronik sistemleri tasarlar, test eder ve devreye alır.",
+  "keywords": [
+   "elektrik mühendisi",
+   "elektronik mühendisi",
+   "electrical engineer"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 4.2,
+  "careerTitles": [
+   "Stajyer Elektrik-Elektronik Mühendisi",
+   "Yeni Mezun Elektrik-Elektronik Mühendisi",
+   "Elektrik-Elektronik Mühendisi",
+   "Kıdemli Elektrik-Elektronik Mühendisi",
+   "Mühendislik Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Devre Tasarımı",
+    "aliases": [
+     "circuit design",
+     "pcb",
+     "altium"
+    ],
+    "hint": "PCB tasarımı"
+   },
+   {
+    "name": "PLC",
+    "aliases": [
+     "siemens",
+     "scada",
+     "otomasyon"
+    ],
+    "hint": "PLC programlama"
+   },
+   {
+    "name": "Elektrik Projelendirme",
+    "aliases": [
+     "elektrik tesisatı",
+     "autocad electrical"
+    ],
+    "hint": "Proje çizimi"
+   },
+   {
+    "name": "Ölçüm",
+    "aliases": [
+     "osiloskop",
+     "test"
+    ],
+    "hint": "Ölçüm teknikleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "Gömülü Sistemler",
+    "aliases": [
+     "embedded",
+     "mikrodenetleyici",
+     "stm32",
+     "arduino"
+    ],
+    "hint": "Gömülü C"
+   },
+   {
+    "name": "MATLAB",
+    "aliases": [
+     "simulink"
+    ],
+    "hint": "MATLAB Onramp"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "Teknik İngilizce"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Yenilenebilir Enerji",
+    "aliases": [
+     "güneş enerjisi",
+     "solar"
+    ],
+    "hint": "Enerji sistemleri"
+   },
+   {
+    "name": "EMC",
+    "aliases": [],
+    "hint": "Elektromanyetik uyumluluk"
+   },
+   {
+    "name": "Proje Yönetimi",
+    "aliases": [],
+    "hint": "Proje yönetimi"
+   }
+  ]
+ },
+ {
+  "code": "industrial-engineer",
+  "name": "Endüstri Mühendisi",
+  "category": "Mühendislik",
+  "description": "Süreçleri verimlilik, maliyet ve kalite açısından iyileştirir.",
+  "keywords": [
+   "endüstri mühendisi",
+   "industrial engineer",
+   "süreç geliştirme"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 4.0,
+  "careerTitles": [
+   "Stajyer Endüstri Mühendisi",
+   "Yeni Mezun Endüstri Mühendisi",
+   "Endüstri Mühendisi",
+   "Kıdemli Endüstri Mühendisi",
+   "Operasyon Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Süreç İyileştirme",
+    "aliases": [
+     "process improvement",
+     "verimlilik"
+    ],
+    "hint": "Süreç analizi"
+   },
+   {
+    "name": "Yalın Üretim",
+    "aliases": [
+     "lean",
+     "kaizen",
+     "5s",
+     "smed"
+    ],
+    "hint": "Lean temelleri"
+   },
+   {
+    "name": "Excel",
+    "aliases": [
+     "ileri excel"
+    ],
+    "hint": "İleri Excel"
+   },
+   {
+    "name": "Üretim Planlama",
+    "aliases": [
+     "mrp",
+     "kapasite planlama"
+    ],
+    "hint": "Üretim planlama"
+   }
+  ],
+  "important": [
+   {
+    "name": "Altı Sigma",
+    "aliases": [
+     "six sigma"
+    ],
+    "hint": "Green Belt"
+   },
+   {
+    "name": "ERP",
+    "aliases": [
+     "sap"
+    ],
+    "hint": "ERP"
+   },
+   {
+    "name": "Veri Analizi",
+    "aliases": [
+     "minitab",
+     "power bi"
+    ],
+    "hint": "İstatistiksel analiz"
+   },
+   {
+    "name": "Simülasyon",
+    "aliases": [
+     "arena",
+     "optimizasyon"
+    ],
+    "hint": "Yöneylem araştırması"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Proje Yönetimi",
+    "aliases": [],
+    "hint": "PMP"
+   },
+   {
+    "name": "Tedarik Zinciri",
+    "aliases": [
+     "supply chain"
+    ],
+    "hint": "Tedarik zinciri"
+   },
+   {
+    "name": "Python",
+    "aliases": [],
+    "hint": "Python ile optimizasyon"
+   }
+  ]
+ },
+ {
+  "code": "civil-engineer",
+  "name": "İnşaat Mühendisi",
+  "category": "Mühendislik",
+  "description": "Yapı projelerini tasarlar, saha uygulamalarını yönetir.",
+  "keywords": [
+   "inşaat mühendisi",
+   "civil engineer",
+   "şantiye mühendisi"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 4.0,
+  "careerTitles": [
+   "Stajyer İnşaat Mühendisi",
+   "Saha Mühendisi İnşaat Mühendisi",
+   "İnşaat Mühendisi",
+   "Kıdemli İnşaat Mühendisi",
+   "Proje Müdürü"
+  ],
+  "core": [
+   {
+    "name": "AutoCAD",
+    "aliases": [
+     "cad"
+    ],
+    "hint": "AutoCAD"
+   },
+   {
+    "name": "Statik Hesap",
+    "aliases": [
+     "sap2000",
+     "etabs",
+     "idecad",
+     "probina"
+    ],
+    "hint": "Statik analiz yazılımları"
+   },
+   {
+    "name": "Metraj",
+    "aliases": [
+     "keşif",
+     "hakediş"
+    ],
+    "hint": "Metraj ve hakediş"
+   },
+   {
+    "name": "Şantiye Yönetimi",
+    "aliases": [
+     "saha yönetimi"
+    ],
+    "hint": "Saha deneyimi"
+   }
+  ],
+  "important": [
+   {
+    "name": "Primavera",
+    "aliases": [
+     "ms project",
+     "planlama"
+    ],
+    "hint": "Proje planlama"
+   },
+   {
+    "name": "İSG",
+    "aliases": [
+     "iş güvenliği"
+    ],
+    "hint": "İSG temelleri"
+   },
+   {
+    "name": "Revit",
+    "aliases": [
+     "bim"
+    ],
+    "hint": "BIM temelleri"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Yapı Denetimi",
+    "aliases": [],
+    "hint": "Yapı denetim mevzuatı"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "Teknik İngilizce"
+   },
+   {
+    "name": "Maliyet Yönetimi",
+    "aliases": [
+     "cost control"
+    ],
+    "hint": "Maliyet kontrolü"
+   }
+  ]
+ },
+ {
+  "code": "architect",
+  "name": "Mimar",
+  "category": "Mühendislik",
+  "description": "Yapıların tasarımını ve uygulama projelerini hazırlar.",
+  "keywords": [
+   "mimar",
+   "architect"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.8,
+  "careerTitles": [
+   "Stajyer Mimar",
+   "Yeni Mezun Mimar",
+   "Mimar",
+   "Kıdemli Mimar",
+   "Proje Mimarı"
+  ],
+  "core": [
+   {
+    "name": "AutoCAD",
+    "aliases": [
+     "cad"
+    ],
+    "hint": "AutoCAD"
+   },
+   {
+    "name": "Revit",
+    "aliases": [
+     "archicad",
+     "bim"
+    ],
+    "hint": "BIM"
+   },
+   {
+    "name": "3B Görselleştirme",
+    "aliases": [
+     "3ds max",
+     "sketchup",
+     "lumion",
+     "v-ray"
+    ],
+    "hint": "Görselleştirme"
+   },
+   {
+    "name": "Uygulama Projesi",
+    "aliases": [
+     "detay çizimi"
+    ],
+    "hint": "Detay çizimleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "Photoshop",
+    "aliases": [
+     "adobe"
+    ],
+    "hint": "Sunum hazırlama"
+   },
+   {
+    "name": "İmar Mevzuatı",
+    "aliases": [
+     "yönetmelik"
+    ],
+    "hint": "İmar mevzuatı"
+   },
+   {
+    "name": "Proje Koordinasyonu",
+    "aliases": [],
+    "hint": "Disiplinler arası koordinasyon"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Rhino",
+    "aliases": [
+     "grasshopper"
+    ],
+    "hint": "Parametrik tasarım"
+   },
+   {
+    "name": "Sürdürülebilirlik",
+    "aliases": [
+     "leed",
+     "breeam"
+    ],
+    "hint": "Yeşil bina"
+   },
+   {
+    "name": "Maliyet",
+    "aliases": [
+     "metraj"
+    ],
+    "hint": "Metraj"
+   }
+  ]
+ },
+ {
+  "code": "chemical-engineer",
+  "name": "Kimya Mühendisi",
+  "category": "Mühendislik",
+  "description": "Kimyasal süreçleri tasarlar, üretimi ve kaliteyi yönetir.",
+  "keywords": [
+   "kimya mühendisi",
+   "chemical engineer",
+   "proses mühendisi"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 4.0,
+  "careerTitles": [
+   "Stajyer Kimya Mühendisi",
+   "Yeni Mezun Kimya Mühendisi",
+   "Kimya Mühendisi",
+   "Kıdemli Kimya Mühendisi",
+   "Üretim Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Proses Kontrol",
+    "aliases": [
+     "process control",
+     "proses"
+    ],
+    "hint": "Proses kontrol"
+   },
+   {
+    "name": "Kalite Kontrol",
+    "aliases": [
+     "qc",
+     "laboratuvar"
+    ],
+    "hint": "Laboratuvar analizleri"
+   },
+   {
+    "name": "GMP",
+    "aliases": [
+     "iso 9001",
+     "haccp"
+    ],
+    "hint": "Kalite standartları"
+   },
+   {
+    "name": "Kütle ve Enerji Denklikleri",
+    "aliases": [
+     "material balance"
+    ],
+    "hint": "Temel hesaplar"
+   }
+  ],
+  "important": [
+   {
+    "name": "Aspen",
+    "aliases": [
+     "hysys",
+     "simülasyon"
+    ],
+    "hint": "Proses simülasyonu"
+   },
+   {
+    "name": "İSG",
+    "aliases": [
+     "çevre",
+     "iş güvenliği"
+    ],
+    "hint": "İSG ve çevre"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Altı Sigma",
+    "aliases": [
+     "six sigma"
+    ],
+    "hint": "Six Sigma"
+   },
+   {
+    "name": "ERP",
+    "aliases": [
+     "sap"
+    ],
+    "hint": "ERP"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "Teknik İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "automotive-engineer",
+  "name": "Otomotiv Mühendisi",
+  "category": "Mühendislik",
+  "description": "Araç sistemleri ve parçalarının tasarım, test ve üretimini yönetir.",
+  "keywords": [
+   "otomotiv mühendisi",
+   "automotive engineer",
+   "ar-ge mühendisi"
+  ],
+  "juniorFactor": 1.7,
+  "seniorFactor": 4.5,
+  "careerTitles": [
+   "Stajyer Otomotiv Mühendisi",
+   "Ar-Ge Mühendisi Otomotiv Mühendisi",
+   "Otomotiv Mühendisi",
+   "Kıdemli Otomotiv Mühendisi",
+   "Ar-Ge Müdürü"
+  ],
+  "core": [
+   {
+    "name": "CATIA",
+    "aliases": [
+     "nx",
+     "solidworks",
+     "cad"
+    ],
+    "hint": "3B modelleme"
+   },
+   {
+    "name": "APQP",
+    "aliases": [
+     "ppap",
+     "iatf 16949"
+    ],
+    "hint": "Otomotiv kalite çekirdek araçları"
+   },
+   {
+    "name": "FMEA",
+    "aliases": [
+     "dfmea",
+     "pfmea"
+    ],
+    "hint": "FMEA"
+   },
+   {
+    "name": "Test ve Doğrulama",
+    "aliases": [
+     "validation",
+     "dvp&r"
+    ],
+    "hint": "Doğrulama planları"
+   }
+  ],
+  "important": [
+   {
+    "name": "CAN",
+    "aliases": [
+     "can bus",
+     "elektronik"
+    ],
+    "hint": "Araç ağları"
+   },
+   {
+    "name": "MATLAB",
+    "aliases": [
+     "simulink"
+    ],
+    "hint": "Model tabanlı tasarım"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "Teknik İngilizce"
+   },
+   {
+    "name": "Proje Yönetimi",
+    "aliases": [],
+    "hint": "Proje yönetimi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Elektrikli Araç",
+    "aliases": [
+     "ev",
+     "batarya",
+     "battery"
+    ],
+    "hint": "Elektrikli araç teknolojileri"
+   },
+   {
+    "name": "AUTOSAR",
+    "aliases": [],
+    "hint": "AUTOSAR"
+   },
+   {
+    "name": "Almanca",
+    "aliases": [
+     "german"
+    ],
+    "hint": "Almanca"
+   }
+  ]
+ },
+ {
+  "code": "accountant",
+  "name": "Muhasebe Uzmanı",
+  "category": "Finans ve Muhasebe",
+  "description": "Muhasebe kayıtlarını, beyannameleri ve mali raporlamayı yürütür.",
+  "keywords": [
+   "muhasebe uzmanı",
+   "accountant",
+   "muhasebeci"
+  ],
+  "juniorFactor": 1.3,
+  "seniorFactor": 3.2,
+  "careerTitles": [
+   "Stajyer Muhasebe Uzmanı",
+   "Muhasebe Uzman Yardımcısı Muhasebe Uzmanı",
+   "Muhasebe Uzmanı",
+   "Kıdemli Muhasebe Uzmanı",
+   "Muhasebe Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Genel Muhasebe",
+    "aliases": [
+     "tekdüzen hesap planı",
+     "defter"
+    ],
+    "hint": "Tekdüzen hesap planı"
+   },
+   {
+    "name": "Vergi Mevzuatı",
+    "aliases": [
+     "kdv",
+     "muhtasar",
+     "beyanname",
+     "vergi"
+    ],
+    "hint": "Güncel vergi mevzuatı"
+   },
+   {
+    "name": "Excel",
+    "aliases": [
+     "ileri excel"
+    ],
+    "hint": "İleri Excel"
+   },
+   {
+    "name": "Muhasebe Programı",
+    "aliases": [
+     "logo",
+     "mikro",
+     "netsis",
+     "eta",
+     "luca",
+     "sap fi"
+    ],
+    "hint": "Bir muhasebe yazılımı"
+   }
+  ],
+  "important": [
+   {
+    "name": "Bordro",
+    "aliases": [
+     "sgk"
+    ],
+    "hint": "Bordro işlemleri"
+   },
+   {
+    "name": "Mali Tablolar",
+    "aliases": [
+     "bilanço",
+     "gelir tablosu"
+    ],
+    "hint": "Mali tablolar"
+   },
+   {
+    "name": "E-Dönüşüm",
+    "aliases": [
+     "e-fatura",
+     "e-defter"
+    ],
+    "hint": "E-dönüşüm uygulamaları"
+   }
+  ],
+  "nice": [
+   {
+    "name": "SMMM",
+    "aliases": [],
+    "hint": "SMMM ruhsatı"
+   },
+   {
+    "name": "TFRS",
+    "aliases": [
+     "ifrs",
+     "ufrs"
+    ],
+    "hint": "TFRS"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İş İngilizcesi"
+   }
+  ]
+ },
+ {
+  "code": "financial-analyst",
+  "name": "Finansal Analist",
+  "category": "Finans ve Muhasebe",
+  "description": "Finansal modeller kurar, bütçe ve performans analizleri yapar.",
+  "keywords": [
+   "finansal analist",
+   "financial analyst",
+   "fp&a"
+  ],
+  "juniorFactor": 1.8,
+  "seniorFactor": 5.0,
+  "careerTitles": [
+   "Stajyer Finansal Analist",
+   "Junior Finansal Analist",
+   "Finansal Analist",
+   "Kıdemli Finansal Analist",
+   "Finans Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Finansal Modelleme",
+    "aliases": [
+     "financial modeling",
+     "değerleme",
+     "dcf"
+    ],
+    "hint": "Finansal modelleme kursları"
+   },
+   {
+    "name": "Excel",
+    "aliases": [
+     "ileri excel",
+     "makro",
+     "vba"
+    ],
+    "hint": "İleri Excel"
+   },
+   {
+    "name": "Bütçe ve Planlama",
+    "aliases": [
+     "budgeting",
+     "forecast",
+     "fp&a"
+    ],
+    "hint": "Bütçe süreçleri"
+   },
+   {
+    "name": "Mali Tablolar",
+    "aliases": [
+     "financial statements"
+    ],
+    "hint": "Mali tablo analizi"
+   }
+  ],
+  "important": [
+   {
+    "name": "Power BI",
+    "aliases": [
+     "tableau"
+    ],
+    "hint": "BI araçları"
+   },
+   {
+    "name": "SQL",
+    "aliases": [],
+    "hint": "Temel SQL"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İş İngilizcesi"
+   },
+   {
+    "name": "ERP",
+    "aliases": [
+     "sap"
+    ],
+    "hint": "ERP"
+   }
+  ],
+  "nice": [
+   {
+    "name": "CFA",
+    "aliases": [
+     "cma"
+    ],
+    "hint": "Sertifikalar"
+   },
+   {
+    "name": "Python",
+    "aliases": [],
+    "hint": "Finans için Python"
+   },
+   {
+    "name": "TFRS",
+    "aliases": [
+     "ifrs"
+    ],
+    "hint": "Raporlama standartları"
+   }
+  ]
+ },
+ {
+  "code": "auditor",
+  "name": "Denetçi",
+  "category": "Finans ve Muhasebe",
+  "description": "Finansal ve operasyonel denetim süreçlerini yürütür.",
+  "keywords": [
+   "denetçi",
+   "auditor",
+   "iç denetim",
+   "bağımsız denetim"
+  ],
+  "juniorFactor": 1.6,
+  "seniorFactor": 4.5,
+  "careerTitles": [
+   "Stajyer Denetçi",
+   "Denetçi Yardımcısı",
+   "Denetçi",
+   "Kıdemli Denetçi",
+   "Denetim Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Denetim Standartları",
+    "aliases": [
+     "bds",
+     "isa",
+     "iç denetim"
+    ],
+    "hint": "Denetim standartları"
+   },
+   {
+    "name": "Mali Tablolar",
+    "aliases": [
+     "financial statements"
+    ],
+    "hint": "Mali tablo analizi"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   },
+   {
+    "name": "Risk Değerlendirme",
+    "aliases": [
+     "risk assessment",
+     "iç kontrol"
+    ],
+    "hint": "İç kontrol"
+   }
+  ],
+  "important": [
+   {
+    "name": "TFRS",
+    "aliases": [
+     "ifrs"
+    ],
+    "hint": "TFRS"
+   },
+   {
+    "name": "Raporlama",
+    "aliases": [
+     "reporting"
+    ],
+    "hint": "Denetim raporu yazımı"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ],
+  "nice": [
+   {
+    "name": "CIA",
+    "aliases": [
+     "cisa"
+    ],
+    "hint": "Sertifika"
+   },
+   {
+    "name": "SMMM",
+    "aliases": [
+     "ymm"
+    ],
+    "hint": "Ruhsat"
+   },
+   {
+    "name": "Veri Analitiği",
+    "aliases": [
+     "acl",
+     "idea"
+    ],
+    "hint": "Denetim analitiği"
+   }
+  ]
+ },
+ {
+  "code": "banking",
+  "name": "Bankacılık / Müşteri Temsilcisi",
+  "category": "Finans ve Muhasebe",
+  "description": "Bireysel ve kurumsal müşterilere bankacılık ürün ve hizmetleri sunar.",
+  "keywords": [
+   "bankacılık",
+   "müşteri temsilcisi",
+   "portföy yöneticisi",
+   "bank"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.5,
+  "careerTitles": [
+   "Stajyer",
+   "Müşteri Temsilcisi",
+   "Portföy Yöneticisi",
+   "Kıdemli Portföy Yöneticisi",
+   "Şube Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Bankacılık Ürünleri",
+    "aliases": [
+     "kredi",
+     "mevduat",
+     "yatırım ürünleri"
+    ],
+    "hint": "Bankacılık temelleri"
+   },
+   {
+    "name": "Müşteri İlişkileri",
+    "aliases": [
+     "crm",
+     "müşteri yönetimi"
+    ],
+    "hint": "Müşteri ilişkileri"
+   },
+   {
+    "name": "Satış",
+    "aliases": [
+     "hedef",
+     "portföy"
+    ],
+    "hint": "Satış teknikleri"
+   },
+   {
+    "name": "Mevzuat",
+    "aliases": [
+     "bddk",
+     "masak"
+    ],
+    "hint": "Bankacılık mevzuatı"
+   }
+  ],
+  "important": [
+   {
+    "name": "Kredi Analizi",
+    "aliases": [
+     "kredi değerlendirme"
+    ],
+    "hint": "Kredi analizi"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [
+     "communication"
+    ],
+    "hint": "İletişim becerileri"
+   }
+  ],
+  "nice": [
+   {
+    "name": "SPK Lisansı",
+    "aliases": [
+     "spk"
+    ],
+    "hint": "SPK lisansları"
+   },
+   {
+    "name": "Sigorta",
+    "aliases": [
+     "bireysel emeklilik"
+    ],
+    "hint": "Sigorta ürünleri"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "tax-specialist",
+  "name": "Vergi Uzmanı",
+  "category": "Finans ve Muhasebe",
+  "description": "Vergi planlaması, uyum ve danışmanlık hizmeti verir.",
+  "keywords": [
+   "vergi uzmanı",
+   "tax specialist",
+   "vergi danışmanı"
+  ],
+  "juniorFactor": 1.6,
+  "seniorFactor": 4.5,
+  "careerTitles": [
+   "Stajyer Vergi Uzmanı",
+   "Junior Vergi Uzmanı",
+   "Vergi Uzmanı",
+   "Kıdemli Vergi Uzmanı",
+   "Vergi Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Vergi Mevzuatı",
+    "aliases": [
+     "kdv",
+     "kurumlar vergisi",
+     "gelir vergisi"
+    ],
+    "hint": "Güncel mevzuat"
+   },
+   {
+    "name": "Beyanname",
+    "aliases": [
+     "e-beyanname"
+    ],
+    "hint": "Beyanname hazırlama"
+   },
+   {
+    "name": "Transfer Fiyatlandırması",
+    "aliases": [
+     "transfer pricing"
+    ],
+    "hint": "Transfer fiyatlandırması"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   }
+  ],
+  "important": [
+   {
+    "name": "Teşvik Mevzuatı",
+    "aliases": [
+     "yatırım teşvik"
+    ],
+    "hint": "Teşvik sistemleri"
+   },
+   {
+    "name": "Muhasebe",
+    "aliases": [
+     "tekdüzen"
+    ],
+    "hint": "Muhasebe"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ],
+  "nice": [
+   {
+    "name": "SMMM",
+    "aliases": [
+     "ymm"
+    ],
+    "hint": "Ruhsat"
+   },
+   {
+    "name": "TFRS",
+    "aliases": [
+     "ifrs"
+    ],
+    "hint": "TFRS"
+   },
+   {
+    "name": "Uluslararası Vergi",
+    "aliases": [
+     "international tax"
+    ],
+    "hint": "Uluslararası vergi"
+   }
+  ]
+ },
+ {
+  "code": "sales",
+  "name": "Satış Temsilcisi",
+  "category": "Satış, Pazarlama ve Müşteri",
+  "description": "Ürün ve hizmet satışı yapar, müşteri portföyü geliştirir.",
+  "keywords": [
+   "satış temsilcisi",
+   "sales representative",
+   "satış uzmanı"
+  ],
+  "juniorFactor": 1.3,
+  "seniorFactor": 3.5,
+  "careerTitles": [
+   "Satış Stajyeri",
+   "Satış Temsilcisi",
+   "Satış Uzmanı",
+   "Kıdemli Satış Uzmanı",
+   "Satış Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Satış Teknikleri",
+    "aliases": [
+     "sales",
+     "satış"
+    ],
+    "hint": "Danışmanlık satışı"
+   },
+   {
+    "name": "Müşteri İlişkileri",
+    "aliases": [
+     "crm",
+     "salesforce"
+    ],
+    "hint": "CRM kullanımı"
+   },
+   {
+    "name": "Müzakere",
+    "aliases": [
+     "negotiation",
+     "pazarlık"
+    ],
+    "hint": "Müzakere teknikleri"
+   },
+   {
+    "name": "Hedef Yönetimi",
+    "aliases": [
+     "kota",
+     "hedef"
+    ],
+    "hint": "Satış hedefleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "Sunum",
+    "aliases": [
+     "presentation"
+    ],
+    "hint": "Etkili sunum"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   },
+   {
+    "name": "Saha Satış",
+    "aliases": [
+     "bölge"
+    ],
+    "hint": "Saha planlama"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "B2B",
+    "aliases": [
+     "kurumsal satış"
+    ],
+    "hint": "Kurumsal satış"
+   },
+   {
+    "name": "Ehliyet",
+    "aliases": [
+     "b sınıfı"
+    ],
+    "hint": "Sürücü belgesi"
+   }
+  ]
+ },
+ {
+  "code": "digital-marketing",
+  "name": "Dijital Pazarlama Uzmanı",
+  "category": "Satış, Pazarlama ve Müşteri",
+  "description": "Dijital kanallarda kampanyalar planlar, yönetir ve ölçer.",
+  "keywords": [
+   "dijital pazarlama",
+   "digital marketing",
+   "performance marketing"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.8,
+  "careerTitles": [
+   "Stajyer Dijital Pazarlama Uzmanı",
+   "Junior Dijital Pazarlama Uzmanı",
+   "Dijital Pazarlama Uzmanı",
+   "Kıdemli Dijital Pazarlama Uzmanı",
+   "Dijital Pazarlama Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Google Ads",
+    "aliases": [
+     "adwords",
+     "sem",
+     "ppc"
+    ],
+    "hint": "Google Ads sertifikaları"
+   },
+   {
+    "name": "Meta Ads",
+    "aliases": [
+     "facebook ads",
+     "instagram ads"
+    ],
+    "hint": "Meta Blueprint"
+   },
+   {
+    "name": "Google Analytics",
+    "aliases": [
+     "ga4",
+     "analytics"
+    ],
+    "hint": "GA4 sertifikası"
+   },
+   {
+    "name": "SEO",
+    "aliases": [
+     "arama motoru optimizasyonu"
+    ],
+    "hint": "SEO temelleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "İçerik Pazarlama",
+    "aliases": [
+     "content marketing"
+    ],
+    "hint": "İçerik stratejisi"
+   },
+   {
+    "name": "E-posta Pazarlama",
+    "aliases": [
+     "email marketing",
+     "crm"
+    ],
+    "hint": "E-posta otomasyonu"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   },
+   {
+    "name": "A/B Test",
+    "aliases": [
+     "ab test"
+    ],
+    "hint": "Deney tasarımı"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Google Tag Manager",
+    "aliases": [
+     "gtm"
+    ],
+    "hint": "GTM"
+   },
+   {
+    "name": "Looker Studio",
+    "aliases": [
+     "data studio",
+     "power bi"
+    ],
+    "hint": "Raporlama"
+   },
+   {
+    "name": "Canva",
+    "aliases": [
+     "photoshop"
+    ],
+    "hint": "Görsel araçlar"
+   }
+  ]
+ },
+ {
+  "code": "seo-specialist",
+  "name": "SEO Uzmanı",
+  "category": "Satış, Pazarlama ve Müşteri",
+  "description": "Web sitelerinin organik arama görünürlüğünü artırır.",
+  "keywords": [
+   "seo uzmanı",
+   "seo specialist"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.8,
+  "careerTitles": [
+   "Stajyer SEO Uzmanı",
+   "Junior SEO Uzmanı",
+   "SEO Uzmanı",
+   "Kıdemli SEO Uzmanı",
+   "SEO Uzmanı Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "SEO",
+    "aliases": [
+     "teknik seo",
+     "on-page",
+     "off-page"
+    ],
+    "hint": "Google Search Central"
+   },
+   {
+    "name": "Anahtar Kelime Araştırması",
+    "aliases": [
+     "keyword research",
+     "semrush",
+     "ahrefs"
+    ],
+    "hint": "Anahtar kelime araçları"
+   },
+   {
+    "name": "Google Search Console",
+    "aliases": [
+     "gsc"
+    ],
+    "hint": "Search Console"
+   },
+   {
+    "name": "Google Analytics",
+    "aliases": [
+     "ga4"
+    ],
+    "hint": "GA4"
+   }
+  ],
+  "important": [
+   {
+    "name": "HTML",
+    "aliases": [
+     "html",
+     "css"
+    ],
+    "hint": "Temel HTML"
+   },
+   {
+    "name": "İçerik Stratejisi",
+    "aliases": [
+     "content"
+    ],
+    "hint": "İçerik planlama"
+   },
+   {
+    "name": "Raporlama",
+    "aliases": [
+     "looker studio"
+    ],
+    "hint": "Raporlama"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Screaming Frog",
+    "aliases": [],
+    "hint": "Tarama araçları"
+   },
+   {
+    "name": "JavaScript SEO",
+    "aliases": [
+     "js"
+    ],
+    "hint": "JavaScript SEO"
+   },
+   {
+    "name": "WordPress",
+    "aliases": [
+     "cms"
+    ],
+    "hint": "CMS kullanımı"
+   }
+  ]
+ },
+ {
+  "code": "social-media",
+  "name": "Sosyal Medya Uzmanı",
+  "category": "Satış, Pazarlama ve Müşteri",
+  "description": "Marka sosyal medya hesaplarını yönetir, içerik üretir.",
+  "keywords": [
+   "sosyal medya uzmanı",
+   "social media specialist"
+  ],
+  "juniorFactor": 1.2,
+  "seniorFactor": 3.0,
+  "careerTitles": [
+   "Stajyer Sosyal Medya Uzmanı",
+   "Junior Sosyal Medya Uzmanı",
+   "Sosyal Medya Uzmanı",
+   "Kıdemli Sosyal Medya Uzmanı",
+   "Sosyal Medya Uzmanı Takım Lideri"
+  ],
+  "core": [
+   {
+    "name": "Sosyal Medya Yönetimi",
+    "aliases": [
+     "social media",
+     "instagram",
+     "linkedin",
+     "tiktok"
+    ],
+    "hint": "Platform rehberleri"
+   },
+   {
+    "name": "İçerik Üretimi",
+    "aliases": [
+     "content creation",
+     "metin yazarlığı",
+     "copywriting"
+    ],
+    "hint": "Metin yazarlığı"
+   },
+   {
+    "name": "Topluluk Yönetimi",
+    "aliases": [
+     "community management"
+    ],
+    "hint": "Topluluk yönetimi"
+   },
+   {
+    "name": "Analitik",
+    "aliases": [
+     "insights",
+     "raporlama"
+    ],
+    "hint": "Platform analitiği"
+   }
+  ],
+  "important": [
+   {
+    "name": "Canva",
+    "aliases": [
+     "photoshop",
+     "adobe"
+    ],
+    "hint": "Görsel tasarım"
+   },
+   {
+    "name": "Reklam Yönetimi",
+    "aliases": [
+     "meta ads",
+     "ads"
+    ],
+    "hint": "Reklam yönetimi"
+   },
+   {
+    "name": "Video Düzenleme",
+    "aliases": [
+     "capcut",
+     "premiere"
+    ],
+    "hint": "Kısa video"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Influencer Pazarlama",
+    "aliases": [
+     "influencer"
+    ],
+    "hint": "Influencer iş birlikleri"
+   },
+   {
+    "name": "Kriz Yönetimi",
+    "aliases": [],
+    "hint": "Kriz iletişimi"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "brand-manager",
+  "name": "Marka Yöneticisi",
+  "category": "Satış, Pazarlama ve Müşteri",
+  "description": "Marka stratejisini, konumlandırmayı ve kampanyaları yönetir.",
+  "keywords": [
+   "marka yöneticisi",
+   "brand manager",
+   "pazarlama müdürü"
+  ],
+  "juniorFactor": 1.8,
+  "seniorFactor": 5.0,
+  "careerTitles": [
+   "Pazarlama Stajyeri",
+   "Marka Uzman Yardımcısı",
+   "Marka Uzmanı",
+   "Marka Yöneticisi",
+   "Pazarlama Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Marka Stratejisi",
+    "aliases": [
+     "brand strategy",
+     "konumlandırma"
+    ],
+    "hint": "Marka yönetimi"
+   },
+   {
+    "name": "Pazar Araştırması",
+    "aliases": [
+     "market research",
+     "tüketici içgörüsü"
+    ],
+    "hint": "Pazar araştırması"
+   },
+   {
+    "name": "Kampanya Yönetimi",
+    "aliases": [
+     "campaign",
+     "atl",
+     "btl"
+    ],
+    "hint": "Kampanya planlama"
+   },
+   {
+    "name": "Bütçe Yönetimi",
+    "aliases": [
+     "budget"
+    ],
+    "hint": "Bütçe"
+   }
+  ],
+  "important": [
+   {
+    "name": "Dijital Pazarlama",
+    "aliases": [
+     "digital"
+    ],
+    "hint": "Dijital pazarlama"
+   },
+   {
+    "name": "Ajans Yönetimi",
+    "aliases": [
+     "agency"
+    ],
+    "hint": "Ajans yönetimi"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Ürün Lansmanı",
+    "aliases": [
+     "launch"
+    ],
+    "hint": "Lansman"
+   },
+   {
+    "name": "Trade Marketing",
+    "aliases": [],
+    "hint": "Trade marketing"
+   }
+  ]
+ },
+ {
+  "code": "customer-service",
+  "name": "Müşteri Hizmetleri Temsilcisi",
+  "category": "Satış, Pazarlama ve Müşteri",
+  "description": "Müşteri taleplerini çözer, memnuniyeti artırır.",
+  "keywords": [
+   "müşteri hizmetleri",
+   "customer service",
+   "çağrı merkezi"
+  ],
+  "juniorFactor": 1.0,
+  "seniorFactor": 2.2,
+  "careerTitles": [
+   "Stajyer",
+   "Müşteri Temsilcisi",
+   "Kıdemli Temsilci",
+   "Takım Lideri",
+   "Müşteri Deneyimi Müdürü"
+  ],
+  "core": [
+   {
+    "name": "İletişim",
+    "aliases": [
+     "communication",
+     "diksiyon"
+    ],
+    "hint": "İletişim becerileri"
+   },
+   {
+    "name": "Müşteri Memnuniyeti",
+    "aliases": [
+     "customer satisfaction",
+     "şikayet yönetimi"
+    ],
+    "hint": "Şikayet yönetimi"
+   },
+   {
+    "name": "CRM",
+    "aliases": [
+     "zendesk",
+     "freshdesk",
+     "salesforce"
+    ],
+    "hint": "CRM araçları"
+   },
+   {
+    "name": "Problem Çözme",
+    "aliases": [
+     "problem solving"
+    ],
+    "hint": "Problem çözme"
+   }
+  ],
+  "important": [
+   {
+    "name": "Bilgisayar Kullanımı",
+    "aliases": [
+     "ms office"
+    ],
+    "hint": "Ofis programları"
+   },
+   {
+    "name": "Stres Yönetimi",
+    "aliases": [],
+    "hint": "Stres yönetimi"
+   },
+   {
+    "name": "Çağrı Merkezi",
+    "aliases": [
+     "call center"
+    ],
+    "hint": "Çağrı merkezi metrikleri"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Satış",
+    "aliases": [
+     "upsell"
+    ],
+    "hint": "Çapraz satış"
+   },
+   {
+    "name": "Canlı Destek",
+    "aliases": [
+     "live chat"
+    ],
+    "hint": "Yazılı iletişim"
+   }
+  ]
+ },
+ {
+  "code": "ecommerce",
+  "name": "E-Ticaret Uzmanı",
+  "category": "Satış, Pazarlama ve Müşteri",
+  "description": "Online satış kanallarını, pazaryerlerini ve operasyonu yönetir.",
+  "keywords": [
+   "e-ticaret uzmanı",
+   "ecommerce specialist",
+   "pazaryeri"
+  ],
+  "juniorFactor": 1.3,
+  "seniorFactor": 3.5,
+  "careerTitles": [
+   "Stajyer E-Ticaret Uzmanı",
+   "Junior E-Ticaret Uzmanı",
+   "E-Ticaret Uzmanı",
+   "Kıdemli E-Ticaret Uzmanı",
+   "E-Ticaret Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Pazaryeri Yönetimi",
+    "aliases": [
+     "trendyol",
+     "hepsiburada",
+     "amazon",
+     "n11"
+    ],
+    "hint": "Pazaryeri yönetim panelleri"
+   },
+   {
+    "name": "E-Ticaret Altyapısı",
+    "aliases": [
+     "shopify",
+     "ikas",
+     "ideasoft",
+     "woocommerce"
+    ],
+    "hint": "Altyapılar"
+   },
+   {
+    "name": "Dijital Pazarlama",
+    "aliases": [
+     "google ads",
+     "meta ads"
+    ],
+    "hint": "Performans pazarlaması"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   }
+  ],
+  "important": [
+   {
+    "name": "Stok ve Lojistik",
+    "aliases": [
+     "kargo",
+     "sipariş yönetimi"
+    ],
+    "hint": "Operasyon"
+   },
+   {
+    "name": "Google Analytics",
+    "aliases": [
+     "ga4"
+    ],
+    "hint": "GA4"
+   },
+   {
+    "name": "Ürün İçeriği",
+    "aliases": [
+     "katalog"
+    ],
+    "hint": "Katalog yönetimi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "SEO",
+    "aliases": [],
+    "hint": "SEO"
+   },
+   {
+    "name": "CRM",
+    "aliases": [
+     "e-posta"
+    ],
+    "hint": "CRM"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "hr-specialist",
+  "name": "İnsan Kaynakları Uzmanı",
+  "category": "İnsan Kaynakları ve Yönetim",
+  "description": "İşe alım, özlük, performans ve çalışan deneyimi süreçlerini yürütür.",
+  "keywords": [
+   "insan kaynakları uzmanı",
+   "hr specialist",
+   "ik uzmanı"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.8,
+  "careerTitles": [
+   "İK Stajyeri",
+   "İK Uzman Yardımcısı",
+   "İK Uzmanı",
+   "Kıdemli İK Uzmanı",
+   "İK Müdürü"
+  ],
+  "core": [
+   {
+    "name": "İşe Alım",
+    "aliases": [
+     "recruitment",
+     "mülakat",
+     "seçme yerleştirme"
+    ],
+    "hint": "Yetkinlik bazlı mülakat"
+   },
+   {
+    "name": "İş Hukuku",
+    "aliases": [
+     "4857",
+     "iş kanunu"
+    ],
+    "hint": "İş kanunu"
+   },
+   {
+    "name": "Bordro",
+    "aliases": [
+     "sgk",
+     "özlük"
+    ],
+    "hint": "Bordro ve özlük"
+   },
+   {
+    "name": "Performans Yönetimi",
+    "aliases": [
+     "performance management",
+     "okr",
+     "kpi"
+    ],
+    "hint": "Performans sistemleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "İK Yazılımları",
+    "aliases": [
+     "sap hr",
+     "workday",
+     "hrms"
+    ],
+    "hint": "İK sistemleri"
+   },
+   {
+    "name": "Eğitim ve Gelişim",
+    "aliases": [
+     "training",
+     "l&d"
+    ],
+    "hint": "Eğitim planlama"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   },
+   {
+    "name": "Çalışan Bağlılığı",
+    "aliases": [
+     "employee engagement"
+    ],
+    "hint": "Bağlılık araştırmaları"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İK Analitiği",
+    "aliases": [
+     "people analytics"
+    ],
+    "hint": "İK analitiği"
+   },
+   {
+    "name": "Ücret Yönetimi",
+    "aliases": [
+     "compensation",
+     "ücretlendirme"
+    ],
+    "hint": "Ücret yönetimi"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "recruiter",
+  "name": "İşe Alım Uzmanı",
+  "category": "İnsan Kaynakları ve Yönetim",
+  "description": "Aday kaynağı bulur, mülakat yapar ve işe alım süreçlerini yönetir.",
+  "keywords": [
+   "işe alım uzmanı",
+   "recruiter",
+   "talent acquisition"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.8,
+  "careerTitles": [
+   "Stajyer",
+   "İşe Alım Uzman Yardımcısı",
+   "İşe Alım Uzmanı",
+   "Kıdemli İşe Alım Uzmanı",
+   "Yetenek Kazanımı Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Aday Kaynağı Bulma",
+    "aliases": [
+     "sourcing",
+     "linkedin recruiter",
+     "boolean search"
+    ],
+    "hint": "Boolean arama"
+   },
+   {
+    "name": "Mülakat Teknikleri",
+    "aliases": [
+     "interview",
+     "yetkinlik bazlı"
+    ],
+    "hint": "Yapılandırılmış mülakat"
+   },
+   {
+    "name": "ATS",
+    "aliases": [
+     "aday takip sistemi",
+     "greenhouse",
+     "lever"
+    ],
+    "hint": "ATS kullanımı"
+   },
+   {
+    "name": "İşveren Markası",
+    "aliases": [
+     "employer branding"
+    ],
+    "hint": "İşveren markası"
+   }
+  ],
+  "important": [
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "İletişim"
+   },
+   {
+    "name": "Teknik İşe Alım",
+    "aliases": [
+     "it recruitment"
+    ],
+    "hint": "Teknik roller"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Yetenek Analitiği",
+    "aliases": [
+     "metrics"
+    ],
+    "hint": "İşe alım metrikleri"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Assessment",
+    "aliases": [
+     "değerlendirme merkezi"
+    ],
+    "hint": "Değerlendirme merkezi"
+   }
+  ]
+ },
+ {
+  "code": "project-manager",
+  "name": "Proje Yöneticisi",
+  "category": "İnsan Kaynakları ve Yönetim",
+  "description": "Projeleri kapsam, zaman, bütçe ve kalite hedefleriyle yönetir.",
+  "keywords": [
+   "proje yöneticisi",
+   "project manager",
+   "pmo"
+  ],
+  "juniorFactor": 2.0,
+  "seniorFactor": 5.5,
+  "careerTitles": [
+   "Proje Asistanı",
+   "Proje Uzmanı",
+   "Proje Yöneticisi",
+   "Kıdemli Proje Yöneticisi",
+   "Program Yöneticisi"
+  ],
+  "core": [
+   {
+    "name": "Proje Yönetimi",
+    "aliases": [
+     "project management",
+     "pmbok"
+    ],
+    "hint": "PMBOK"
+   },
+   {
+    "name": "Planlama",
+    "aliases": [
+     "ms project",
+     "primavera",
+     "gantt"
+    ],
+    "hint": "Planlama araçları"
+   },
+   {
+    "name": "Risk Yönetimi",
+    "aliases": [
+     "risk management"
+    ],
+    "hint": "Risk yönetimi"
+   },
+   {
+    "name": "Paydaş Yönetimi",
+    "aliases": [
+     "stakeholder"
+    ],
+    "hint": "Paydaş yönetimi"
+   }
+  ],
+  "important": [
+   {
+    "name": "Agile",
+    "aliases": [
+     "scrum",
+     "kanban"
+    ],
+    "hint": "Çevik yöntemler"
+   },
+   {
+    "name": "Bütçe Yönetimi",
+    "aliases": [
+     "budget"
+    ],
+    "hint": "Bütçe"
+   },
+   {
+    "name": "Jira",
+    "aliases": [
+     "confluence"
+    ],
+    "hint": "Araçlar"
+   },
+   {
+    "name": "Raporlama",
+    "aliases": [
+     "reporting"
+    ],
+    "hint": "Raporlama"
+   }
+  ],
+  "nice": [
+   {
+    "name": "PMP",
+    "aliases": [
+     "prince2",
+     "psm"
+    ],
+    "hint": "Sertifika"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Değişim Yönetimi",
+    "aliases": [
+     "change management"
+    ],
+    "hint": "Değişim yönetimi"
+   }
+  ]
+ },
+ {
+  "code": "office-admin",
+  "name": "İdari İşler / Ofis Yöneticisi",
+  "category": "İnsan Kaynakları ve Yönetim",
+  "description": "Ofis düzenini, idari süreçleri ve satın almayı koordine eder.",
+  "keywords": [
+   "idari işler",
+   "ofis yöneticisi",
+   "office manager",
+   "yönetici asistanı"
+  ],
+  "juniorFactor": 1.1,
+  "seniorFactor": 2.5,
+  "careerTitles": [
+   "Stajyer",
+   "İdari İşler Asistanı",
+   "İdari İşler Uzmanı",
+   "Kıdemli Uzman",
+   "İdari İşler Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Ofis Programları",
+    "aliases": [
+     "ms office",
+     "excel",
+     "word",
+     "outlook"
+    ],
+    "hint": "MS Office"
+   },
+   {
+    "name": "Organizasyon",
+    "aliases": [
+     "organization",
+     "planlama"
+    ],
+    "hint": "Etkinlik planlama"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "İletişim"
+   },
+   {
+    "name": "Yazışma",
+    "aliases": [
+     "resmi yazışma"
+    ],
+    "hint": "Resmi yazışma kuralları"
+   }
+  ],
+  "important": [
+   {
+    "name": "Satın Alma",
+    "aliases": [
+     "purchasing"
+    ],
+    "hint": "Satın alma"
+   },
+   {
+    "name": "Tedarikçi Yönetimi",
+    "aliases": [
+     "vendor"
+    ],
+    "hint": "Tedarikçi ilişkileri"
+   },
+   {
+    "name": "Seyahat Organizasyonu",
+    "aliases": [],
+    "hint": "Seyahat planlama"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Bütçe",
+    "aliases": [],
+    "hint": "Bütçe takibi"
+   },
+   {
+    "name": "ERP",
+    "aliases": [],
+    "hint": "ERP"
+   }
+  ]
+ },
+ {
+  "code": "logistics",
+  "name": "Lojistik Uzmanı",
+  "category": "Operasyon, Lojistik ve Üretim",
+  "description": "Taşıma, depo ve dağıtım operasyonlarını planlar.",
+  "keywords": [
+   "lojistik uzmanı",
+   "logistics specialist",
+   "sevkiyat"
+  ],
+  "juniorFactor": 1.3,
+  "seniorFactor": 3.5,
+  "careerTitles": [
+   "Stajyer Lojistik Uzmanı",
+   "Junior Lojistik Uzmanı",
+   "Lojistik Uzmanı",
+   "Kıdemli Lojistik Uzmanı",
+   "Lojistik Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Lojistik Planlama",
+    "aliases": [
+     "logistics",
+     "sevkiyat planlama"
+    ],
+    "hint": "Lojistik temelleri"
+   },
+   {
+    "name": "Depo Yönetimi",
+    "aliases": [
+     "wms",
+     "stok yönetimi"
+    ],
+    "hint": "Depo yönetim sistemleri"
+   },
+   {
+    "name": "Dış Ticaret",
+    "aliases": [
+     "gümrük",
+     "incoterms"
+    ],
+    "hint": "Incoterms 2020"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   }
+  ],
+  "important": [
+   {
+    "name": "ERP",
+    "aliases": [
+     "sap mm",
+     "sap"
+    ],
+    "hint": "ERP"
+   },
+   {
+    "name": "Tedarikçi Yönetimi",
+    "aliases": [
+     "vendor"
+    ],
+    "hint": "Tedarikçi ilişkileri"
+   },
+   {
+    "name": "Raporlama",
+    "aliases": [
+     "kpi"
+    ],
+    "hint": "Lojistik KPI'ları"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Yalın Lojistik",
+    "aliases": [
+     "lean"
+    ],
+    "hint": "Yalın"
+   },
+   {
+    "name": "Ehliyet",
+    "aliases": [],
+    "hint": "Sürücü belgesi"
+   }
+  ]
+ },
+ {
+  "code": "supply-chain",
+  "name": "Tedarik Zinciri Uzmanı",
+  "category": "Operasyon, Lojistik ve Üretim",
+  "description": "Tedarik, talep planlama ve stok optimizasyonunu yönetir.",
+  "keywords": [
+   "tedarik zinciri",
+   "supply chain",
+   "talep planlama"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 4.2,
+  "careerTitles": [
+   "Stajyer Tedarik Zinciri Uzmanı",
+   "Junior Tedarik Zinciri Uzmanı",
+   "Tedarik Zinciri Uzmanı",
+   "Kıdemli Tedarik Zinciri Uzmanı",
+   "Tedarik Zinciri Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Talep Planlama",
+    "aliases": [
+     "demand planning",
+     "forecast"
+    ],
+    "hint": "Talep tahmini"
+   },
+   {
+    "name": "Stok Yönetimi",
+    "aliases": [
+     "inventory",
+     "envanter"
+    ],
+    "hint": "Stok optimizasyonu"
+   },
+   {
+    "name": "ERP",
+    "aliases": [
+     "sap",
+     "oracle"
+    ],
+    "hint": "ERP"
+   },
+   {
+    "name": "Excel",
+    "aliases": [
+     "ileri excel"
+    ],
+    "hint": "İleri Excel"
+   }
+  ],
+  "important": [
+   {
+    "name": "S&OP",
+    "aliases": [
+     "satış ve operasyon planlama"
+    ],
+    "hint": "S&OP süreci"
+   },
+   {
+    "name": "Tedarikçi Yönetimi",
+    "aliases": [
+     "vendor management"
+    ],
+    "hint": "Tedarikçi değerlendirme"
+   },
+   {
+    "name": "Power BI",
+    "aliases": [],
+    "hint": "BI"
+   }
+  ],
+  "nice": [
+   {
+    "name": "APICS",
+    "aliases": [
+     "cpim",
+     "cscp"
+    ],
+    "hint": "Sertifika"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Python",
+    "aliases": [],
+    "hint": "Python"
+   }
+  ]
+ },
+ {
+  "code": "purchasing",
+  "name": "Satın Alma Uzmanı",
+  "category": "Operasyon, Lojistik ve Üretim",
+  "description": "Tedarikçi seçer, fiyat müzakere eder ve satın alma süreçlerini yürütür.",
+  "keywords": [
+   "satın alma uzmanı",
+   "purchasing specialist",
+   "procurement"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.8,
+  "careerTitles": [
+   "Stajyer Satın Alma Uzmanı",
+   "Junior Satın Alma Uzmanı",
+   "Satın Alma Uzmanı",
+   "Kıdemli Satın Alma Uzmanı",
+   "Satın Alma Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Satın Alma",
+    "aliases": [
+     "procurement",
+     "purchasing"
+    ],
+    "hint": "Satın alma süreçleri"
+   },
+   {
+    "name": "Müzakere",
+    "aliases": [
+     "negotiation"
+    ],
+    "hint": "Müzakere"
+   },
+   {
+    "name": "Tedarikçi Yönetimi",
+    "aliases": [
+     "vendor"
+    ],
+    "hint": "Tedarikçi değerlendirme"
+   },
+   {
+    "name": "ERP",
+    "aliases": [
+     "sap mm",
+     "sap"
+    ],
+    "hint": "ERP"
+   }
+  ],
+  "important": [
+   {
+    "name": "Maliyet Analizi",
+    "aliases": [
+     "cost analysis"
+    ],
+    "hint": "Maliyet analizi"
+   },
+   {
+    "name": "Sözleşme Yönetimi",
+    "aliases": [
+     "contract"
+    ],
+    "hint": "Sözleşmeler"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Dış Ticaret",
+    "aliases": [
+     "ithalat",
+     "incoterms"
+    ],
+    "hint": "Dış ticaret"
+   },
+   {
+    "name": "Kategori Yönetimi",
+    "aliases": [],
+    "hint": "Kategori yönetimi"
+   }
+  ]
+ },
+ {
+  "code": "production-planner",
+  "name": "Üretim Planlama Uzmanı",
+  "category": "Operasyon, Lojistik ve Üretim",
+  "description": "Üretim programını kapasite ve malzeme ihtiyacına göre planlar.",
+  "keywords": [
+   "üretim planlama",
+   "production planner",
+   "planlama uzmanı"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.8,
+  "careerTitles": [
+   "Stajyer Üretim Planlama Uzmanı",
+   "Junior Üretim Planlama Uzmanı",
+   "Üretim Planlama Uzmanı",
+   "Kıdemli Üretim Planlama Uzmanı",
+   "Planlama Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Üretim Planlama",
+    "aliases": [
+     "mrp",
+     "mps",
+     "kapasite planlama"
+    ],
+    "hint": "MRP mantığı"
+   },
+   {
+    "name": "ERP",
+    "aliases": [
+     "sap pp",
+     "sap"
+    ],
+    "hint": "ERP"
+   },
+   {
+    "name": "Excel",
+    "aliases": [
+     "ileri excel"
+    ],
+    "hint": "İleri Excel"
+   },
+   {
+    "name": "Stok Yönetimi",
+    "aliases": [
+     "inventory"
+    ],
+    "hint": "Stok"
+   }
+  ],
+  "important": [
+   {
+    "name": "Yalın Üretim",
+    "aliases": [
+     "lean",
+     "kanban"
+    ],
+    "hint": "Yalın"
+   },
+   {
+    "name": "Raporlama",
+    "aliases": [
+     "kpi",
+     "oee"
+    ],
+    "hint": "Üretim KPI'ları"
+   },
+   {
+    "name": "Koordinasyon",
+    "aliases": [],
+    "hint": "Departmanlar arası koordinasyon"
+   }
+  ],
+  "nice": [
+   {
+    "name": "APS",
+    "aliases": [],
+    "hint": "İleri planlama sistemleri"
+   },
+   {
+    "name": "Power BI",
+    "aliases": [],
+    "hint": "BI"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "quality",
+  "name": "Kalite Mühendisi / Uzmanı",
+  "category": "Operasyon, Lojistik ve Üretim",
+  "description": "Kalite yönetim sistemlerini ve ürün kalitesini güvence altına alır.",
+  "keywords": [
+   "kalite mühendisi",
+   "quality engineer",
+   "kalite güvence"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 4.0,
+  "careerTitles": [
+   "Stajyer Kalite Mühendisi",
+   "Junior Kalite Mühendisi",
+   "Kalite Mühendisi",
+   "Kıdemli Kalite Mühendisi",
+   "Kalite Müdürü"
+  ],
+  "core": [
+   {
+    "name": "ISO 9001",
+    "aliases": [
+     "kalite yönetim sistemi",
+     "iatf 16949"
+    ],
+    "hint": "ISO 9001 iç denetçi"
+   },
+   {
+    "name": "Kök Neden Analizi",
+    "aliases": [
+     "8d",
+     "5n1k",
+     "balık kılçığı",
+     "root cause"
+    ],
+    "hint": "8D problem çözme"
+   },
+   {
+    "name": "FMEA",
+    "aliases": [],
+    "hint": "FMEA"
+   },
+   {
+    "name": "İstatistiksel Proses Kontrol",
+    "aliases": [
+     "spc",
+     "msa"
+    ],
+    "hint": "SPC ve MSA"
+   }
+  ],
+  "important": [
+   {
+    "name": "Tedarikçi Kalite",
+    "aliases": [
+     "sqe",
+     "tedarikçi denetimi"
+    ],
+    "hint": "Tedarikçi kalite"
+   },
+   {
+    "name": "İç Denetim",
+    "aliases": [
+     "internal audit"
+    ],
+    "hint": "İç denetim"
+   },
+   {
+    "name": "Excel",
+    "aliases": [
+     "minitab"
+    ],
+    "hint": "Analiz araçları"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Altı Sigma",
+    "aliases": [
+     "six sigma"
+    ],
+    "hint": "Green Belt"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "ISO 14001",
+    "aliases": [
+     "iso 45001"
+    ],
+    "hint": "Entegre yönetim sistemleri"
+   }
+  ]
+ },
+ {
+  "code": "ohs",
+  "name": "İş Sağlığı ve Güvenliği Uzmanı",
+  "category": "Operasyon, Lojistik ve Üretim",
+  "description": "İşyerinde risk değerlendirmesi yapar, İSG mevzuatına uyumu sağlar.",
+  "keywords": [
+   "isg uzmanı",
+   "iş güvenliği uzmanı",
+   "ohs specialist"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.5,
+  "careerTitles": [
+   "Stajyer",
+   "C Sınıfı İSG Uzmanı",
+   "B Sınıfı İSG Uzmanı",
+   "A Sınıfı İSG Uzmanı",
+   "İSG Müdürü"
+  ],
+  "core": [
+   {
+    "name": "İSG Mevzuatı",
+    "aliases": [
+     "6331",
+     "iş sağlığı ve güvenliği"
+    ],
+    "hint": "6331 sayılı kanun"
+   },
+   {
+    "name": "Risk Değerlendirmesi",
+    "aliases": [
+     "risk assessment",
+     "fine kinney",
+     "hazop"
+    ],
+    "hint": "Risk analiz yöntemleri"
+   },
+   {
+    "name": "İSG Eğitimi",
+    "aliases": [
+     "eğitim"
+    ],
+    "hint": "Eğitim verme"
+   },
+   {
+    "name": "Acil Durum Planı",
+    "aliases": [
+     "acil durum"
+    ],
+    "hint": "Acil durum planlama"
+   }
+  ],
+  "important": [
+   {
+    "name": "ISO 45001",
+    "aliases": [
+     "ohsas"
+    ],
+    "hint": "ISO 45001"
+   },
+   {
+    "name": "Kaza Analizi",
+    "aliases": [
+     "incident investigation"
+    ],
+    "hint": "Kaza araştırma"
+   },
+   {
+    "name": "Raporlama",
+    "aliases": [],
+    "hint": "Raporlama"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İSG Uzmanlık Belgesi",
+    "aliases": [
+     "a sınıfı",
+     "b sınıfı",
+     "c sınıfı"
+    ],
+    "hint": "Belge sınıfı"
+   },
+   {
+    "name": "Çevre Mevzuatı",
+    "aliases": [
+     "iso 14001"
+    ],
+    "hint": "Çevre"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "nurse",
+  "name": "Hemşire",
+  "category": "Sağlık",
+  "description": "Hastaların bakımını, tedavi uygulamalarını ve takibini yapar.",
+  "keywords": [
+   "hemşire",
+   "nurse"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.0,
+  "careerTitles": [
+   "Stajyer Hemşire",
+   "Hemşire",
+   "Deneyimli Hemşire",
+   "Sorumlu Hemşire",
+   "Başhemşire"
+  ],
+  "core": [
+   {
+    "name": "Hasta Bakımı",
+    "aliases": [
+     "patient care",
+     "klinik bakım"
+    ],
+    "hint": "Klinik deneyim"
+   },
+   {
+    "name": "İlaç Uygulama",
+    "aliases": [
+     "tedavi"
+    ],
+    "hint": "İlaç güvenliği"
+   },
+   {
+    "name": "Enfeksiyon Kontrolü",
+    "aliases": [
+     "sterilizasyon"
+    ],
+    "hint": "Enfeksiyon kontrolü"
+   },
+   {
+    "name": "Temel Yaşam Desteği",
+    "aliases": [
+     "tyd",
+     "bls",
+     "ilk yardım"
+    ],
+    "hint": "Sertifika"
+   }
+  ],
+  "important": [
+   {
+    "name": "Hastane Bilgi Sistemi",
+    "aliases": [
+     "hbys"
+    ],
+    "hint": "HBYS"
+   },
+   {
+    "name": "Yoğun Bakım",
+    "aliases": [
+     "icu"
+    ],
+    "hint": "Yoğun bakım sertifikası"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "Hasta iletişimi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İleri Yaşam Desteği",
+    "aliases": [
+     "ils",
+     "acls"
+    ],
+    "hint": "Sertifika"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "Tıbbi İngilizce"
+   },
+   {
+    "name": "JCI",
+    "aliases": [
+     "akreditasyon"
+    ],
+    "hint": "Akreditasyon"
+   }
+  ]
+ },
+ {
+  "code": "pharmacist",
+  "name": "Eczacı",
+  "category": "Sağlık",
+  "description": "İlaçların doğru kullanımını sağlar, hasta danışmanlığı yapar.",
+  "keywords": [
+   "eczacı",
+   "pharmacist"
+  ],
+  "juniorFactor": 1.8,
+  "seniorFactor": 4.0,
+  "careerTitles": [
+   "Stajyer Eczacı",
+   "Yardımcı Eczacı",
+   "Eczacı",
+   "Sorumlu Eczacı",
+   "Eczane Sahibi / Müdür"
+  ],
+  "core": [
+   {
+    "name": "Farmakoloji",
+    "aliases": [
+     "pharmacology",
+     "ilaç bilgisi"
+    ],
+    "hint": "Güncel farmakoloji"
+   },
+   {
+    "name": "Reçete Yönetimi",
+    "aliases": [
+     "medula",
+     "reçete"
+    ],
+    "hint": "Medula sistemi"
+   },
+   {
+    "name": "Hasta Danışmanlığı",
+    "aliases": [
+     "counseling"
+    ],
+    "hint": "Danışmanlık"
+   },
+   {
+    "name": "Stok Yönetimi",
+    "aliases": [
+     "inventory"
+    ],
+    "hint": "Stok"
+   }
+  ],
+  "important": [
+   {
+    "name": "Mevzuat",
+    "aliases": [
+     "titck",
+     "eczacılık mevzuatı"
+    ],
+    "hint": "Mevzuat"
+   },
+   {
+    "name": "Dermokozmetik",
+    "aliases": [],
+    "hint": "Dermokozmetik"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "İletişim"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Klinik Eczacılık",
+    "aliases": [],
+    "hint": "Klinik eczacılık"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Satış",
+    "aliases": [],
+    "hint": "Satış"
+   }
+  ]
+ },
+ {
+  "code": "medical-rep",
+  "name": "Tıbbi Mümessil",
+  "category": "Sağlık",
+  "description": "İlaç ve tıbbi ürünleri hekimlere tanıtır.",
+  "keywords": [
+   "tıbbi mümessil",
+   "medical representative",
+   "ilaç sektörü"
+  ],
+  "juniorFactor": 1.6,
+  "seniorFactor": 4.0,
+  "careerTitles": [
+   "Stajyer",
+   "Tıbbi Mümessil",
+   "Kıdemli Tıbbi Mümessil",
+   "Bölge Müdürü",
+   "Satış Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Ürün Tanıtımı",
+    "aliases": [
+     "ilaç tanıtımı",
+     "detailing"
+    ],
+    "hint": "Ürün eğitimi"
+   },
+   {
+    "name": "Satış",
+    "aliases": [
+     "sales"
+    ],
+    "hint": "Satış"
+   },
+   {
+    "name": "Medikal Bilgi",
+    "aliases": [
+     "farmakoloji",
+     "tıbbi terminoloji"
+    ],
+    "hint": "Tıbbi terminoloji"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "İletişim"
+   }
+  ],
+  "important": [
+   {
+    "name": "CRM",
+    "aliases": [
+     "veeva"
+    ],
+    "hint": "CRM"
+   },
+   {
+    "name": "Bölge Planlama",
+    "aliases": [
+     "territory"
+    ],
+    "hint": "Bölge yönetimi"
+   },
+   {
+    "name": "Ehliyet",
+    "aliases": [
+     "b sınıfı"
+    ],
+    "hint": "Sürücü belgesi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Mevzuat",
+    "aliases": [
+     "titck"
+    ],
+    "hint": "Tanıtım yönetmeliği"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   }
+  ]
+ },
+ {
+  "code": "psychologist",
+  "name": "Psikolog",
+  "category": "Sağlık",
+  "description": "Bireylerin psikolojik değerlendirmesini yapar, danışmanlık verir.",
+  "keywords": [
+   "psikolog",
+   "psychologist",
+   "psikolojik danışman"
+  ],
+  "juniorFactor": 1.4,
+  "seniorFactor": 3.5,
+  "careerTitles": [
+   "Stajyer Psikolog",
+   "Psikolog",
+   "Uzman Psikolog",
+   "Klinik Psikolog",
+   "Klinik Direktörü"
+  ],
+  "core": [
+   {
+    "name": "Psikolojik Danışmanlık",
+    "aliases": [
+     "counseling",
+     "terapi"
+    ],
+    "hint": "Süpervizyonlu deneyim"
+   },
+   {
+    "name": "Psikolojik Testler",
+    "aliases": [
+     "test uygulama",
+     "mmpi"
+    ],
+    "hint": "Test sertifikaları"
+   },
+   {
+    "name": "Terapi Yaklaşımları",
+    "aliases": [
+     "bdt",
+     "cbt",
+     "emdr"
+    ],
+    "hint": "Terapi eğitimleri"
+   },
+   {
+    "name": "Etik",
+    "aliases": [
+     "meslek etiği"
+    ],
+    "hint": "Etik ilkeler"
+   }
+  ],
+  "important": [
+   {
+    "name": "Raporlama",
+    "aliases": [
+     "vaka raporu"
+    ],
+    "hint": "Rapor yazımı"
+   },
+   {
+    "name": "Gözlem",
+    "aliases": [],
+    "hint": "Gözlem"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "Empatik iletişim"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Online Terapi",
+    "aliases": [
+     "online"
+    ],
+    "hint": "Online danışmanlık"
+   },
+   {
+    "name": "Kurum Psikolojisi",
+    "aliases": [
+     "endüstri psikolojisi"
+    ],
+    "hint": "İş psikolojisi"
+   }
+  ]
+ },
+ {
+  "code": "dietitian",
+  "name": "Diyetisyen",
+  "category": "Sağlık",
+  "description": "Bireylere ve kurumlara beslenme programları hazırlar.",
+  "keywords": [
+   "diyetisyen",
+   "dietitian",
+   "beslenme uzmanı"
+  ],
+  "juniorFactor": 1.2,
+  "seniorFactor": 3.0,
+  "careerTitles": [
+   "Stajyer Diyetisyen",
+   "Diyetisyen",
+   "Uzman Diyetisyen",
+   "Kıdemli Diyetisyen",
+   "Klinik / Kurum Sorumlusu"
+  ],
+  "core": [
+   {
+    "name": "Beslenme Planlama",
+    "aliases": [
+     "diyet programı",
+     "menü planlama"
+    ],
+    "hint": "Klinik beslenme"
+   },
+   {
+    "name": "Klinik Beslenme",
+    "aliases": [
+     "enteral",
+     "parenteral"
+    ],
+    "hint": "Klinik beslenme"
+   },
+   {
+    "name": "Danışmanlık",
+    "aliases": [
+     "counseling"
+    ],
+    "hint": "Danışan iletişimi"
+   },
+   {
+    "name": "Antropometri",
+    "aliases": [
+     "vücut analizi"
+    ],
+    "hint": "Ölçüm teknikleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "Beslenme Yazılımı",
+    "aliases": [
+     "bebis"
+    ],
+    "hint": "Beslenme programları"
+   },
+   {
+    "name": "Toplu Beslenme",
+    "aliases": [
+     "gıda güvenliği",
+     "haccp"
+    ],
+    "hint": "Toplu beslenme"
+   },
+   {
+    "name": "Sosyal Medya",
+    "aliases": [],
+    "hint": "İçerik üretimi"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Sporcu Beslenmesi",
+    "aliases": [],
+    "hint": "Sporcu beslenmesi"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Online Danışmanlık",
+    "aliases": [
+     "online"
+    ],
+    "hint": "Online danışmanlık"
+   }
+  ]
+ },
+ {
+  "code": "teacher",
+  "name": "Öğretmen",
+  "category": "Eğitim ve Sosyal",
+  "description": "Öğrencilere müfredata uygun eğitim verir, gelişimlerini izler.",
+  "keywords": [
+   "öğretmen",
+   "teacher",
+   "eğitmen"
+  ],
+  "juniorFactor": 1.3,
+  "seniorFactor": 2.8,
+  "careerTitles": [
+   "Stajyer Öğretmen",
+   "Öğretmen",
+   "Deneyimli Öğretmen",
+   "Zümre Başkanı",
+   "Okul Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Ders Planlama",
+    "aliases": [
+     "müfredat",
+     "ders planı"
+    ],
+    "hint": "Öğretim tasarımı"
+   },
+   {
+    "name": "Sınıf Yönetimi",
+    "aliases": [
+     "classroom management"
+    ],
+    "hint": "Sınıf yönetimi"
+   },
+   {
+    "name": "Ölçme ve Değerlendirme",
+    "aliases": [
+     "assessment"
+    ],
+    "hint": "Ölçme değerlendirme"
+   },
+   {
+    "name": "Alan Bilgisi",
+    "aliases": [
+     "branş"
+    ],
+    "hint": "Alan uzmanlığı"
+   }
+  ],
+  "important": [
+   {
+    "name": "Eğitim Teknolojileri",
+    "aliases": [
+     "eba",
+     "google classroom",
+     "moodle"
+    ],
+    "hint": "Dijital araçlar"
+   },
+   {
+    "name": "Rehberlik",
+    "aliases": [
+     "veli iletişimi"
+    ],
+    "hint": "Veli iletişimi"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "İletişim"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Pedagojik Formasyon",
+    "aliases": [
+     "formasyon"
+    ],
+    "hint": "Formasyon"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Özel Eğitim",
+    "aliases": [],
+    "hint": "Kaynaştırma"
+   }
+  ]
+ },
+ {
+  "code": "english-teacher",
+  "name": "İngilizce Öğretmeni",
+  "category": "Eğitim ve Sosyal",
+  "description": "İngilizce dil eğitimi verir, sınav hazırlığı yapar.",
+  "keywords": [
+   "ingilizce öğretmeni",
+   "english teacher"
+  ],
+  "juniorFactor": 1.3,
+  "seniorFactor": 3.0,
+  "careerTitles": [
+   "Stajyer",
+   "İngilizce Öğretmeni",
+   "Deneyimli Öğretmen",
+   "Zümre Başkanı",
+   "Akademik Koordinatör"
+  ],
+  "core": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english",
+     "c1",
+     "c2"
+    ],
+    "hint": "İleri İngilizce"
+   },
+   {
+    "name": "Dil Öğretimi",
+    "aliases": [
+     "elt",
+     "tefl",
+     "celta"
+    ],
+    "hint": "CELTA/TEFL"
+   },
+   {
+    "name": "Ders Planlama",
+    "aliases": [
+     "lesson plan"
+    ],
+    "hint": "Ders planı"
+   },
+   {
+    "name": "Sınav Hazırlığı",
+    "aliases": [
+     "ielts",
+     "toefl",
+     "yds"
+    ],
+    "hint": "Sınav formatları"
+   }
+  ],
+  "important": [
+   {
+    "name": "Eğitim Teknolojileri",
+    "aliases": [
+     "edtech"
+    ],
+    "hint": "Dijital araçlar"
+   },
+   {
+    "name": "Sınıf Yönetimi",
+    "aliases": [],
+    "hint": "Sınıf yönetimi"
+   },
+   {
+    "name": "Materyal Geliştirme",
+    "aliases": [],
+    "hint": "Materyal geliştirme"
+   }
+  ],
+  "nice": [
+   {
+    "name": "CELTA",
+    "aliases": [
+     "delta"
+    ],
+    "hint": "Sertifika"
+   },
+   {
+    "name": "İkinci Yabancı Dil",
+    "aliases": [
+     "almanca",
+     "german"
+    ],
+    "hint": "İkinci dil"
+   },
+   {
+    "name": "Online Eğitim",
+    "aliases": [
+     "online"
+    ],
+    "hint": "Online eğitim"
+   }
+  ]
+ },
+ {
+  "code": "trainer",
+  "name": "Kurumsal Eğitmen",
+  "category": "Eğitim ve Sosyal",
+  "description": "Çalışanlara yönelik eğitim programları tasarlar ve uygular.",
+  "keywords": [
+   "kurumsal eğitmen",
+   "corporate trainer",
+   "eğitim uzmanı"
+  ],
+  "juniorFactor": 1.5,
+  "seniorFactor": 4.0,
+  "careerTitles": [
+   "Stajyer",
+   "Eğitim Uzman Yardımcısı",
+   "Eğitim Uzmanı",
+   "Kıdemli Eğitim Uzmanı",
+   "Akademi Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Eğitim Tasarımı",
+    "aliases": [
+     "instructional design",
+     "addie"
+    ],
+    "hint": "ADDIE modeli"
+   },
+   {
+    "name": "Sunum",
+    "aliases": [
+     "presentation"
+    ],
+    "hint": "Sunum becerileri"
+   },
+   {
+    "name": "Eğitim İhtiyaç Analizi",
+    "aliases": [
+     "tna"
+    ],
+    "hint": "İhtiyaç analizi"
+   },
+   {
+    "name": "Kolaylaştırıcılık",
+    "aliases": [
+     "facilitation"
+    ],
+    "hint": "Kolaylaştırıcılık"
+   }
+  ],
+  "important": [
+   {
+    "name": "LMS",
+    "aliases": [
+     "e-öğrenme",
+     "moodle"
+    ],
+    "hint": "LMS"
+   },
+   {
+    "name": "Ölçme ve Değerlendirme",
+    "aliases": [
+     "kirkpatrick"
+    ],
+    "hint": "Kirkpatrick modeli"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "İletişim"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Koçluk",
+    "aliases": [
+     "coaching",
+     "icf"
+    ],
+    "hint": "ICF"
+   },
+   {
+    "name": "E-Öğrenme İçeriği",
+    "aliases": [
+     "articulate",
+     "storyline"
+    ],
+    "hint": "İçerik araçları"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "social-worker",
+  "name": "Sosyal Hizmet Uzmanı",
+  "category": "Eğitim ve Sosyal",
+  "description": "Bireylere, ailelere ve topluluklara sosyal destek sağlar.",
+  "keywords": [
+   "sosyal hizmet uzmanı",
+   "social worker"
+  ],
+  "juniorFactor": 1.2,
+  "seniorFactor": 2.8,
+  "careerTitles": [
+   "Stajyer",
+   "Sosyal Hizmet Uzmanı",
+   "Deneyimli Uzman",
+   "Kıdemli Uzman",
+   "Birim Sorumlusu"
+  ],
+  "core": [
+   {
+    "name": "Vaka Yönetimi",
+    "aliases": [
+     "case management"
+    ],
+    "hint": "Vaka yönetimi"
+   },
+   {
+    "name": "Sosyal İnceleme",
+    "aliases": [
+     "sir"
+    ],
+    "hint": "Sosyal inceleme raporu"
+   },
+   {
+    "name": "Mevzuat",
+    "aliases": [
+     "sosyal hizmet mevzuatı"
+    ],
+    "hint": "Mevzuat"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "Görüşme teknikleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "Kriz Müdahalesi",
+    "aliases": [
+     "crisis"
+    ],
+    "hint": "Kriz müdahalesi"
+   },
+   {
+    "name": "Raporlama",
+    "aliases": [],
+    "hint": "Rapor yazımı"
+   },
+   {
+    "name": "Proje Yazımı",
+    "aliases": [
+     "hibe"
+    ],
+    "hint": "Proje yazımı"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Psikososyal Destek",
+    "aliases": [
+     "pss"
+    ],
+    "hint": "Psikososyal destek"
+   },
+   {
+    "name": "Gönüllü Yönetimi",
+    "aliases": [],
+    "hint": "Gönüllü koordinasyonu"
+   }
+  ]
+ },
+ {
+  "code": "graphic-designer",
+  "name": "Grafik Tasarımcı",
+  "category": "Medya, Tasarım ve Hukuk",
+  "description": "Basılı ve dijital mecralar için görsel tasarımlar üretir.",
+  "keywords": [
+   "grafik tasarımcı",
+   "graphic designer"
+  ],
+  "juniorFactor": 1.2,
+  "seniorFactor": 3.2,
+  "careerTitles": [
+   "Stajyer Grafik Tasarımcı",
+   "Junior Grafik Tasarımcı",
+   "Grafik Tasarımcı",
+   "Kıdemli Grafik Tasarımcı",
+   "Sanat Yönetmeni"
+  ],
+  "core": [
+   {
+    "name": "Adobe Photoshop",
+    "aliases": [
+     "photoshop"
+    ],
+    "hint": "Photoshop"
+   },
+   {
+    "name": "Adobe Illustrator",
+    "aliases": [
+     "illustrator"
+    ],
+    "hint": "Illustrator"
+   },
+   {
+    "name": "Adobe InDesign",
+    "aliases": [
+     "indesign"
+    ],
+    "hint": "InDesign"
+   },
+   {
+    "name": "Tipografi",
+    "aliases": [
+     "typography"
+    ],
+    "hint": "Tipografi"
+   }
+  ],
+  "important": [
+   {
+    "name": "Kurumsal Kimlik",
+    "aliases": [
+     "brand identity",
+     "logo"
+    ],
+    "hint": "Kimlik tasarımı"
+   },
+   {
+    "name": "Baskı Öncesi",
+    "aliases": [
+     "prepress",
+     "matbaa"
+    ],
+    "hint": "Baskı hazırlığı"
+   },
+   {
+    "name": "Figma",
+    "aliases": [],
+    "hint": "Figma"
+   }
+  ],
+  "nice": [
+   {
+    "name": "After Effects",
+    "aliases": [
+     "motion",
+     "animasyon"
+    ],
+    "hint": "Hareketli grafik"
+   },
+   {
+    "name": "3B",
+    "aliases": [
+     "blender",
+     "cinema 4d"
+    ],
+    "hint": "3B tasarım"
+   },
+   {
+    "name": "Fotoğraf",
+    "aliases": [
+     "lightroom"
+    ],
+    "hint": "Fotoğraf"
+   }
+  ]
+ },
+ {
+  "code": "video-editor",
+  "name": "Video Editörü",
+  "category": "Medya, Tasarım ve Hukuk",
+  "description": "Video çekimlerini kurgular, renk ve ses düzenlemesi yapar.",
+  "keywords": [
+   "video editörü",
+   "video editor",
+   "kurgu"
+  ],
+  "juniorFactor": 1.2,
+  "seniorFactor": 3.2,
+  "careerTitles": [
+   "Stajyer Video Editörü",
+   "Junior Video Editörü",
+   "Video Editörü",
+   "Kıdemli Video Editörü",
+   "Post Prodüksiyon Sorumlusu"
+  ],
+  "core": [
+   {
+    "name": "Premiere Pro",
+    "aliases": [
+     "premiere",
+     "final cut",
+     "davinci resolve"
+    ],
+    "hint": "Kurgu programı"
+   },
+   {
+    "name": "Kurgu",
+    "aliases": [
+     "editing",
+     "montaj"
+    ],
+    "hint": "Kurgu dili"
+   },
+   {
+    "name": "Renk Düzenleme",
+    "aliases": [
+     "color grading"
+    ],
+    "hint": "Renk"
+   },
+   {
+    "name": "Ses Düzenleme",
+    "aliases": [
+     "audio",
+     "audition"
+    ],
+    "hint": "Ses"
+   }
+  ],
+  "important": [
+   {
+    "name": "After Effects",
+    "aliases": [
+     "motion graphics"
+    ],
+    "hint": "Hareketli grafik"
+   },
+   {
+    "name": "Sosyal Medya Videosu",
+    "aliases": [
+     "reels",
+     "tiktok"
+    ],
+    "hint": "Kısa format"
+   },
+   {
+    "name": "Çekim",
+    "aliases": [
+     "kamera"
+    ],
+    "hint": "Çekim teknikleri"
+   }
+  ],
+  "nice": [
+   {
+    "name": "3B",
+    "aliases": [
+     "cinema 4d"
+    ],
+    "hint": "3B"
+   },
+   {
+    "name": "Senaryo",
+    "aliases": [
+     "storyboard"
+    ],
+    "hint": "Hikaye anlatımı"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "copywriter",
+  "name": "Metin Yazarı / İçerik Editörü",
+  "category": "Medya, Tasarım ve Hukuk",
+  "description": "Marka iletişimi için metin ve içerik üretir.",
+  "keywords": [
+   "metin yazarı",
+   "copywriter",
+   "içerik editörü",
+   "content writer"
+  ],
+  "juniorFactor": 1.2,
+  "seniorFactor": 3.2,
+  "careerTitles": [
+   "Stajyer Metin Yazarı",
+   "Junior Metin Yazarı",
+   "Metin Yazarı",
+   "Kıdemli Metin Yazarı",
+   "Yaratıcı Yönetmen"
+  ],
+  "core": [
+   {
+    "name": "Metin Yazarlığı",
+    "aliases": [
+     "copywriting"
+    ],
+    "hint": "Metin yazarlığı"
+   },
+   {
+    "name": "İçerik Üretimi",
+    "aliases": [
+     "content writing",
+     "blog"
+    ],
+    "hint": "İçerik"
+   },
+   {
+    "name": "Türkçe Dil Bilgisi",
+    "aliases": [
+     "yazım kuralları",
+     "imla"
+    ],
+    "hint": "TDK yazım kılavuzu"
+   },
+   {
+    "name": "SEO",
+    "aliases": [
+     "seo uyumlu içerik"
+    ],
+    "hint": "SEO temelleri"
+   }
+  ],
+  "important": [
+   {
+    "name": "Marka Dili",
+    "aliases": [
+     "tone of voice"
+    ],
+    "hint": "Marka sesi"
+   },
+   {
+    "name": "Sosyal Medya",
+    "aliases": [],
+    "hint": "Sosyal medya"
+   },
+   {
+    "name": "Araştırma",
+    "aliases": [],
+    "hint": "Araştırma"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english",
+     "çeviri"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Senaryo",
+    "aliases": [
+     "script"
+    ],
+    "hint": "Senaryo"
+   },
+   {
+    "name": "CMS",
+    "aliases": [
+     "wordpress"
+    ],
+    "hint": "CMS"
+   }
+  ]
+ },
+ {
+  "code": "lawyer",
+  "name": "Avukat",
+  "category": "Medya, Tasarım ve Hukuk",
+  "description": "Müvekkillerine hukuki danışmanlık verir, dava süreçlerini yürütür.",
+  "keywords": [
+   "avukat",
+   "lawyer",
+   "hukuk müşaviri"
+  ],
+  "juniorFactor": 1.6,
+  "seniorFactor": 5.0,
+  "careerTitles": [
+   "Stajyer Avukat",
+   "Avukat",
+   "Kıdemli Avukat",
+   "Ortak Avukat",
+   "Hukuk Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Dava Takibi",
+    "aliases": [
+     "uyap",
+     "litigation"
+    ],
+    "hint": "UYAP"
+   },
+   {
+    "name": "Sözleşme Hazırlama",
+    "aliases": [
+     "contract drafting",
+     "sözleşme"
+    ],
+    "hint": "Sözleşme hukuku"
+   },
+   {
+    "name": "Hukuki Araştırma",
+    "aliases": [
+     "içtihat",
+     "legal research"
+    ],
+    "hint": "İçtihat taraması"
+   },
+   {
+    "name": "Mevzuat",
+    "aliases": [
+     "tbk",
+     "tmk",
+     "ttk"
+    ],
+    "hint": "Temel kanunlar"
+   }
+  ],
+  "important": [
+   {
+    "name": "İş Hukuku",
+    "aliases": [
+     "4857"
+    ],
+    "hint": "İş hukuku"
+   },
+   {
+    "name": "Ticaret Hukuku",
+    "aliases": [
+     "şirketler hukuku"
+    ],
+    "hint": "Ticaret hukuku"
+   },
+   {
+    "name": "KVKK",
+    "aliases": [
+     "gdpr",
+     "veri koruma"
+    ],
+    "hint": "KVKK"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english",
+     "legal english"
+    ],
+    "hint": "Hukuk İngilizcesi"
+   },
+   {
+    "name": "Arabuluculuk",
+    "aliases": [
+     "mediation"
+    ],
+    "hint": "Arabuluculuk"
+   },
+   {
+    "name": "Uyum",
+    "aliases": [
+     "compliance"
+    ],
+    "hint": "Uyum"
+   }
+  ]
+ },
+ {
+  "code": "legal-assistant",
+  "name": "Hukuk Asistanı / Sekreter",
+  "category": "Medya, Tasarım ve Hukuk",
+  "description": "Hukuk bürosunda dosya, takvim ve yazışma işlerini yürütür.",
+  "keywords": [
+   "hukuk sekreteri",
+   "legal assistant",
+   "avukat asistanı"
+  ],
+  "juniorFactor": 1.1,
+  "seniorFactor": 2.2,
+  "careerTitles": [
+   "Stajyer",
+   "Hukuk Asistanı",
+   "Deneyimli Asistan",
+   "Kıdemli Asistan",
+   "Büro Yöneticisi"
+  ],
+  "core": [
+   {
+    "name": "UYAP",
+    "aliases": [],
+    "hint": "UYAP"
+   },
+   {
+    "name": "Dosya Takibi",
+    "aliases": [
+     "dava takibi"
+    ],
+    "hint": "Dosya yönetimi"
+   },
+   {
+    "name": "Ofis Programları",
+    "aliases": [
+     "ms office"
+    ],
+    "hint": "MS Office"
+   },
+   {
+    "name": "Yazışma",
+    "aliases": [
+     "dilekçe"
+    ],
+    "hint": "Resmi yazışma"
+   }
+  ],
+  "important": [
+   {
+    "name": "Takvim Yönetimi",
+    "aliases": [
+     "duruşma takvimi"
+    ],
+    "hint": "Takvim"
+   },
+   {
+    "name": "Tebligat",
+    "aliases": [
+     "icra"
+    ],
+    "hint": "Tebligat ve icra"
+   },
+   {
+    "name": "İletişim",
+    "aliases": [],
+    "hint": "İletişim"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Arşiv",
+    "aliases": [
+     "arşivleme"
+    ],
+    "hint": "Arşiv"
+   },
+   {
+    "name": "Muhasebe",
+    "aliases": [],
+    "hint": "Temel muhasebe"
+   }
+  ]
+ },
+ {
+  "code": "hospitality",
+  "name": "Otel / Ön Büro Uzmanı",
+  "category": "Hizmet ve Turizm",
+  "description": "Misafir karşılama, rezervasyon ve konaklama hizmetlerini yönetir.",
+  "keywords": [
+   "ön büro",
+   "resepsiyonist",
+   "front office",
+   "otel"
+  ],
+  "juniorFactor": 1.1,
+  "seniorFactor": 2.8,
+  "careerTitles": [
+   "Stajyer",
+   "Resepsiyonist",
+   "Ön Büro Uzmanı",
+   "Ön Büro Şefi",
+   "Ön Büro Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Misafir İlişkileri",
+    "aliases": [
+     "guest relations"
+    ],
+    "hint": "Misafir ilişkileri"
+   },
+   {
+    "name": "Otel Yazılımı",
+    "aliases": [
+     "opera",
+     "fidelio",
+     "elektraweb"
+    ],
+    "hint": "PMS kullanımı"
+   },
+   {
+    "name": "Rezervasyon",
+    "aliases": [
+     "reservation"
+    ],
+    "hint": "Rezervasyon"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ],
+  "important": [
+   {
+    "name": "İkinci Yabancı Dil",
+    "aliases": [
+     "almanca",
+     "rusça"
+    ],
+    "hint": "İkinci dil"
+   },
+   {
+    "name": "Problem Çözme",
+    "aliases": [],
+    "hint": "Şikayet yönetimi"
+   },
+   {
+    "name": "Kasa İşlemleri",
+    "aliases": [
+     "cashier"
+    ],
+    "hint": "Kasa"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Gelir Yönetimi",
+    "aliases": [
+     "revenue management"
+    ],
+    "hint": "Gelir yönetimi"
+   },
+   {
+    "name": "Satış",
+    "aliases": [],
+    "hint": "Satış"
+   },
+   {
+    "name": "Turizm Mevzuatı",
+    "aliases": [],
+    "hint": "Mevzuat"
+   }
+  ]
+ },
+ {
+  "code": "chef",
+  "name": "Aşçı / Şef",
+  "category": "Hizmet ve Turizm",
+  "description": "Mutfak üretimini, menü ve hijyen standartlarını yönetir.",
+  "keywords": [
+   "aşçı",
+   "şef",
+   "chef",
+   "cook"
+  ],
+  "juniorFactor": 1.1,
+  "seniorFactor": 3.0,
+  "careerTitles": [
+   "Komi",
+   "Aşçı",
+   "Chef de Partie",
+   "Sous Chef",
+   "Executive Chef"
+  ],
+  "core": [
+   {
+    "name": "Mutfak Teknikleri",
+    "aliases": [
+     "pişirme teknikleri"
+    ],
+    "hint": "Mutfak teknikleri"
+   },
+   {
+    "name": "Hijyen",
+    "aliases": [
+     "haccp",
+     "gıda güvenliği"
+    ],
+    "hint": "HACCP"
+   },
+   {
+    "name": "Menü Planlama",
+    "aliases": [
+     "menu"
+    ],
+    "hint": "Menü"
+   },
+   {
+    "name": "Maliyet Kontrolü",
+    "aliases": [
+     "food cost"
+    ],
+    "hint": "Gıda maliyeti"
+   }
+  ],
+  "important": [
+   {
+    "name": "Mutfak Yönetimi",
+    "aliases": [
+     "ekip yönetimi"
+    ],
+    "hint": "Ekip"
+   },
+   {
+    "name": "Stok",
+    "aliases": [
+     "envanter"
+    ],
+    "hint": "Stok"
+   },
+   {
+    "name": "Sunum",
+    "aliases": [
+     "plating"
+    ],
+    "hint": "Tabak sunumu"
+   }
+  ],
+  "nice": [
+   {
+    "name": "Pastacılık",
+    "aliases": [
+     "pastry"
+    ],
+    "hint": "Pastacılık"
+   },
+   {
+    "name": "Dünya Mutfağı",
+    "aliases": [],
+    "hint": "Dünya mutfakları"
+   },
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   }
+  ]
+ },
+ {
+  "code": "retail-store",
+  "name": "Mağaza Müdürü / Satış Danışmanı",
+  "category": "Hizmet ve Turizm",
+  "description": "Mağaza satışını, ekibini ve operasyonunu yönetir.",
+  "keywords": [
+   "mağaza müdürü",
+   "satış danışmanı",
+   "retail",
+   "perakende"
+  ],
+  "juniorFactor": 1.0,
+  "seniorFactor": 3.0,
+  "careerTitles": [
+   "Stajyer",
+   "Satış Danışmanı",
+   "Kıdemli Satış Danışmanı",
+   "Mağaza Müdür Yardımcısı",
+   "Mağaza Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Perakende Satış",
+    "aliases": [
+     "retail sales"
+    ],
+    "hint": "Perakende satış"
+   },
+   {
+    "name": "Müşteri İlişkileri",
+    "aliases": [
+     "customer"
+    ],
+    "hint": "Müşteri"
+   },
+   {
+    "name": "Görsel Düzenleme",
+    "aliases": [
+     "visual merchandising"
+    ],
+    "hint": "VM"
+   },
+   {
+    "name": "Kasa İşlemleri",
+    "aliases": [
+     "cashier"
+    ],
+    "hint": "Kasa"
+   }
+  ],
+  "important": [
+   {
+    "name": "Stok Yönetimi",
+    "aliases": [
+     "inventory"
+    ],
+    "hint": "Stok"
+   },
+   {
+    "name": "Ekip Yönetimi",
+    "aliases": [
+     "team"
+    ],
+    "hint": "Ekip"
+   },
+   {
+    "name": "KPI Takibi",
+    "aliases": [
+     "ciro",
+     "hedef"
+    ],
+    "hint": "Perakende KPI'ları"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Excel",
+    "aliases": [],
+    "hint": "Excel"
+   },
+   {
+    "name": "E-Ticaret",
+    "aliases": [],
+    "hint": "Omnichannel"
+   }
+  ]
+ },
+ {
+  "code": "driver-courier",
+  "name": "Şoför / Kurye",
+  "category": "Hizmet ve Turizm",
+  "description": "Yolcu veya yük taşımacılığını güvenli şekilde yapar.",
+  "keywords": [
+   "şoför",
+   "kurye",
+   "driver",
+   "sürücü"
+  ],
+  "juniorFactor": 1.0,
+  "seniorFactor": 1.8,
+  "careerTitles": [
+   "Stajyer",
+   "Şoför",
+   "Deneyimli Şoför",
+   "Filo Sorumlusu",
+   "Filo Müdürü"
+  ],
+  "core": [
+   {
+    "name": "Sürücü Belgesi",
+    "aliases": [
+     "ehliyet",
+     "b sınıfı",
+     "c sınıfı",
+     "e sınıfı"
+    ],
+    "hint": "Ehliyet sınıfı"
+   },
+   {
+    "name": "SRC Belgesi",
+    "aliases": [
+     "src",
+     "psikoteknik"
+    ],
+    "hint": "SRC ve psikoteknik"
+   },
+   {
+    "name": "Güvenli Sürüş",
+    "aliases": [
+     "defensive driving"
+    ],
+    "hint": "Defansif sürüş"
+   },
+   {
+    "name": "Navigasyon",
+    "aliases": [
+     "rota"
+    ],
+    "hint": "Rota planlama"
+   }
+  ],
+  "important": [
+   {
+    "name": "Araç Bakımı",
+    "aliases": [
+     "bakım"
+    ],
+    "hint": "Temel bakım"
+   },
+   {
+    "name": "Müşteri İletişimi",
+    "aliases": [],
+    "hint": "İletişim"
+   },
+   {
+    "name": "Teslimat",
+    "aliases": [
+     "delivery"
+    ],
+    "hint": "Teslimat"
+   }
+  ],
+  "nice": [
+   {
+    "name": "İngilizce",
+    "aliases": [
+     "english"
+    ],
+    "hint": "İngilizce"
+   },
+   {
+    "name": "Takograf",
+    "aliases": [],
+    "hint": "Takograf"
+   },
+   {
+    "name": "Tehlikeli Madde",
+    "aliases": [
+     "adr"
+    ],
+    "hint": "ADR"
+   }
+  ]
+ }
+]

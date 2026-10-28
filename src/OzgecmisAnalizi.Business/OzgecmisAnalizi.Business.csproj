@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>OzgecmisAnalizi.Business</RootNamespace>
+    <Description>İş katmanı: CV ayrıştırma, analiz, beceri boşluğu, maaş tahmini, kariyer yolu, PDF, iş arama ve yapay zeka entegrasyonu.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" />
+    <PackageReference Include="PdfPig" />
+    <PackageReference Include="DocumentFormat.OpenXml" />
+    <PackageReference Include="QuestPDF" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OzgecmisAnalizi.Core\OzgecmisAnalizi.Core.csproj" />
+    <ProjectReference Include="..\OzgecmisAnalizi.Entities\OzgecmisAnalizi.Entities.csproj" />
+    <ProjectReference Include="..\OzgecmisAnalizi.DataAccess\OzgecmisAnalizi.DataAccess.csproj" />
+  </ItemGroup>
+</Project>

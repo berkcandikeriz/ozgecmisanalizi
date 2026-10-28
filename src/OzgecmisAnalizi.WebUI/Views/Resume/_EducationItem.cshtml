@@ -1,0 +1,15 @@
+@model (EducationItem Item, string Prefix)
+@{ var p = Model.Prefix; var e = Model.Item; }
+<div class="repeat-item">
+    <button type="button" class="btn btn-ghost btn-icon btn-sm remove" data-remove aria-label="Bu eğitimi kaldır"><svg class="icon"><use href="#i-x" /></svg></button>
+    <div class="grid-2">
+        <label class="field"><span class="label">Okul</span><input class="input" name="@(p).School" value="@e.School" placeholder="Örn. Ege Üniversitesi" /></label>
+        <label class="field"><span class="label">Derece</span><input class="input" name="@(p).Degree" value="@e.Degree" placeholder="Lisans, Yüksek Lisans..." /></label>
+    </div>
+    <div class="grid-3">
+        <label class="field"><span class="label">Bölüm</span><input class="input" name="@(p).Field" value="@e.Field" /></label>
+        <label class="field"><span class="label">Başlangıç</span><input class="input" name="@(p).StartDate" value="@e.StartDate" placeholder="2016" /></label>
+        <label class="field"><span class="label">Bitiş</span><input class="input" name="@(p).EndDate" value="@e.EndDate" placeholder="2020" /></label>
+    </div>
+    <label class="field" style="margin-bottom:0"><span class="label">Not ortalaması / derece (isteğe bağlı)</span><input class="input" name="@(p).Grade" value="@e.Grade" placeholder="3.25 / 4.00" /></label>
+</div>

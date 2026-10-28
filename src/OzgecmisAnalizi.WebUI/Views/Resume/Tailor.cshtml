@@ -1,0 +1,59 @@
+@model TailorViewModel
+@{ ViewData["Title"] = "İlana göre uyarla"; }
+<div class="page-head">
+    <div><h1>İlana göre uyarla</h1><p><strong>@Model.Resume.Title</strong> CV'nizi bir iş ilanıyla karşılaştırın.</p></div>
+    <div class="actions"><a class="btn" href="/cv/@Model.Resume.Id/duzenle"><svg class="icon"><use href="#i-pen" /></svg>CV'yi düzenle</a></div>
+</div>
+<div class="layout-aside">
+    <form method="post" asp-antiforgery="true" class="panel">
+        <div asp-validation-summary="All" class="alert alert-error" role="alert"></div>
+        <div class="field">
+            <label for="JobTitle">İlandaki pozisyon adı</label>
+            <input id="JobTitle" name="JobTitle" value="@Model.JobTitle" class="input" placeholder="Örn. Kıdemli .NET Geliştirici" />
+        </div>
+        <div class="field">
+            <label for="JobDescription">İlan metni</label>
+            <textarea id="JobDescription" name="JobDescription" class="textarea" style="min-height:260px" placeholder="İlanın tamamını (aranan nitelikler, sorumluluklar) buraya yapıştırın.">@Model.JobDescription</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Karşılaştır</button>
+    </form>
+    <aside class="aside">
+        @if (Model.Result is { } r)
+        {
+            <div class="panel stack">
+                <div style="display:flex;gap:var(--s-4);align-items:center">
+                    <partial name="_ScoreRing" model="(r.MatchPercent, 112)" />
+                    <div><h2 style="margin:0">Anahtar kelime eşleşmesi</h2><p class="small muted" style="margin:0">@r.MatchedKeywords.Count eşleşen, @r.MissingKeywords.Count eksik</p></div>
+                </div>
+                @if (r.MissingKeywords.Count > 0)
+                {
+                    <div><h3>CV'nizde olmayanlar</h3><div class="chips">@foreach (var k in r.MissingKeywords) { <span class="chip chip-miss">@k</span> }</div></div>
+                }
+                @if (r.MatchedKeywords.Count > 0)
+                {
+                    <div><h3>Eşleşenler</h3><div class="chips">@foreach (var k in r.MatchedKeywords) { <span class="chip chip-ok">@k</span> }</div></div>
+                }
+                @if (!string.IsNullOrWhiteSpace(r.SuggestedSummary))
+                {
+                    <div>
+                        <h3>Önerilen özet</h3>
+                        <textarea id="suggested" class="textarea" readonly>@r.SuggestedSummary</textarea>
+                        <button type="button" class="btn btn-sm" data-copy="#suggested" style="margin-top:var(--s-2)">Kopyala</button>
+                    </div>
+                }
+                <div>
+                    <h3>Öneriler</h3>
+                    <ul class="ticks">@foreach (var s in r.Suggestions) { <li class="ok"><span class="mark">✓</span><span>@s</span></li> }</ul>
+                </div>
+                <p class="xs muted">Motor: @r.Engine</p>
+            </div>
+        }
+        else
+        {
+            <div class="panel-flat">
+                <h3>Nasıl çalışır?</h3>
+                <p class="small muted">İlandaki beceri ve araçlar 700'den fazla beceri tanımıyla eşleştirilir, CV'nizde geçenler ve geçmeyenler ayrılır. ATS'ler de ilanı CV'nizle benzer şekilde karşılaştırır.</p>
+            </div>
+        }
+    </aside>
+</div>

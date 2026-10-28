@@ -1,0 +1,13 @@
+@{
+    var items = new[] { (Alerts.Success, "alert-success"), (Alerts.Error, "alert-error"), (Alerts.Info, "alert-info") };
+}
+@foreach (var (key, css) in items)
+{
+    if (TempData[key] is string message && !string.IsNullOrWhiteSpace(message))
+    {
+        <div class="alert @css" role="@(css == "alert-error" ? "alert" : "status")">
+            <span>@message</span>
+            <button type="button" class="close" data-dismiss aria-label="Kapat">×</button>
+        </div>
+    }
+}

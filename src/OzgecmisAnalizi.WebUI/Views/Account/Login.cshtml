@@ -1,0 +1,24 @@
+@model LoginViewModel
+@{ ViewData["Title"] = "Giriş yap"; ViewData["FullBleed"] = true; }
+<div class="auth">
+    <div class="panel">
+        <h1>Tekrar hoş geldiniz</h1>
+        <p class="muted">CV'lerinize ve analizlerinize kaldığınız yerden devam edin.</p>
+        <form method="post" asp-antiforgery="true" asp-action="Login" novalidate>
+            <div asp-validation-summary="ModelOnly" class="alert alert-error" role="alert"></div>
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="field">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="input" autocomplete="email" autofocus />
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="input" autocomplete="current-password" />
+                <span asp-validation-for="Password"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Giriş yap</button>
+        </form>
+        <p class="small muted" style="margin-top:var(--s-4)">Hesabınız yok mu? <a href="/hesap/kayit">Ücretsiz hesap oluşturun</a></p>
+    </div>
+</div>

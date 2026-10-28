@@ -1,0 +1,42 @@
+@model ProfessionDto
+@{ ViewData["Title"] = Model.Name; var signedIn = User.Identity?.IsAuthenticated == true; }
+<div class="page-head">
+    <div><h1>@Model.Name</h1><p>@Model.Category</p></div>
+    <div class="actions"><a class="btn btn-primary" href="@(signedIn ? "/cv/yukle" : "/hesap/kayit")">CV'mi bu mesleğe göre analiz et</a></div>
+</div>
+<div class="layout-aside">
+    <div class="stack">
+        <section class="panel">
+            <h2>Aranan beceriler</h2>
+            @foreach (var group in Model.Skills.GroupBy(s => s.Importance))
+            {
+                <h3 style="margin-top:var(--s-4)">@group.Key</h3>
+                <div class="table-wrap">
+                    <table class="table">
+                        <tbody>
+                            @foreach (var s in group) { <tr><td style="width:40%"><strong>@s.Name</strong></td><td class="muted">@(s.LearningHint ?? "–")</td></tr> }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </section>
+    </div>
+    <aside class="aside stack">
+        <section class="panel">
+            <h2>Kariyer basamakları ve maaş</h2>
+            <ol class="path">
+                @for (var i = 0; i < Model.CareerPath.Count; i++)
+                {
+                    var step = Model.CareerPath[i];
+                    var sal = i < Model.Salaries.Count ? Model.Salaries[i] : null;
+                    <li>
+                        <div class="t">@step.Title</div>
+                        <div class="m">@step.Duration</div>
+                        @if (sal is not null) { <div class="small">@Fmt.Money(sal.MinNet) – @Fmt.Money(sal.MaxNet)</div> }
+                    </li>
+                }
+            </ol>
+            <p class="xs muted" style="margin:0">Net, aylık, şehir katsayısı uygulanmamış tahmini aralıklar.</p>
+        </section>
+    </aside>
+</div>

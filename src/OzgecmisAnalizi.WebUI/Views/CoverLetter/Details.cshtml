@@ -1,0 +1,15 @@
+@model CoverLetterDto
+@{ ViewData["Title"] = "Ön yazı: " + Model.JobTitle; }
+<div class="page-head">
+    <div><h1>@Model.JobTitle, @Model.Company</h1><p>Taslağı okuyun, size ait olmayan ifadeleri değiştirin ve kaydedin.</p></div>
+    <div class="actions">
+        <button type="button" class="btn" data-copy="#letter">Kopyala</button>
+        <form method="post" asp-antiforgery="true" action="/on-yazi/@Model.Id/sil" data-confirm="Bu ön yazı silinsin mi?"><button class="btn btn-ghost btn-danger" type="submit">Sil</button></form>
+    </div>
+</div>
+<form method="post" asp-antiforgery="true" class="panel" style="max-width:820px">
+    <label class="field"><span class="visually-hidden">Ön yazı metni</span>
+        <textarea id="letter" class="textarea" name="content" style="min-height:460px;font-size:var(--fs-base);line-height:1.65">@Model.Content</textarea>
+    </label>
+    <div class="actions"><button type="submit" class="btn btn-primary">Kaydet</button><a class="btn btn-ghost" href="/on-yazi">Listeye dön</a><span class="xs muted">Oluşturan: @Model.Engine</span></div>
+</form>

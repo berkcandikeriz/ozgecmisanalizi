@@ -1,0 +1,6 @@
+@{ ViewData["Title"] = "Sunucuya ulaşılamıyor"; }
+<div class="empty">
+    <h1>API'ye ulaşılamıyor</h1>
+    <p>Arayüz çalışıyor ama veri sunucusu (OzgecmisAnalizi.API) yanıt vermiyor. API projesinin çalıştığından ve appsettings içindeki <code>Api:BaseUrl</code> adresinin doğru olduğundan emin olun.</p>
+    <a class="btn btn-primary" href="@Context.Request.Path">Tekrar dene</a>
+</div>

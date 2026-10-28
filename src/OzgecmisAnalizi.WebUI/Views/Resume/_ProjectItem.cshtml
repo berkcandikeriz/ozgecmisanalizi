@@ -1,0 +1,10 @@
+@model (ProjectItem Item, string Prefix)
+@{ var p = Model.Prefix; var x = Model.Item; }
+<div class="repeat-item">
+    <button type="button" class="btn btn-ghost btn-icon btn-sm remove" data-remove aria-label="Bu projeyi kaldır"><svg class="icon"><use href="#i-x" /></svg></button>
+    <div class="grid-2">
+        <label class="field"><span class="label">Proje adı</span><input class="input" name="@(p).Name" value="@x.Name" /></label>
+        <label class="field"><span class="label">Bağlantı</span><input class="input" name="@(p).Url" value="@x.Url" placeholder="https://github.com/..." /></label>
+    </div>
+    <label class="field" style="margin-bottom:0"><span class="label">Açıklama</span><textarea class="textarea" style="min-height:80px" name="@(p).Description">@x.Description</textarea></label>
+</div>

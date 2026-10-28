@@ -1,0 +1,54 @@
+@model CoverLetterIndexViewModel
+@{ ViewData["Title"] = "Ön yazı"; var f = Model.Form; }
+<div class="page-head"><div><h1>Ön yazı</h1><p>CV'nizden ve ilandan kişiselleştirilmiş bir taslak oluşturun, sonra kendi sesinizle düzenleyin.</p></div></div>
+
+<div class="layout-aside">
+    @if (Model.Resumes.Count == 0)
+    {
+        <div class="empty"><h2>Önce bir CV ekleyin</h2><p>Ön yazı, CV'nizdeki deneyim ve becerilerden yola çıkarak yazılır.</p><a class="btn btn-primary" href="/cv/yukle">CV yükle</a></div>
+    }
+    else
+    {
+        <form method="post" asp-antiforgery="true" action="/on-yazi/olustur" class="panel">
+            <input type="hidden" name="Form.JobApplicationId" value="@f.JobApplicationId" />
+            <label class="field"><span class="label">CV</span>
+                <select class="select" name="Form.ResumeId" required>
+                    @foreach (var r in Model.Resumes)
+                    {
+                        if (r.Id == f.ResumeId) { <option value="@r.Id" selected>@r.Title</option> } else { <option value="@r.Id">@r.Title</option> }
+                    }
+                </select>
+            </label>
+            <div class="grid-2">
+                <label class="field"><span class="label">Pozisyon</span><input class="input" name="Form.JobTitle" value="@f.JobTitle" required /></label>
+                <label class="field"><span class="label">Şirket</span><input class="input" name="Form.Company" value="@f.Company" required /></label>
+            </div>
+            <label class="field"><span class="label">İlan metni (isteğe bağlı)</span><textarea class="textarea" name="Form.JobDescription" placeholder="İlanı yapıştırırsanız ortak beceriler öne çıkarılır.">@f.JobDescription</textarea></label>
+            <label class="field"><span class="label">Ton</span>
+                <select class="select" name="Form.Tone">
+                    <option value="profesyonel ve samimi">Profesyonel ve samimi</option>
+                    <option value="resmi">Resmi</option>
+                    <option value="enerjik ve kendinden emin">Enerjik ve kendinden emin</option>
+                    <option value="kısa ve öz">Kısa ve öz</option>
+                </select>
+            </label>
+            <button type="submit" class="btn btn-primary btn-lg">Ön yazı oluştur</button>
+        </form>
+    }
+    <aside class="aside panel">
+        <h2>Önceki yazılar</h2>
+        @if (Model.Letters.Count == 0)
+        {
+            <p class="small muted">Oluşturduğunuz ön yazılar burada listelenir.</p>
+        }
+        else
+        {
+            <ul class="list">
+                @foreach (var l in Model.Letters)
+                {
+                    <li><div class="grow"><div class="title"><a href="/on-yazi/@l.Id">@l.JobTitle</a></div><div class="xs muted">@l.Company — @Fmt.Date(l.CreatedAt)</div></div></li>
+                }
+            </ul>
+        }
+    </aside>
+</div>

@@ -1,0 +1,29 @@
+feature,area,priority,original,clone,notes
+Email ile kayıt ve giriş,onboarding,must,yes,yes,JWT (API) + cookie (MVC)
+PDF CV yükleme ve metin çıkarma,analysis,must,yes,yes,PdfPig
+DOCX CV yükleme,analysis,should,no,yes,OpenXml - eklediğimiz özellik
+CV genel puanı ve etiket,analysis,must,yes,yes,
+Alt puanlar (kapsam yapı açıklık),analysis,must,yes,yes,
+ATS okunabilirlik kontrolü,analysis,must,yes,yes,iletişim tarih bölüm başlıkları
+Bölüm bölüm öneriler,analysis,must,yes,yes,kural tabanlı + isteğe bağlı yapay zeka
+Yapay zeka sohbet rehberi,analysis,could,yes,partial,AI sağlayıcı ile öneri metni; sohbet arayüzü yok
+Yüklenen CV'yi düzenlenebilir CV'ye çevirme,builder,must,yes,yes,sezgisel ayrıştırıcı
+CV düzenleyici,builder,must,yes,yes,
+ATS uyumlu şablonlar,builder,must,yes,yes,4 şablon
+PDF dışa aktarma,builder,must,yes,yes,QuestPDF
+İlana göre CV uyarlama,tailoring,should,yes,yes,anahtar kelime eşleşmesi + AI özet
+Ön yazı oluşturma,cover letter,should,yes,yes,AI veya şablon
+İş önerileri ve eşleşme puanı,jobs,must,yes,yes,Jooble/JSearch API + site arama linkleri
+Öneriyi uygun değil olarak işaretleme,jobs,could,yes,no,
+Başvuru takip panosu,tracker,should,yes,yes,
+Mülakat tarihi kaydı,tracker,could,yes,yes,
+Başvuruya belge bağlama,tracker,could,yes,partial,yalnızca CV bağlanıyor
+Haftalık otomatik iş önerisi e-postası,jobs,could,yes,no,
+Çoklu dil arayüzü,platform,could,yes,no,yalnızca Türkçe
+Ücretli abonelik,platform,could,yes,skip,platform ücretsiz
+56+ meslek için eksik beceri tespiti,analysis,must,no,yes,eklediğimiz özellik
+Kariyer yolu planlaması,analysis,should,no,yes,eklediğimiz özellik
+Maaş tahmini,analysis,should,no,yes,asgari ücrete endeksli tahmini aralık
+Analiz PDF raporu,analysis,should,no,yes,eklediğimiz özellik
+Açık ve koyu tema,platform,should,no,yes,
+Çoklu istemci için REST API,platform,must,no,yes,

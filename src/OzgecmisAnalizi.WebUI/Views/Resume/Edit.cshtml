@@ -1,0 +1,187 @@
+@model ResumeEditViewModel
+@{
+    ViewData["Title"] = "CV düzenle";
+    var r = Model.Resume;
+    var c = r.Content;
+    var p = c.Personal;
+    const string Base = "Resume.Content";
+    var thumbs = new Dictionary<ResumeTemplate, string>
+    {
+        [ResumeTemplate.Klasik] = "<i style='left:30%;right:30%;top:8px'></i><i style='left:10%;right:10%;top:20px'></i><i style='left:10%;right:25%;top:30px'></i><i style='left:10%;right:15%;top:40px'></i>",
+        [ResumeTemplate.Modern] = "<i style='left:0;width:32%;top:0;bottom:0;height:auto;opacity:.25'></i><i style='left:40%;right:10%;top:10px'></i><i style='left:40%;right:20%;top:22px'></i><i style='left:40%;right:15%;top:34px'></i>",
+        [ResumeTemplate.Kompakt] = "<i style='left:8%;right:50%;top:6px'></i><i style='left:8%;right:8%;top:14px'></i><i style='left:8%;right:12%;top:20px'></i><i style='left:8%;right:8%;top:26px'></i><i style='left:8%;right:20%;top:32px'></i><i style='left:8%;right:10%;top:38px'></i>",
+        [ResumeTemplate.Profesyonel] = "<i style='left:0;right:0;top:0;height:18px;opacity:.3'></i><i style='left:10%;right:20%;top:26px'></i><i style='left:10%;right:10%;top:36px'></i><i style='left:10%;right:30%;top:46px'></i>"
+    };
+}
+
+<div class="page-head">
+    <div>
+        <h1>@r.Title</h1>
+        <p>Değişiklikleri kaydettikten sonra yeniden analiz ederek puanınızın nasıl değiştiğini görün.</p>
+    </div>
+    <div class="actions">
+        <a class="btn" href="/cv/@Model.Id/uyarla"><svg class="icon"><use href="#i-target" /></svg>İlana uyarla</a>
+        @if (Model.LastAnalysisId is not null)
+        {
+            <a class="btn" href="/analiz/@Model.LastAnalysisId">Son analiz: @Model.LastScore</a>
+        }
+    </div>
+</div>
+
+<form method="post" asp-antiforgery="true" action="/cv/@Model.Id/duzenle" data-resume-editor>
+    <div asp-validation-summary="ModelOnly" class="alert alert-error" role="alert"></div>
+    <div class="layout-aside">
+        <div class="panel">
+            <section class="editor-section">
+                <h2>Genel</h2>
+                <div class="grid-2">
+                    <label class="field"><span class="label">CV başlığı (yalnızca size görünür)</span><input class="input" name="Resume.Title" value="@r.Title" required maxlength="150" /></label>
+                    <label class="field"><span class="label">Hedef meslek</span>
+                        <select class="select" name="Resume.TargetProfessionId">
+                            <option value="">Analizde otomatik belirlensin</option>
+                            @foreach (var group in Model.Professions.GroupBy(x => x.Category).OrderBy(g => g.Key))
+                            {
+                                <optgroup label="@group.Key">
+                                    @foreach (var prof in group)
+                                    {
+                                        if (prof.Id == r.TargetProfessionId)
+                                        {
+                                            <option value="@prof.Id" selected>@prof.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@prof.Id">@prof.Name</option>
+                                        }
+                                    }
+                                </optgroup>
+                            }
+                        </select>
+                    </label>
+                </div>
+            </section>
+
+            <section class="editor-section">
+                <h2>Kişisel bilgiler</h2>
+                <div class="grid-2">
+                    <label class="field"><span class="label">Ad soyad</span><input class="input" name="@(Base).Personal.FullName" value="@p.FullName" autocomplete="name" /></label>
+                    <label class="field"><span class="label">Unvan</span><input class="input" name="@(Base).Personal.Title" value="@p.Title" placeholder="Örn. Kıdemli İK Uzmanı" /></label>
+                    <label class="field"><span class="label">E-posta</span><input class="input" type="email" name="@(Base).Personal.Email" value="@p.Email" autocomplete="email" /></label>
+                    <label class="field"><span class="label">Telefon</span><input class="input" type="tel" name="@(Base).Personal.Phone" value="@p.Phone" placeholder="+90 5xx xxx xx xx" autocomplete="tel" /></label>
+                    <label class="field"><span class="label">Şehir</span><input class="input" name="@(Base).Personal.City" value="@p.City" /></label>
+                    <label class="field"><span class="label">LinkedIn</span><input class="input" name="@(Base).Personal.LinkedIn" value="@p.LinkedIn" placeholder="linkedin.com/in/..." /></label>
+                </div>
+                <label class="field"><span class="label">Web sitesi / portfolyo</span><input class="input" name="@(Base).Personal.Website" value="@p.Website" /></label>
+            </section>
+
+            <section class="editor-section">
+                <h2>Profesyonel özet</h2>
+                <label class="field"><span class="visually-hidden">Özet</span>
+                    <textarea class="textarea" name="@(Base).Summary" placeholder="3-4 cümle: kim olduğunuz, kaç yıllık deneyim, en güçlü 2-3 beceriniz ve hedefiniz.">@c.Summary</textarea>
+                    <span class="hint">İdeal uzunluk 60-90 kelime.</span>
+                </label>
+            </section>
+
+            <section class="editor-section">
+                <div class="panel-head"><h2>İş deneyimi</h2><button type="button" class="btn btn-sm" data-add="@(Base).Experiences"><svg class="icon"><use href="#i-plus" /></svg>Deneyim ekle</button></div>
+                <div data-collection="@(Base).Experiences">
+                    @for (var i = 0; i < c.Experiences.Count; i++)
+                    {
+                        <partial name="_ExperienceItem" model='(c.Experiences[i], $"{Base}.Experiences[{i}]")' />
+                    }
+                </div>
+                @if (c.Experiences.Count == 0) { <p class="muted small" data-empty-for="@(Base).Experiences">Henüz deneyim eklenmedi. Staj ve gönüllü çalışmalar da sayılır.</p> }
+            </section>
+
+            <section class="editor-section">
+                <div class="panel-head"><h2>Eğitim</h2><button type="button" class="btn btn-sm" data-add="@(Base).Educations"><svg class="icon"><use href="#i-plus" /></svg>Eğitim ekle</button></div>
+                <div data-collection="@(Base).Educations">
+                    @for (var i = 0; i < c.Educations.Count; i++)
+                    {
+                        <partial name="_EducationItem" model='(c.Educations[i], $"{Base}.Educations[{i}]")' />
+                    }
+                </div>
+            </section>
+
+            <section class="editor-section">
+                <h2>Beceriler</h2>
+                <label class="field"><span class="visually-hidden">Beceriler</span>
+                    <textarea class="textarea" name="SkillsText" style="min-height:90px" placeholder="Virgülle ayırın: Excel, SQL, Proje Yönetimi, İngilizce sunum...">@Model.SkillsText</textarea>
+                    <span class="hint">Araçları ve yöntemleri ilandaki yazımla aynı şekilde yazın.</span>
+                </label>
+            </section>
+
+            <section class="editor-section">
+                <div class="panel-head"><h2>Yabancı dil</h2><button type="button" class="btn btn-sm" data-add="@(Base).Languages"><svg class="icon"><use href="#i-plus" /></svg>Dil ekle</button></div>
+                <div data-collection="@(Base).Languages">
+                    @for (var i = 0; i < c.Languages.Count; i++)
+                    {
+                        <partial name="_LanguageItem" model='(c.Languages[i], $"{Base}.Languages[{i}]")' />
+                    }
+                </div>
+            </section>
+
+            <section class="editor-section">
+                <div class="panel-head"><h2>Sertifikalar ve kurslar</h2><button type="button" class="btn btn-sm" data-add="@(Base).Certificates"><svg class="icon"><use href="#i-plus" /></svg>Sertifika ekle</button></div>
+                <div data-collection="@(Base).Certificates">
+                    @for (var i = 0; i < c.Certificates.Count; i++)
+                    {
+                        <partial name="_CertificateItem" model='(c.Certificates[i], $"{Base}.Certificates[{i}]")' />
+                    }
+                </div>
+            </section>
+
+            <section class="editor-section">
+                <div class="panel-head"><h2>Projeler</h2><button type="button" class="btn btn-sm" data-add="@(Base).Projects"><svg class="icon"><use href="#i-plus" /></svg>Proje ekle</button></div>
+                <div data-collection="@(Base).Projects">
+                    @for (var i = 0; i < c.Projects.Count; i++)
+                    {
+                        <partial name="_ProjectItem" model='(c.Projects[i], $"{Base}.Projects[{i}]")' />
+                    }
+                </div>
+            </section>
+        </div>
+
+        <aside class="aside stack">
+            <div class="panel">
+                <h2>Şablon</h2>
+                <div class="templates" role="radiogroup" aria-label="PDF şablonu">
+                    @foreach (var t in Enum.GetValues<ResumeTemplate>())
+                    {
+                        <div class="template-option">
+                            @if (t == r.Template)
+                            {
+                                <input type="radio" id="tpl-@t" name="Resume.Template" value="@t" checked />
+                            }
+                            else
+                            {
+                                <input type="radio" id="tpl-@t" name="Resume.Template" value="@t" />
+                            }
+                            <label for="tpl-@t"><span class="thumb" aria-hidden="true">@Html.Raw(thumbs[t])</span>@Fmt.Template(t)</label>
+                        </div>
+                    }
+                </div>
+                <p class="hint" style="margin-top:var(--s-3)">Tüm şablonlar metin tabanlıdır; ATS sistemleri tarafından okunabilir.</p>
+            </div>
+            <div class="panel-flat">
+                <h3>Güçlü bir madde nasıl yazılır?</h3>
+                <p class="small muted">Eylem + kapsam + sonuç. "Müşteri şikayetlerini ele aldım" yerine "Haftalık 120 müşteri talebini yanıtladım, çözüm süresini 2 günden 6 saate indirdim."</p>
+            </div>
+        </aside>
+    </div>
+
+    <div class="sticky-save">
+        <div class="actions">
+            <button type="submit" class="btn btn-primary" name="next" value="save">Kaydet</button>
+            <button type="submit" class="btn" name="next" value="analyze" data-loading-text>Kaydet ve analiz et</button>
+            <button type="submit" class="btn" name="next" value="pdf" data-no-loading><svg class="icon"><use href="#i-download" /></svg>Kaydet ve PDF indir</button>
+            <span class="xs muted">Kaydedilmemiş değişiklikler sayfadan çıkarken uyarılır.</span>
+        </div>
+    </div>
+</form>
+
+@* Yeni satır şablonları: __i__ gönderimden önce sıra numarasıyla değiştirilir. *@
+<template data-for="@(Base).Experiences"><partial name="_ExperienceItem" model='(new ExperienceItem(), $"{Base}.Experiences[__i__]")' /></template>
+<template data-for="@(Base).Educations"><partial name="_EducationItem" model='(new EducationItem(), $"{Base}.Educations[__i__]")' /></template>
+<template data-for="@(Base).Languages"><partial name="_LanguageItem" model='(new LanguageItem(), $"{Base}.Languages[__i__]")' /></template>
+<template data-for="@(Base).Certificates"><partial name="_CertificateItem" model='(new CertificateItem(), $"{Base}.Certificates[__i__]")' /></template>
+<template data-for="@(Base).Projects"><partial name="_ProjectItem" model='(new ProjectItem(), $"{Base}.Projects[__i__]")' /></template>
