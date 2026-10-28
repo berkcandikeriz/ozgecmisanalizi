@@ -1,0 +1,91 @@
+@model DashboardDto
+@{ ViewData["Title"] = "Panel"; }
+<div class="page-head">
+    <div>
+        <h1>Merhaba, @(User.Identity?.Name?.Split(' ').FirstOrDefault())</h1>
+        <p>CV'leriniz, son analizleriniz ve başvurularınız bir arada.</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-primary" href="/cv/yukle"><svg class="icon"><use href="#i-upload" /></svg>CV yükle</a>
+        <form method="post" asp-antiforgery="true" action="/cv/yeni"><button class="btn" type="submit"><svg class="icon"><use href="#i-pen" /></svg>Sıfırdan oluştur</button></form>
+    </div>
+</div>
+
+@if (Model.ResumeCount == 0)
+{
+    <div class="empty">
+        <h2>İlk CV'nizi ekleyin</h2>
+        <p>Mevcut CV'nizi yükleyin; puanınızı, eksik becerilerinizi ve size uygun ilanları hemen görün.</p>
+        <a class="btn btn-primary btn-lg" href="/cv/yukle">CV'mi yükle</a>
+    </div>
+}
+else
+{
+    <div class="stats">
+        <div class="stat"><div class="v">@(Model.BestScore?.ToString() ?? "–")</div><div class="k">En yüksek puan</div></div>
+        <div class="stat"><div class="v">@Model.ResumeCount</div><div class="k">CV</div></div>
+        <div class="stat"><div class="v">@Model.AnalysisCount</div><div class="k">Analiz</div></div>
+        <div class="stat"><div class="v">@Model.ApplicationCount</div><div class="k">Takip edilen başvuru</div></div>
+    </div>
+
+    <div class="layout-aside">
+        <div class="stack">
+            <section class="panel">
+                <div class="panel-head"><h2>Son analizler</h2><a href="/analizler" class="small">Tümü</a></div>
+                @if (Model.RecentAnalyses.Count == 0)
+                {
+                    <p class="muted">Henüz analiz yok. Bir CV seçip "Analiz et" deyin.</p>
+                }
+                else
+                {
+                    <ul class="list">
+                        @foreach (var a in Model.RecentAnalyses)
+                        {
+                            <li>
+                                <span class="badge badge-@Fmt.Tone(a.OverallScore)">@a.OverallScore</span>
+                                <div class="grow">
+                                    <div class="title"><a href="/analiz/@a.Id">@a.ResumeTitle</a></div>
+                                    <div class="xs muted">@(a.ProfessionName ?? "Genel değerlendirme") — @Fmt.Ago(a.CreatedAt)</div>
+                                </div>
+                                <span class="small muted hide-sm">@a.Label</span>
+                            </li>
+                        }
+                    </ul>
+                }
+            </section>
+            <section class="panel">
+                <div class="panel-head"><h2>CV'lerim</h2><a href="/cv" class="small">Tümü</a></div>
+                <ul class="list">
+                    @foreach (var r in Model.RecentResumes)
+                    {
+                        <li>
+                            <svg class="icon" style="width:20px;height:20px;color:var(--accent)"><use href="#i-doc" /></svg>
+                            <div class="grow">
+                                <div class="title"><a href="/cv/@r.Id/duzenle">@r.Title</a></div>
+                                <div class="xs muted">@(r.TargetProfession ?? "Meslek seçilmedi") — @Fmt.Ago(r.UpdatedAt ?? r.CreatedAt)</div>
+                            </div>
+                            <form method="post" asp-antiforgery="true" action="/cv/@r.Id/analiz-et"><button class="btn btn-sm" type="submit">Analiz et</button></form>
+                        </li>
+                    }
+                </ul>
+            </section>
+        </div>
+        <aside class="aside stack">
+            <section class="panel">
+                <div class="panel-head"><h2>Başvurular</h2><a href="/basvurular" class="small">Panoyu aç</a></div>
+                <ul class="list">
+                    @foreach (var (stage, count) in Model.ApplicationsByStage)
+                    {
+                        var s = Enum.Parse<ApplicationStage>(stage);
+                        <li><span class="grow">@Fmt.Stage(s)</span><b>@count</b></li>
+                    }
+                </ul>
+            </section>
+            <section class="panel-flat">
+                <h3>Sıradaki adım</h3>
+                <p class="small muted">CV'nize uygun ilanları görün ve beğendiklerinizi panoya kaydedin.</p>
+                <a class="btn btn-primary" href="/isler">İş önerilerini göster</a>
+            </section>
+        </aside>
+    </div>
+}

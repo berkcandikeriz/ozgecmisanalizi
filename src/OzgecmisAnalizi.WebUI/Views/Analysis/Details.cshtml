@@ -1,0 +1,189 @@
+@model AnalysisViewModel
+@{
+    var a = Model.Analysis;
+    var d = a.Details;
+    ViewData["Title"] = $"Analiz: {a.ResumeTitle}";
+    var meters = new List<(string Label, int Value, string Help)>
+    {
+        ("Kapsam", a.ComprehensivenessScore, "Gerekli bölümler ve iletişim bilgileri"),
+        ("Yapı", a.StructureScore, "Başlıklar, tarihler, sıralama, uzunluk"),
+        ("Dil ve anlatım", a.ClarityScore, "Eylem fiilleri, ölçülebilir sonuçlar"),
+        ("ATS okunabilirliği", a.AtsScore, "Otomatik sistemlerin okuyabilmesi")
+    };
+    if (a.ProfessionName is not null)
+    {
+        meters.Add(($"Beceri eşleşmesi", a.SkillMatchScore, a.ProfessionName));
+    }
+}
+
+<div class="page-head">
+    <div>
+        <h1>@a.ResumeTitle</h1>
+        <p>@(a.ProfessionName is null ? "Genel değerlendirme" : a.ProfessionName + " pozisyonuna göre değerlendirildi") — @Fmt.Date(a.CreatedAt)</p>
+    </div>
+    <div class="actions">
+        <a class="btn" href="/cv/@a.ResumeId/duzenle"><svg class="icon"><use href="#i-pen" /></svg>Önerileri uygula</a>
+        <a class="btn" href="/analiz/@a.Id/rapor"><svg class="icon"><use href="#i-download" /></svg>PDF rapor</a>
+        <a class="btn btn-primary" href="/isler?resumeId=@a.ResumeId"><svg class="icon"><use href="#i-briefcase" /></svg>Uygun işleri bul</a>
+    </div>
+</div>
+
+<section class="panel" style="display:grid;gap:var(--s-5);grid-template-columns:repeat(auto-fit,minmax(260px,1fr));align-items:center">
+    <div style="display:flex;gap:var(--s-5);align-items:center;flex-wrap:wrap">
+        <partial name="_ScoreRing" model="(a.OverallScore, 168)" />
+        <div>
+            <div class="badge badge-@Fmt.Tone(a.OverallScore)" style="font-size:var(--fs-sm)">@a.Label</div>
+            <p style="margin:var(--s-2) 0 0;font-size:var(--fs-lg);font-weight:600">Tahmini ilk %@a.TopPercent</p>
+            <p class="small muted" style="margin:0">Benzer CV'lere göre konumunuz</p>
+            @if (d.ExperienceYears > 0) { <p class="small muted" style="margin:var(--s-2) 0 0">Toplam deneyim: yaklaşık @d.ExperienceYears.ToString("0.#") yıl</p> }
+        </div>
+    </div>
+    <div class="meters">
+        @foreach (var m in meters)
+        {
+            <div class="meter tone-@Fmt.Tone(m.Value)" title="@m.Help">
+                <span>@m.Label</span>
+                <span class="bar"><span style="--w:@(m.Value)%"></span></span>
+                <b>@m.Value</b>
+            </div>
+        }
+    </div>
+</section>
+
+<form method="post" asp-antiforgery="true" action="/cv/@a.ResumeId/analiz-et" class="actions no-print" style="margin:var(--s-3) 0 var(--s-5)">
+    <label class="small muted" for="professionId">Başka bir meslek için değerlendir:</label>
+    <select class="select" id="professionId" name="professionId" style="max-width:280px">
+        @foreach (var p in Model.Professions.OrderBy(x => x.Name))
+        {
+            if (p.Id == a.ProfessionId)
+            {
+                <option value="@p.Id" selected>@p.Name</option>
+            }
+            else
+            {
+                <option value="@p.Id">@p.Name</option>
+            }
+        }
+    </select>
+    <button type="submit" class="btn btn-sm">Yeniden analiz et</button>
+</form>
+
+<div class="layout-aside">
+    <div class="stack">
+        @if (!string.IsNullOrWhiteSpace(d.AiSummary))
+        {
+            <section class="panel"><h2>Genel değerlendirme</h2><p style="margin:0">@d.AiSummary</p></section>
+        }
+
+        <section class="panel">
+            <h2>Öncelikli iyileştirmeler</h2>
+            @if (d.Improvements.Count == 0)
+            {
+                <p class="muted">Kritik bir eksik bulunmadı. İlana göre uyarlama yaparak bir adım öne geçebilirsiniz.</p>
+            }
+            else
+            {
+                <ul class="ticks">@foreach (var s in d.Improvements) { <li class="no"><span class="mark">!</span><span>@s</span></li> }</ul>
+            }
+            @if (d.Strengths.Count > 0)
+            {
+                <h3 style="margin-top:var(--s-5)">Güçlü yönler</h3>
+                <ul class="ticks">@foreach (var s in d.Strengths) { <li class="ok"><span class="mark">✓</span><span>@s</span></li> }</ul>
+            }
+        </section>
+
+        <section class="panel">
+            <h2>Bölüm bölüm öneriler</h2>
+            @foreach (var s in d.Sections)
+            {
+                <details class="faq" open="@(s.Score < 70)">
+                    <summary><span>@s.Section <span class="badge badge-@Fmt.Tone(s.Score)" style="margin-left:6px">@s.Score</span></span></summary>
+                    @if (s.Tips.Count == 0) { <p>Bu bölüm iyi durumda.</p> }
+                    else { <ul class="ticks" style="margin-top:var(--s-3)">@foreach (var t in s.Tips) { <li class="no"><span class="mark">!</span><span>@t</span></li> }</ul> }
+                </details>
+            }
+        </section>
+
+        @if (d.MissingSkills.Count > 0)
+        {
+            <section class="panel">
+                <div class="panel-head"><h2>Eksik beceriler</h2><span class="small muted">@a.ProfessionName ilanlarında aranan, CV'nizde bulunamayanlar</span></div>
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead><tr><th>Beceri</th><th>Önem</th><th>Nasıl öğrenilir</th></tr></thead>
+                        <tbody>
+                            @foreach (var g in d.MissingSkills)
+                            {
+                                var tone = g.Importance == "Olmazsa olmaz" ? "low" : g.Importance == "Önemli" ? "mid" : "accent";
+                                <tr><td><strong>@g.Skill</strong></td><td><span class="badge badge-@tone">@g.Importance</span></td><td class="muted">@(g.HowToLearn ?? "–")</td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        }
+
+        @if (d.CareerPath.Count > 0)
+        {
+            <section class="panel">
+                <h2>Kariyer yolu</h2>
+                @{ var passed = true; }
+                <ol class="path">
+                    @foreach (var step in d.CareerPath)
+                    {
+                        if (step.IsCurrent) { passed = false; }
+                        <li class="@(step.IsCurrent ? "current" : passed ? "done" : "")">
+                            <div class="t">@step.Title @if (step.IsCurrent) { <span class="badge badge-accent">Şu an</span> }</div>
+                            <div class="m">@step.Level — @step.Duration</div>
+                            @if (!step.IsCurrent && !passed && step.Focus.Count > 0) { <div class="small" style="margin-top:4px">Odak: @string.Join(", ", step.Focus)</div> }
+                        </li>
+                    }
+                </ol>
+            </section>
+        }
+    </div>
+
+    <aside class="aside stack">
+        @if (d.Salary is { } sal)
+        {
+            <section class="panel">
+                <h2>Tahmini maaş</h2>
+                <p style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;margin:0;line-height:1.2">@Fmt.Money(sal.MinNet) – @Fmt.Money(sal.MaxNet)</p>
+                <p class="small muted">Net, aylık · @sal.Level@(sal.City is null ? "" : " · " + sal.City)</p>
+                <p class="xs muted" style="margin:0">@sal.Basis</p>
+            </section>
+        }
+
+        <section class="panel">
+            <h2>ATS kontrolleri</h2>
+            <ul class="ticks">
+                @foreach (var c in d.AtsChecks)
+                {
+                    <li class="@(c.Passed ? "ok" : "no")"><span class="mark">@(c.Passed ? "✓" : "!")</span><span><strong>@c.Name</strong><br /><span class="xs muted">@c.Detail</span></span></li>
+                }
+            </ul>
+        </section>
+
+        @if (d.DetectedSkills.Count > 0)
+        {
+            <section class="panel">
+                <h2>CV'nizde bulunan beceriler</h2>
+                <div class="chips">@foreach (var s in d.DetectedSkills) { <span class="chip chip-ok">@s</span> }</div>
+            </section>
+        }
+
+        @if (d.ProfessionMatches.Count > 0)
+        {
+            <section class="panel">
+                <h2>Size en yakın meslekler</h2>
+                <ul class="list">
+                    @foreach (var m in d.ProfessionMatches)
+                    {
+                        <li><a class="grow" href="/meslekler/@m.ProfessionId">@m.Name</a><span class="badge badge-@Fmt.Tone(m.MatchPercent)">%@m.MatchPercent</span></li>
+                    }
+                </ul>
+            </section>
+        }
+        <p class="xs muted">Değerlendirme motoru: @a.Engine</p>
+    </aside>
+</div>

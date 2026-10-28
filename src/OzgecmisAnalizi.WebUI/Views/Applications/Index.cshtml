@@ -1,0 +1,66 @@
+@model ApplicationsViewModel
+@{
+    ViewData["Title"] = "Başvurular";
+    var stages = Enum.GetValues<ApplicationStage>();
+}
+<div class="page-head">
+    <div><h1>Başvuru panosu</h1><p>Kaydettiğiniz ilanları aşamalar arasında taşıyın; mülakat tarihlerini ve notlarınızı tek yerde tutun.</p></div>
+</div>
+
+<details class="panel" style="margin-bottom:var(--s-5)" open="@(Model.Items.Count == 0)">
+    <summary style="cursor:pointer;font-weight:700">Elle başvuru ekle</summary>
+    <form method="post" asp-antiforgery="true" action="/basvurular/ekle" style="margin-top:var(--s-4)">
+        <div class="grid-3">
+            <label class="field"><span class="label">Pozisyon</span><input class="input" name="NewItem.JobTitle" required /></label>
+            <label class="field"><span class="label">Şirket</span><input class="input" name="NewItem.Company" required /></label>
+            <label class="field"><span class="label">Konum</span><input class="input" name="NewItem.Location" /></label>
+        </div>
+        <div class="grid-3">
+            <label class="field"><span class="label">İlan bağlantısı</span><input class="input" type="url" name="NewItem.Url" placeholder="https://" /></label>
+            <label class="field"><span class="label">Aşama</span>
+                <select class="select" name="NewItem.Stage">@foreach (var s in stages) { <option value="@s">@Fmt.Stage(s)</option> }</select>
+            </label>
+            <label class="field"><span class="label">Kullanılan CV</span>
+                <select class="select" name="NewItem.ResumeId"><option value="">Seçilmedi</option>@foreach (var r in Model.Resumes) { <option value="@r.Id">@r.Title</option> }</select>
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Panoya ekle</button>
+    </form>
+</details>
+
+<div class="board" role="list">
+    @foreach (var stage in stages)
+    {
+        var items = Model.Items.Where(i => i.Stage == stage).ToList();
+        <section class="column" role="listitem" aria-label="@Fmt.Stage(stage)">
+            <header><span>@Fmt.Stage(stage)</span><span class="badge">@items.Count</span></header>
+            @if (items.Count == 0) { <p class="xs muted">Bu aşamada başvuru yok.</p> }
+            @foreach (var item in items)
+            {
+                <article class="card">
+                    <div class="t"><a href="/basvurular/@item.Id">@item.JobTitle</a></div>
+                    <div class="c">@item.Company@(item.Location is null ? "" : ", " + item.Location)</div>
+                    @if (item.InterviewAt is { } at) { <div class="c" style="color:var(--highlight)">Mülakat: @at.ToLocalTime().ToString("d MMM HH:mm", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</div> }
+                    <div class="row">
+                        @if (item.MatchScore is int ms) { <span class="badge badge-@Fmt.Tone(ms)">%@ms</span> }
+                        <form method="post" asp-antiforgery="true" action="/basvurular/@item.Id/asama" style="margin-left:auto" data-no-loading>
+                            <label class="visually-hidden" for="stage-@item.Id">Aşama</label>
+                            <select class="select" id="stage-@item.Id" name="stage" data-autosubmit>
+                                @foreach (var s in stages)
+                                {
+                                    if (s == item.Stage) { <option value="@s" selected>@Fmt.Stage(s)</option> }
+                                    else { <option value="@s">@Fmt.Stage(s)</option> }
+                                }
+                            </select>
+                            <noscript><button class="btn btn-sm" type="submit">Taşı</button></noscript>
+                        </form>
+                    </div>
+                    <div class="row">
+                        @if (!string.IsNullOrWhiteSpace(item.Url)) { <a class="xs" href="@item.Url" target="_blank" rel="noopener noreferrer">İlan</a> }
+                        <a class="xs" href="/on-yazi?jobTitle=@Uri.EscapeDataString(item.JobTitle)&company=@Uri.EscapeDataString(item.Company)&applicationId=@item.Id">Ön yazı yaz</a>
+                    </div>
+                </article>
+            }
+        </section>
+    }
+</div>

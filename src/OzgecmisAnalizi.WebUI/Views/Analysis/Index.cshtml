@@ -1,0 +1,26 @@
+@model IReadOnlyList<AnalysisListItemDto>
+@{ ViewData["Title"] = "Analizler"; }
+<div class="page-head"><div><h1>Analizler</h1><p>Her analiz, o anki CV içeriğinin bir fotoğrafıdır. Düzenleme sonrası yeniden analiz ederek ilerlemenizi görün.</p></div></div>
+@if (Model.Count == 0)
+{
+    <div class="empty"><h2>Henüz analiz yok</h2><p>Bir CV yükleyin veya mevcut bir CV'yi analiz edin.</p><a class="btn btn-primary" href="/cv/yukle">CV yükle</a></div>
+}
+else
+{
+    <div class="panel">
+        <ul class="list">
+            @foreach (var a in Model)
+            {
+                <li>
+                    <span class="badge badge-@Fmt.Tone(a.OverallScore)">@a.OverallScore</span>
+                    <div class="grow">
+                        <div class="title"><a href="/analiz/@a.Id">@a.ResumeTitle</a></div>
+                        <div class="xs muted">@(a.ProfessionName ?? "Genel değerlendirme") — @a.Label — @Fmt.Date(a.CreatedAt)</div>
+                    </div>
+                    <a class="btn btn-sm" href="/analiz/@a.Id/rapor"><svg class="icon"><use href="#i-download" /></svg>Rapor</a>
+                    <form method="post" asp-antiforgery="true" action="/analiz/@a.Id/sil" data-confirm="Bu analiz silinsin mi?"><button class="btn btn-sm btn-ghost btn-danger" type="submit">Sil</button></form>
+                </li>
+            }
+        </ul>
+    </div>
+}

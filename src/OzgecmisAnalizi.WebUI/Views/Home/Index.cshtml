@@ -1,0 +1,151 @@
+@{
+    ViewData["FullBleed"] = true;
+    var signedIn = User.Identity?.IsAuthenticated == true;
+    var startUrl = signedIn ? "/cv/yukle" : "/hesap/kayit";
+}
+
+<section class="hero">
+    <div class="container hero-grid">
+        <div>
+            <h1>CV'nizi bir İK uzmanının gözüyle okuyun.</h1>
+            <p class="lede">
+                CV'nizi yükleyin; ATS uyumunu, eksik becerilerinizi, mesleğinize göre maaş aralığını ve sonraki kariyer adımınızı
+                birkaç saniyede görün. Ardından düzeltilmiş CV'nizi PDF olarak indirin ve size uyan ilanlara başvurun.
+            </p>
+            <div class="actions">
+                <a class="btn btn-primary btn-lg" href="@startUrl">
+                    <svg class="icon"><use href="#i-upload" /></svg> CV'mi analiz et
+                </a>
+                <a class="btn btn-lg" href="/meslekler">Meslek rehberine bak</a>
+            </div>
+            <p class="proof">Ücretsiz. Kart bilgisi istemez. 68 meslek, 700'den fazla beceri tanımıyla çalışır.</p>
+        </div>
+
+        <div class="review" aria-label="Örnek CV değerlendirmesi">
+            <partial name="_ScoreRing" model="(78, 104)" />
+            <article class="paper" aria-hidden="true">
+                <div class="p-name">Deniz Arslan</div>
+                <div class="p-role">Backend Geliştirici · İzmir</div>
+                <div class="p-h">PROFESYONEL ÖZET</div>
+                <p>5 yıllık deneyime sahip, <span class="mark-hl">C# ve .NET ile ölçeklenebilir API'ler</span> geliştiren yazılımcı.
+                    <span class="mark-strike">Takım oyuncusuyum, motivasyonum yüksektir.</span></p>
+                <div class="p-h">İŞ DENEYİMİ</div>
+                <strong>Kıdemli Geliştirici · Lojistik Teknolojileri A.Ş.</strong>
+                <ul>
+                    <li><span class="mark-hl mark-delay-1">Sipariş servisinin yanıt süresini %42 kısalttım.</span></li>
+                    <li>Ekip için kod inceleme sürecini kurdum.</li>
+                    <li>Azure üzerinde CI/CD hattını devreye aldım.</li>
+                </ul>
+                <div class="p-h">BECERİLER</div>
+                <p>C#, ASP.NET Core, SQL Server, <span class="mark-hl mark-delay-2">Docker</span>, Git</p>
+            </article>
+            <div class="note note-1" aria-hidden="true"><b>Güçlü madde</b>Ölçülebilir sonuç var. Diğer maddeleri de böyle yazın.</div>
+            <div class="note note-2" aria-hidden="true"><b>Kalıp ifade</b>Bunun yerine takım çalışmasını gösteren bir başarı yazın.</div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt" id="nasil">
+    <div class="container">
+        <h2>Dört adımda daha çok geri dönüş</h2>
+        <p class="intro">Her adım bir öncekinin çıktısını kullanır; CV'nizi bir kez yüklemeniz yeterli.</p>
+        <ol class="steps">
+            <li>
+                <h3>CV'nizi yükleyin</h3>
+                <p>PDF, Word veya düz metin. Metin okunur ve düzenlenebilir bölümlere ayrılır.</p>
+            </li>
+            <li>
+                <h3>Puanınızı ve önerileri görün</h3>
+                <p>Kapsam, yapı, anlatım, ATS okunabilirliği ve meslek eşleşmesi ayrı ayrı puanlanır.</p>
+            </li>
+            <li>
+                <h3>Düzeltip indirin</h3>
+                <p>Önerileri editörde uygulayın, dört ATS uyumlu şablondan birini seçip PDF alın.</p>
+            </li>
+            <li>
+                <h3>Uygun işlere başvurun</h3>
+                <p>CV'nize göre puanlanmış ilanlar ve LinkedIn, Indeed, Kariyer.net aramaları tek listede.</p>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="section" id="ozellikler">
+    <div class="container">
+        <h2>Ücretli CV hizmetlerinin yaptığı her şey</h2>
+        <p class="intro">Analizler kural tabanlı ve açıklanabilir bir motorla yapılır. İsterseniz kendi yapay zeka anahtarınızı veya bilgisayarınızda çalışan bir modeli bağlayarak yorumları zenginleştirebilirsiniz.</p>
+        <div class="features">
+            <div class="feature">
+                <h3><svg class="icon"><use href="#i-score" /></svg>CV puanı ve ATS kontrolü</h3>
+                <p>İletişim bilgileri, bölüm başlıkları, tarih biçimleri, uzunluk ve simge kullanımı tek tek kontrol edilir; neyin neden eksik olduğu yazılır.</p>
+            </div>
+            <div class="feature">
+                <h3><svg class="icon"><use href="#i-gap" /></svg>Eksik beceri tespiti</h3>
+                <p>Yazılımdan hemşireliğe 68 meslek için olmazsa olmaz, önemli ve artı değer becerileri CV'nizle karşılaştırır, nasıl öğreneceğinizi önerir.</p>
+            </div>
+            <div class="feature">
+                <h3><svg class="icon"><use href="#i-money" /></svg>Maaş tahmini</h3>
+                <p>Deneyim seviyenize ve şehrinize göre net aylık aralık. Hesaplama yöntemi her raporda açıkça gösterilir.</p>
+            </div>
+            <div class="feature">
+                <h3><svg class="icon"><use href="#i-path" /></svg>Kariyer yolu</h3>
+                <p>Bulunduğunuz basamağı ve bir sonraki unvana geçmek için odaklanmanız gereken becerileri görün.</p>
+            </div>
+            <div class="feature">
+                <h3><svg class="icon"><use href="#i-doc" /></svg>CV oluşturucu ve PDF</h3>
+                <p>Klasik, Modern, Kompakt ve Profesyonel şablonlar. Hepsi metin tabanlı, ATS'nin okuyabileceği şekilde hazırlanır.</p>
+            </div>
+            <div class="feature">
+                <h3><svg class="icon"><use href="#i-target" /></svg>İlana göre uyarlama</h3>
+                <p>İlan metnini yapıştırın; eşleşen ve eksik anahtar kelimeleri, özetinizi ilana göre nasıl yazacağınızı görün.</p>
+            </div>
+            <div class="feature">
+                <h3><svg class="icon"><use href="#i-briefcase" /></svg>İş önerileri</h3>
+                <p>Resmi ilan API'lerinden gelen ilanlar CV'nizle eşleşme puanına göre sıralanır; kaydettiklerinizi panoda takip edersiniz.</p>
+            </div>
+            <div class="feature">
+                <h3><svg class="icon"><use href="#i-letter" /></svg>Ön yazı</h3>
+                <p>CV'nizden ve ilandan kişiselleştirilmiş ön yazı taslağı. Düzenleyin, kopyalayın, başvurunuza ekleyin.</p>
+            </div>
+            <div class="feature">
+                <h3><svg class="icon"><use href="#i-shield" /></svg>Verileriniz sizde</h3>
+                <p>Platform kendi sunucunuzda çalışır. CV'leriniz üçüncü taraflara satılmaz; yapay zeka bağlamazsanız hiçbir yere gönderilmez.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-alt" id="sss">
+    <div class="container">
+        <h2>Sık sorulanlar</h2>
+        <details class="faq">
+            <summary>Gerçekten ücretsiz mi?</summary>
+            <p>Evet. Analiz, CV oluşturma, PDF indirme ve başvuru takibi ücretsizdir. İlan API'leri ve yapay zeka sağlayıcıları için kendi ücretsiz anahtarlarınızı kullanabilirsiniz.</p>
+        </details>
+        <details class="faq">
+            <summary>ATS nedir, CV'm neden ondan geçmeli?</summary>
+            <p>Aday takip sistemleri (ATS), başvuruları insan görmeden önce okuyup filtreler. Görsel ağırlıklı, standart dışı başlıklı veya tarihleri okunamayan CV'ler bu aşamada elenebilir.</p>
+        </details>
+        <details class="faq">
+            <summary>Maaş tahmini neye dayanıyor?</summary>
+            <p>Her meslek için junior ve kıdemli seviyeye ait katsayılar, güncel net asgari ücret ve şehir katsayısı ile çarpılır. Sonuç bir piyasa araştırması değil, yön gösteren bir aralıktır; katsayılar yönetici tarafından güncellenebilir.</p>
+        </details>
+        <details class="faq">
+            <summary>LinkedIn ve Indeed ilanlarını nasıl buluyorsunuz?</summary>
+            <p>Sitelerin kullanım koşullarına uymak için ilan sayfaları kazınmaz. Resmi ilan API'leri (Jooble, JSearch) kullanılır ve her site için CV'nize göre hazırlanmış arama bağlantıları verilir.</p>
+        </details>
+        <details class="faq">
+            <summary>Taranmış (fotoğraf) PDF yükleyebilir miyim?</summary>
+            <p>Hayır; metni seçilemeyen PDF'ler ATS tarafından da okunamaz. Word dosyanızı veya metin tabanlı bir PDF'i yükleyin; ya da CV'nizi editörde sıfırdan oluşturun.</p>
+        </details>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="cta-band">
+            <h2>Bir sonraki başvurunuz yanıtsız kalmasın.</h2>
+            <a class="btn btn-lg" href="@startUrl">CV'mi ücretsiz analiz et</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,5 @@
+{
+  "avoid": ["JobStep", "jobstep"],
+  "domains": ["jobstep.io", "app.jobstep.io"],
+  "colors": []
+}

@@ -1,0 +1,102 @@
+@model JobsViewModel
+@{
+    ViewData["Title"] = "İş önerileri";
+    var q = Model.Query;
+    var res = Model.Result;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
+<div class="page-head">
+    <div><h1>İş önerileri</h1><p>İlanlar CV'nizdeki becerilerle ve aradığınız pozisyonla eşleşmesine göre sıralanır.</p></div>
+</div>
+
+<form method="get" class="panel" style="margin-bottom:var(--s-5)">
+    <div class="grid-3">
+        <label class="field"><span class="label">CV</span>
+            <select class="select" name="ResumeId">
+                <option value="">CV kullanma</option>
+                @foreach (var r in Model.Resumes)
+                {
+                    if (r.Id == q.ResumeId) { <option value="@r.Id" selected>@r.Title</option> }
+                    else { <option value="@r.Id">@r.Title</option> }
+                }
+            </select>
+        </label>
+        <label class="field"><span class="label">Pozisyon / anahtar kelime</span><input class="input" name="Keywords" value="@q.Keywords" placeholder="Boşsa CV'nizden belirlenir" /></label>
+        <label class="field"><span class="label">Konum</span><input class="input" name="Location" value="@q.Location" placeholder="İstanbul, Ankara, Uzaktan..." /></label>
+    </div>
+    <button type="submit" class="btn btn-primary">İş ara</button>
+</form>
+
+@if (res is null)
+{
+    <div class="empty"><h2>Aramaya bir CV ile başlayın</h2><p>CV seçtiğinizde pozisyon ve şehir CV'nizden alınır; dilerseniz değiştirebilirsiniz.</p><a class="btn btn-primary" href="/cv/yukle">CV yükle</a></div>
+}
+else
+{
+    foreach (var w in res.Warnings)
+    {
+        <div class="alert alert-warning" role="status"><span>@w</span></div>
+    }
+    <div class="layout-aside">
+        <section>
+            <div class="panel-head">
+                <h2>"@res.Keywords" için @res.Listings.Count ilan</h2>
+                @if (res.ActiveProviders.Count > 0) { <span class="small muted">Kaynak: @string.Join(", ", res.ActiveProviders)</span> }
+            </div>
+            @if (res.Listings.Count == 0)
+            {
+                <div class="empty"><h2>Doğrudan ilan listesi yok</h2><p>Sağdaki bağlantılarla aynı aramayı LinkedIn, Indeed ve Kariyer.net'te açabilirsiniz.</p></div>
+            }
+            else
+            {
+                <div class="jobs">
+                    @foreach (var j in res.Listings)
+                    {
+                        <article class="job">
+                            <div>
+                                <h3>@j.Title</h3>
+                                <div class="meta">@j.Company@(j.Location is null ? "" : ", " + j.Location)</div>
+                                <div class="xs muted">@j.Source@(j.PostedAt is null ? "" : " — " + Fmt.Ago(j.PostedAt))@(j.EmploymentType is null ? "" : " — " + j.EmploymentType)</div>
+                            </div>
+                            <div class="match tone-@Fmt.Tone(j.MatchScore)" title="CV ile eşleşme">
+                                <div class="n">%@j.MatchScore</div>
+                                <div class="l">eşleşme</div>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(j.Snippet)) { <p class="snippet">@j.Snippet</p> }
+                            <div class="foot">
+                                <div class="chips">@foreach (var s in j.MatchedSkills) { <span class="chip chip-ok">@s</span> }</div>
+                                <div class="actions">
+                                    <form method="post" asp-antiforgery="true" action="/isler/takibe-al" data-no-loading>
+                                        <input type="hidden" name="JobTitle" value="@j.Title" />
+                                        <input type="hidden" name="Company" value="@j.Company" />
+                                        <input type="hidden" name="Location" value="@j.Location" />
+                                        <input type="hidden" name="Url" value="@j.Url" />
+                                        <input type="hidden" name="Source" value="@j.Source" />
+                                        <input type="hidden" name="Description" value="@j.Snippet" />
+                                        <input type="hidden" name="MatchScore" value="@j.MatchScore" />
+                                        <input type="hidden" name="ResumeId" value="@q.ResumeId" />
+                                        <input type="hidden" name="returnUrl" value="@returnUrl" />
+                                        <button type="submit" class="btn btn-sm">Takibe al</button>
+                                    </form>
+                                    <a class="btn btn-sm btn-primary" href="@j.Url" target="_blank" rel="noopener noreferrer">İlanı aç <svg class="icon"><use href="#i-external" /></svg></a>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                </div>
+            }
+        </section>
+        <aside class="aside">
+            <div class="panel">
+                <h2>Sitelerde ara</h2>
+                <p class="small muted">Aynı arama, sitelerin kendi sonuç sayfasında açılır.</p>
+                <div class="sites">
+                    @foreach (var s in res.SiteLinks)
+                    {
+                        <a class="site-link" href="@s.Url" target="_blank" rel="noopener noreferrer"><span>@s.Site<br /><small>@s.Description</small></span><svg class="icon" style="width:18px;height:18px"><use href="#i-external" /></svg></a>
+                    }
+                </div>
+            </div>
+        </aside>
+    </div>
+}

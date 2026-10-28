@@ -1,0 +1,11 @@
+@model (int Value, int Size)
+@{
+    var tone = Fmt.Tone(Model.Value);
+}
+<div class="ring tone-@tone" data-value="@Model.Value" style="--size:@(Model.Size)px" role="img" aria-label="Puan @Model.Value / 100">
+    <svg viewBox="0 0 120 120">
+        <circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="10"/>
+        <circle class="value" cx="60" cy="60" r="52" fill="none" stroke-width="10" stroke-dasharray="326.73" stroke-dashoffset="@((326.73 * (1 - Model.Value / 100.0)).ToString(System.Globalization.CultureInfo.InvariantCulture))"/>
+    </svg>
+    <div class="center"><span class="num">@Model.Value</span><span class="of">/ 100</span></div>
+</div>

@@ -1,0 +1,33 @@
+@model UploadViewModel
+@{ ViewData["Title"] = "CV yükle"; }
+<div class="page-head"><div><h1>CV'nizi yükleyin</h1><p>Metin okunur, bölümlere ayrılır ve düzenlenebilir bir CV'ye dönüştürülür. Orijinal dosyanız saklanmaz.</p></div></div>
+
+<div class="layout-aside">
+    <form method="post" asp-antiforgery="true" enctype="multipart/form-data" class="panel">
+        <div asp-validation-summary="ModelOnly" class="alert alert-error" role="alert"></div>
+        <label class="dropzone" tabindex="0">
+            <input type="file" name="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" required />
+            <svg class="icon"><use href="#i-upload" /></svg>
+            <span class="file-name">Dosyayı buraya sürükleyin veya seçmek için tıklayın</span>
+            <span class="hint">PDF, DOCX veya TXT · en fazla 10 MB</span>
+        </label>
+        <div class="field" style="margin-top:var(--s-4)">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="input" placeholder="Örn. Backend Geliştirici CV 2026" />
+            <span class="hint">Boş bırakırsanız dosya adı kullanılır.</span>
+        </div>
+        <div class="actions">
+            <button type="submit" name="analyze" value="true" class="btn btn-primary btn-lg">Yükle ve analiz et</button>
+            <button type="submit" name="analyze" value="false" class="btn btn-lg">Yalnızca yükle</button>
+        </div>
+    </form>
+    <aside class="aside panel-flat">
+        <h3>En iyi sonuç için</h3>
+        <ul class="ticks">
+            <li class="ok"><span class="mark">✓</span><span>Metni seçilebilen bir PDF veya Word dosyası kullanın.</span></li>
+            <li class="ok"><span class="mark">✓</span><span>"İş Deneyimi", "Eğitim", "Beceriler" gibi standart başlıklar ATS'nin işini kolaylaştırır.</span></li>
+            <li class="ok"><span class="mark">✓</span><span>Tarihleri "03/2021 - Günümüz" biçiminde yazın.</span></li>
+            <li class="no"><span class="mark">!</span><span>Fotoğraftan taranmış CV'ler okunamaz.</span></li>
+        </ul>
+    </aside>
+</div>

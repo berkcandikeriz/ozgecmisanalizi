@@ -1,0 +1,22 @@
+@model (ExperienceItem Item, string Prefix)
+@{ var p = Model.Prefix; var e = Model.Item; }
+<div class="repeat-item">
+    <button type="button" class="btn btn-ghost btn-icon btn-sm remove" data-remove aria-label="Bu deneyimi kaldır"><svg class="icon"><use href="#i-x" /></svg></button>
+    <div class="grid-2">
+        <label class="field"><span class="label">Pozisyon</span><input class="input" name="@(p).Position" value="@e.Position" placeholder="Örn. Yazılım Geliştirici" /></label>
+        <label class="field"><span class="label">Şirket</span><input class="input" name="@(p).Company" value="@e.Company" /></label>
+    </div>
+    <div class="grid-3">
+        <label class="field"><span class="label">Başlangıç</span><input class="input" name="@(p).StartDate" value="@e.StartDate" placeholder="03/2021" /></label>
+        <label class="field"><span class="label">Bitiş</span><input class="input" name="@(p).EndDate" value="@e.EndDate" placeholder="05/2024" data-end-date disabled="@e.IsCurrent" /></label>
+        <label class="field"><span class="label">Konum</span><input class="input" name="@(p).Location" value="@e.Location" placeholder="İstanbul / Uzaktan" /></label>
+    </div>
+    <label class="check" style="margin:-6px 0 var(--s-3)">
+        <input type="checkbox" name="@(p).IsCurrent" value="true" data-current-toggle checked="@e.IsCurrent" />
+        <input type="hidden" name="@(p).IsCurrent" value="false" />
+        Halen burada çalışıyorum
+    </label>
+    <label class="field" style="margin-bottom:0"><span class="label">Sorumluluklar ve başarılar</span>
+        <textarea class="textarea" name="@(p).Description" placeholder="Her satıra bir madde. Eylem fiiliyle başlayın, sonucu sayıyla yazın.">@e.Description</textarea>
+    </label>
+</div>

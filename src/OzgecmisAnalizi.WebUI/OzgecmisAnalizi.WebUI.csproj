@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <RootNamespace>OzgecmisAnalizi.WebUI</RootNamespace>
+    <Description>ASP.NET Core MVC arayüzü. Veriye yalnızca OzgecmisAnalizi.API üzerinden erişir.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OzgecmisAnalizi.Core\OzgecmisAnalizi.Core.csproj" />
+    <ProjectReference Include="..\OzgecmisAnalizi.Entities\OzgecmisAnalizi.Entities.csproj" />
+  </ItemGroup>
+</Project>

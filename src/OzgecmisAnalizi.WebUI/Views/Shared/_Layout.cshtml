@@ -1,0 +1,104 @@
+@{
+    var signedIn = User.Identity?.IsAuthenticated == true;
+    var path = Context.Request.Path.Value ?? "/";
+    string? Current(string prefix) => path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ? "page" : null;
+    var title = ViewData["Title"] as string;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@(title is null ? "ÖzgeçmişAnalizi · Ücretsiz CV analizi" : title + " · ÖzgeçmişAnalizi")</title>
+    <meta name="description" content="CV'nizi ücretsiz analiz edin: ATS uyumu, eksik beceriler, maaş tahmini, kariyer yolu ve size uygun iş ilanları." />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+        // Tema yanıp sönmesini önlemek için CSS yüklenmeden önce uygulanır.
+        (function () {
+            var t = null;
+            try { t = localStorage.getItem("theme"); } catch (e) { }
+            if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", t);
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="icon" href="~/img/favicon.svg" type="image/svg+xml" />
+    @await RenderSectionAsync("Head", required: false)
+</head>
+<body>
+    <partial name="_Icons" />
+    <a class="skip-link" href="#main">İçeriğe geç</a>
+    <header class="site-header">
+        <div class="container bar">
+            <a class="brand" href="@(signedIn ? "/panel" : "/")"><partial name="_Brand" />ÖzgeçmişAnalizi</a>
+            <nav class="nav" id="site-nav" aria-label="Ana menü">
+                @if (signedIn)
+                {
+                    <a href="/panel" aria-current="@Current("/panel")">Panel</a>
+                    <a href="/cv" aria-current="@Current("/cv")">CV'lerim</a>
+                    <a href="/analizler" aria-current="@(Current("/analiz"))">Analizler</a>
+                    <a href="/isler" aria-current="@Current("/isler")">İş önerileri</a>
+                    <a href="/basvurular" aria-current="@Current("/basvurular")">Başvurular</a>
+                    <a href="/on-yazi" aria-current="@Current("/on-yazi")">Ön yazı</a>
+                    <a href="/meslekler" aria-current="@Current("/meslekler")">Meslekler</a>
+                }
+                else
+                {
+                    <a href="/#nasil">Nasıl çalışır</a>
+                    <a href="/#ozellikler">Özellikler</a>
+                    <a href="/meslekler" aria-current="@Current("/meslekler")">Meslekler</a>
+                    <a href="/#sss">Sorular</a>
+                }
+            </nav>
+            <div class="bar-end">
+                <button type="button" class="btn btn-ghost btn-icon theme-toggle" data-theme-toggle aria-label="Temayı değiştir">
+                    <svg class="icon sun"><use href="#i-sun" /></svg>
+                    <svg class="icon moon"><use href="#i-moon" /></svg>
+                </button>
+                @if (signedIn)
+                {
+                    <form method="post" asp-antiforgery="true" action="/hesap/cikis" class="hide-sm" data-no-loading>
+                        <button type="submit" class="btn btn-ghost btn-sm" title="@User.Identity!.Name">Çıkış</button>
+                    </form>
+                }
+                else
+                {
+                    <a class="btn btn-ghost btn-sm hide-sm" href="/hesap/giris">Giriş yap</a>
+                    <a class="btn btn-primary btn-sm" href="/hesap/kayit">Ücretsiz başla</a>
+                }
+                <button type="button" class="btn btn-ghost btn-icon menu-toggle" data-menu-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Menüyü aç">
+                    <svg class="icon"><use href="#i-menu" /></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main">
+        @if (ViewData["FullBleed"] is true)
+        {
+            <div class="container"><partial name="_Alerts" /></div>
+            @RenderBody()
+        }
+        else
+        {
+            <div class="container page">
+                <partial name="_Alerts" />
+                @RenderBody()
+            </div>
+        }
+    </main>
+
+    <footer class="site-footer">
+        <div class="container row">
+            <span>ÖzgeçmişAnalizi — CV'nizi ücretsiz ve açık kaynaklı araçlarla değerlendirin.</span>
+            <span><a href="/meslekler">Meslek rehberi</a> &nbsp; <a href="/gizlilik">Gizlilik</a></span>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

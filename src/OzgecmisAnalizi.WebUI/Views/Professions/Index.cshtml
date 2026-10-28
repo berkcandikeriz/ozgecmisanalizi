@@ -1,0 +1,40 @@
+@model ProfessionsViewModel
+@{ ViewData["Title"] = "Meslek rehberi"; }
+<div class="page-head">
+    <div><h1>Meslek rehberi</h1><p>@Model.Items.Count meslek için aranan beceriler, kariyer basamakları ve tahmini net maaş aralıkları.</p></div>
+</div>
+<form method="get" class="actions" style="margin-bottom:var(--s-5)">
+    <label class="visually-hidden" for="search">Ara</label>
+    <input class="input" id="search" name="search" value="@Model.Search" placeholder="Meslek veya beceri ara (örn. SQL, hemşire)" style="max-width:360px" />
+    <label class="visually-hidden" for="category">Kategori</label>
+    <select class="select" id="category" name="category" style="max-width:260px" data-autosubmit>
+        <option value="">Tüm kategoriler</option>
+        @foreach (var c in Model.Categories)
+        {
+            if (c == Model.Category) { <option value="@c" selected>@c</option> } else { <option value="@c">@c</option> }
+        }
+    </select>
+    <button class="btn" type="submit">Filtrele</button>
+</form>
+@if (Model.Items.Count == 0)
+{
+    <div class="empty"><h2>Sonuç bulunamadı</h2><p>Farklı bir kelime deneyin veya kategori filtresini kaldırın.</p><a class="btn" href="/meslekler">Filtreyi temizle</a></div>
+}
+@foreach (var group in Model.Items.GroupBy(i => i.Category))
+{
+    <section class="panel">
+        <h2>@group.Key</h2>
+        <div class="table-wrap">
+            <table class="table">
+                <thead><tr><th>Meslek</th><th>Beceri</th><th>Junior (net)</th><th>Kıdemli (net)</th></tr></thead>
+                <tbody>
+                    @foreach (var p in group)
+                    {
+                        <tr><td><a href="/meslekler/@p.Id"><strong>@p.Name</strong></a></td><td class="muted">@p.SkillCount</td><td class="nowrap">@Fmt.Money(p.JuniorNet)</td><td class="nowrap">@Fmt.Money(p.SeniorNet)</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+<p class="xs muted">Maaşlar, güncel net asgari ücrete endeksli meslek katsayılarıyla hesaplanan tahminlerdir.</p>

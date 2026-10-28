@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>OzgecmisAnalizi.Entities</RootNamespace>
+    <Description>Varlıklar, enum'lar ve istemcilerle paylaşılan DTO'lar. EF bağımlılığı yoktur.</Description>
+  </PropertyGroup>
+</Project>

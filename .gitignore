@@ -1,0 +1,35 @@
+## .NET
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+*.userprefs
+.vs/
+.idea/
+*.swp
+TestResults/
+publish/
+artifacts/
+
+## Gizli bilgiler
+appsettings.*.local.json
+appsettings.Local.json
+*.env
+.env*
+secrets.json
+
+## Çalışma zamanı
+logs/
+App_Data/uploads/
+*.db
+*.db-shm
+*.db-wal
+
+## Kurulum betiği çıktıları
+kurulum.log
+build.log
+
+## Replica referans ekran görüntüleri (asla yayınlanmaz)
+replica/screens/

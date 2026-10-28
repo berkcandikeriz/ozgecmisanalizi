@@ -1,0 +1,36 @@
+{
+  "color": {
+    "bg": "#0d1512",
+    "surface": "#141f1b",
+    "surface-2": "#1b2924",
+    "border": "#2a3a34",
+    "border-input": "#6f8279",
+    "text": "#e8efeb",
+    "text-muted": "#a3b3ab",
+    "accent": "#3cc7a8",
+    "accent-hover": "#5fd6bb",
+    "on-accent": "#06231c",
+    "accent-soft": "#173a32",
+    "highlight": "#f5a524",
+    "danger": "#f97066",
+    "success": "#4ade80",
+    "warning": "#fbbf24"
+  },
+  "pairs": [
+    ["text", "bg"],
+    ["text", "surface"],
+    ["text", "surface-2"],
+    ["text-muted", "bg"],
+    ["text-muted", "surface"],
+    ["on-accent", "accent"],
+    ["on-accent", "accent-hover"],
+    ["accent", "bg"],
+    ["accent", "surface"],
+    ["accent", "accent-soft"],
+    ["highlight", "surface"],
+    ["danger", "surface"],
+    ["success", "surface"],
+    ["warning", "surface"],
+    ["border-input", "surface", "ui"]
+  ]
+}

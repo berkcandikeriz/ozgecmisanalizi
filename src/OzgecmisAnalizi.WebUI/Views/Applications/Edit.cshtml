@@ -1,0 +1,43 @@
+@model JobApplicationDto
+@{
+    ViewData["Title"] = Model.JobTitle;
+    var resumes = (IReadOnlyList<ResumeListItemDto>)ViewBag.Resumes;
+}
+<div class="page-head">
+    <div><h1>@Model.JobTitle</h1><p>@Model.Company — eklenme @Fmt.Date(Model.CreatedAt)@(Model.AppliedAt is null ? "" : ", başvuru " + Fmt.Date(Model.AppliedAt.Value))</p></div>
+    <div class="actions">
+        <a class="btn" href="/on-yazi?jobTitle=@Uri.EscapeDataString(Model.JobTitle)&company=@Uri.EscapeDataString(Model.Company)&applicationId=@Model.Id"><svg class="icon"><use href="#i-letter" /></svg>Ön yazı yaz</a>
+        <form method="post" asp-antiforgery="true" action="/basvurular/@Model.Id/sil" data-confirm="Bu başvuru silinsin mi?"><button class="btn btn-ghost btn-danger" type="submit">Sil</button></form>
+    </div>
+</div>
+<form method="post" asp-antiforgery="true" class="panel" style="max-width:860px">
+    <div class="grid-2">
+        <label class="field"><span class="label">Pozisyon</span><input class="input" name="JobTitle" value="@Model.JobTitle" required /></label>
+        <label class="field"><span class="label">Şirket</span><input class="input" name="Company" value="@Model.Company" required /></label>
+        <label class="field"><span class="label">Konum</span><input class="input" name="Location" value="@Model.Location" /></label>
+        <label class="field"><span class="label">İlan bağlantısı</span><input class="input" type="url" name="Url" value="@Model.Url" /></label>
+        <label class="field"><span class="label">Aşama</span>
+            <select class="select" name="Stage">
+                @foreach (var s in Enum.GetValues<ApplicationStage>())
+                {
+                    if (s == Model.Stage) { <option value="@s" selected>@Fmt.Stage(s)</option> } else { <option value="@s">@Fmt.Stage(s)</option> }
+                }
+            </select>
+        </label>
+        <label class="field"><span class="label">Mülakat tarihi</span><input class="input" type="datetime-local" name="InterviewAt" value="@(Model.InterviewAt?.ToLocalTime().ToString("yyyy-MM-ddTHH:mm"))" /></label>
+        <label class="field"><span class="label">Kullanılan CV</span>
+            <select class="select" name="ResumeId">
+                <option value="">Seçilmedi</option>
+                @foreach (var r in resumes)
+                {
+                    if (r.Id == Model.ResumeId) { <option value="@r.Id" selected>@r.Title</option> } else { <option value="@r.Id">@r.Title</option> }
+                }
+            </select>
+        </label>
+        <label class="field"><span class="label">Eşleşme puanı</span><input class="input" type="number" min="0" max="100" name="MatchScore" value="@Model.MatchScore" /></label>
+    </div>
+    <input type="hidden" name="Source" value="@Model.Source" />
+    <label class="field"><span class="label">İlan açıklaması</span><textarea class="textarea" name="Description">@Model.Description</textarea></label>
+    <label class="field"><span class="label">Notlar</span><textarea class="textarea" name="Notes" placeholder="Görüştüğünüz kişi, sorulan sorular, maaş beklentisi...">@Model.Notes</textarea></label>
+    <div class="actions"><button type="submit" class="btn btn-primary">Kaydet</button><a class="btn btn-ghost" href="/basvurular">Panoya dön</a></div>
+</form>

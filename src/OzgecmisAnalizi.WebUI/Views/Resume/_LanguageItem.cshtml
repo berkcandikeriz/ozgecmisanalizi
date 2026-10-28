@@ -1,0 +1,23 @@
+@model (LanguageItem Item, string Prefix)
+@{ var p = Model.Prefix; var l = Model.Item; }
+<div class="repeat-item">
+    <button type="button" class="btn btn-ghost btn-icon btn-sm remove" data-remove aria-label="Bu dili kaldır"><svg class="icon"><use href="#i-x" /></svg></button>
+    <div class="grid-2">
+        <label class="field" style="margin-bottom:0"><span class="label">Dil</span><input class="input" name="@(p).Name" value="@l.Name" placeholder="İngilizce" /></label>
+        <label class="field" style="margin-bottom:0"><span class="label">Seviye</span>
+            <select class="select" name="@(p).Level">
+                @foreach (var level in Enum.GetValues<LanguageLevel>())
+                {
+                    if (level == l.Level)
+                    {
+                        <option value="@level" selected>@Fmt.Language(level)</option>
+                    }
+                    else
+                    {
+                        <option value="@level">@Fmt.Language(level)</option>
+                    }
+                }
+            </select>
+        </label>
+    </div>
+</div>

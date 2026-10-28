@@ -1,0 +1,10 @@
+@model (CertificateItem Item, string Prefix)
+@{ var p = Model.Prefix; var c = Model.Item; }
+<div class="repeat-item">
+    <button type="button" class="btn btn-ghost btn-icon btn-sm remove" data-remove aria-label="Bu sertifikayı kaldır"><svg class="icon"><use href="#i-x" /></svg></button>
+    <div class="grid-3">
+        <label class="field" style="margin-bottom:0"><span class="label">Sertifika / kurs</span><input class="input" name="@(p).Name" value="@c.Name" /></label>
+        <label class="field" style="margin-bottom:0"><span class="label">Veren kurum</span><input class="input" name="@(p).Issuer" value="@c.Issuer" /></label>
+        <label class="field" style="margin-bottom:0"><span class="label">Tarih</span><input class="input" name="@(p).Date" value="@c.Date" placeholder="2024" /></label>
+    </div>
+</div>

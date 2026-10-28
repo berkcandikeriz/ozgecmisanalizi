@@ -1,0 +1,47 @@
+@model RegisterViewModel
+@{ ViewData["Title"] = "Hesap oluştur"; ViewData["FullBleed"] = true; }
+<div class="auth">
+    <div class="panel">
+        <h1>Ücretsiz hesap oluşturun</h1>
+        <p class="muted">CV'leriniz, analizleriniz ve başvurularınız hesabınızda saklanır.</p>
+        <form method="post" asp-antiforgery="true" asp-action="Register" novalidate>
+            <div asp-validation-summary="ModelOnly" class="alert alert-error" role="alert"></div>
+            <div class="field">
+                <label asp-for="FullName"></label>
+                <input asp-for="FullName" class="input" autocomplete="name" autofocus />
+                <span asp-validation-for="FullName"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="input" autocomplete="email" />
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="field">
+                <label asp-for="City"></label>
+                <input asp-for="City" class="input" list="cities" autocomplete="address-level2" placeholder="Örn. İstanbul" />
+                <datalist id="cities">
+                    @foreach (var c in new[] { "İstanbul", "Ankara", "İzmir", "Bursa", "Kocaeli", "Antalya", "Konya", "Adana", "Eskişehir", "Gaziantep", "Kayseri", "Uzaktan" })
+                    {
+                        <option value="@c"></option>
+                    }
+                </datalist>
+                <span class="hint">Maaş tahmini şehir katsayısıyla hesaplanır.</span>
+            </div>
+            <div class="grid-2">
+                <div class="field">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="input" autocomplete="new-password" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input asp-for="ConfirmPassword" class="input" autocomplete="new-password" />
+                    <span asp-validation-for="ConfirmPassword"></span>
+                </div>
+            </div>
+            <p class="hint" style="margin-top:-8px">En az 8 karakter; harf ve rakam içermeli.</p>
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%">Hesap oluştur</button>
+        </form>
+        <p class="small muted" style="margin-top:var(--s-4)">Zaten hesabınız var mı? <a href="/hesap/giris">Giriş yapın</a></p>
+    </div>
+</div>
