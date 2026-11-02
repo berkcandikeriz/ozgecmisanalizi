@@ -20,7 +20,8 @@ public enum ResumeSection
 
 public interface IResumeTextParser
 {
-    ResumeContent Parse(string text);
+    /// <param name="links">Dosyanın bağlantı katmanından okunan adresler (metinde görünmeyebilir).</param>
+    ResumeContent Parse(string text, IReadOnlyList<string>? links = null);
 
     /// <summary>Metindeki bölüm başlıklarını ve satırlarını döndürür (analiz için de kullanılır).</summary>
     IReadOnlyDictionary<ResumeSection, List<string>> SplitSections(string text);
@@ -50,8 +51,12 @@ public sealed partial class ResumeTextParser : IResumeTextParser
     [GeneratedRegex(@"(?:\+?90[\s\-]?)?\(?0?5\d{2}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}|\+\d{1,3}[\s\-]?\d{2,4}[\s\-]?\d{3}[\s\-]?\d{2,4}")]
     private static partial Regex PhoneRegex();
 
-    [GeneratedRegex(@"(?:https?://)?(?:[a-z]{2,3}\.)?linkedin\.com/in/[A-Za-z0-9\-_%]+/?", RegexOptions.IgnoreCase)]
+    [GeneratedRegex(@"(?:https?://)?(?:[a-z]{2,3}\.)?linkedin\.com/in/[\p{L}0-9\-_%]+/?", RegexOptions.IgnoreCase)]
     private static partial Regex LinkedInRegex();
+
+    /// <summary>"LinkedIn: berkcan-dikeriz", "in/berkcan" gibi alan adı yazılmamış profil ifadeleri.</summary>
+    [GeneratedRegex(@"(?:linkedin\s*:\s*(?:in/)?|(?<![\p{L}/])in/)(?<handle>[\p{L}0-9][\p{L}0-9\-_%]{2,})", RegexOptions.IgnoreCase)]
+    private static partial Regex LinkedInHandleRegex();
 
     [GeneratedRegex(@"(?:https?://)?(?:www\.)?(?:github\.com/[A-Za-z0-9\-_]+|[a-z0-9\-]+\.(?:dev|io|me|com\.tr|com)(?:/[^\s]*)?)", RegexOptions.IgnoreCase)]
     private static partial Regex WebsiteRegex();
@@ -93,12 +98,13 @@ public sealed partial class ResumeTextParser : IResumeTextParser
         return result;
     }
 
-    public ResumeContent Parse(string text)
+    public ResumeContent Parse(string text, IReadOnlyList<string>? links = null)
     {
         var sections = SplitSections(text);
         var content = new ResumeContent();
 
         ParseContact(text, sections[ResumeSection.Header], content.Personal);
+        ApplyLinks(links, content.Personal);
 
         if (sections.TryGetValue(ResumeSection.Summary, out var summary))
         {
@@ -155,10 +161,33 @@ public sealed partial class ResumeTextParser : IResumeTextParser
             return null;
         }
 
-        var key = line.TrimEnd(':', '.', ' ').ToSearchKey();
+        var key = line.Trim().TrimStart('•', '-', '#', '|', '▪', '►').TrimEnd(':', '.', ' ', '|').ToSearchKey();
+        if (key.Length == 0)
+        {
+            return null;
+        }
+
+        // Tam eşleşme: "Eğitim", "İŞ DENEYİMİ".
         foreach (var (section, keys) in Headings)
         {
             if (keys.Any(k => key == k))
+            {
+                return section;
+            }
+        }
+
+        // Ek almış kısa başlıklar: "Eğitim Bilgilerim", "Beceriler ve Araçlar", "Deneyim (5 yıl)".
+        // Cümle olmaması için en fazla 4 kelime ve tamamı büyük harf ya da başlık biçiminde olmalı.
+        var words = key.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var looksLikeHeading = words.Length <= 4 && (line.ToUpperInvariant() == line || char.IsUpper(line.TrimStart()[0]));
+        if (!looksLikeHeading)
+        {
+            return null;
+        }
+
+        foreach (var (section, keys) in Headings)
+        {
+            if (keys.Any(k => key.StartsWith(k + " ", StringComparison.Ordinal)))
             {
                 return section;
             }
@@ -173,9 +202,31 @@ public sealed partial class ResumeTextParser : IResumeTextParser
         personal.Phone = PhoneRegex().Match(fullText).Value.Trim().NullIfEmpty();
         var linkedin = LinkedInRegex().Match(fullText).Value;
         personal.LinkedIn = linkedin.NullIfEmpty();
-
-        foreach (Match m in WebsiteRegex().Matches(fullText))
+        if (personal.LinkedIn is null)
         {
+            var handle = LinkedInHandleRegex().Match(fullText);
+            if (handle.Success)
+            {
+                personal.LinkedIn = "linkedin.com/in/" + handle.Groups["handle"].Value.TrimEnd('.', ',', ')');
+            }
+        }
+
+        // Kişisel site yalnızca iletişim bölgesinde aranır; deneyimlerdeki şirket alan adları web sitesi sanılmasın.
+        // GitHub profili ise CV'nin herhangi bir yerinde olabilir.
+        var contactRegion = string.Join("\n", headerLines.Take(12));
+        var github = Regex.Match(fullText, @"(?:https?://)?(?:www\.)?github\.com/[A-Za-z0-9\-_]+", RegexOptions.IgnoreCase);
+        if (github.Success)
+        {
+            personal.Website = github.Value;
+        }
+
+        foreach (Match m in WebsiteRegex().Matches(contactRegion))
+        {
+            if (personal.Website is not null)
+            {
+                break;
+            }
+
             if (!m.Value.Contains("linkedin", StringComparison.OrdinalIgnoreCase) && !m.Value.Contains('@')
                 && (personal.Email is null || !personal.Email.Contains(m.Value, StringComparison.OrdinalIgnoreCase)))
             {
@@ -194,11 +245,58 @@ public sealed partial class ResumeTextParser : IResumeTextParser
             personal.Title = titleLine;
         }
 
-        var cityLine = candidates.FirstOrDefault(l => TurkishCities.Any(c => l.ToSearchKey().Contains(c.ToSearchKey())));
-        if (cityLine is not null)
+        // Şehir: kelime sınırıyla ara ("Van" ≠ "Vanessa", "Kars" ≠ "karşılaştırma"); önce başlık bölgesi, sonra ilk satırlar.
+        var region = string.Join(" ", headerLines.Take(10)) + " " + string.Join(" ", fullText.Split('\n').Take(12));
+        var tokens = " " + System.Text.RegularExpressions.Regex.Replace(region.ToSearchKey(), @"[^a-z0-9]+", " ") + " ";
+        var city = TurkishCities.FirstOrDefault(c => tokens.Contains(" " + c.ToSearchKey() + " ", StringComparison.Ordinal));
+        if (city is not null)
         {
-            personal.City = TurkishCities.First(c => cityLine.ToSearchKey().Contains(c.ToSearchKey()));
+            personal.City = city;
         }
+        else if (tokens.Contains(" uzaktan ", StringComparison.Ordinal) || tokens.Contains(" remote ", StringComparison.Ordinal))
+        {
+            personal.City = "Uzaktan";
+        }
+    }
+
+    /// <summary>Bağlantı katmanındaki adresleri LinkedIn ve web sitesi alanlarına yerleştirir.</summary>
+    private static void ApplyLinks(IReadOnlyList<string>? links, PersonalInfo personal)
+    {
+        if (links is null || links.Count == 0)
+        {
+            return;
+        }
+
+        var linkedin = links.FirstOrDefault(l => l.Contains("linkedin.com", StringComparison.OrdinalIgnoreCase));
+        if (linkedin is not null && (personal.LinkedIn is null || !personal.LinkedIn.Contains("linkedin.com", StringComparison.OrdinalIgnoreCase)))
+        {
+            personal.LinkedIn = CleanUrl(linkedin);
+        }
+
+        if (personal.Website is null)
+        {
+            var site = links.FirstOrDefault(l => !l.Contains("linkedin.com", StringComparison.OrdinalIgnoreCase)
+                                                  && !l.Contains("mailto:", StringComparison.OrdinalIgnoreCase)
+                                                  && !l.Contains("wa.me", StringComparison.OrdinalIgnoreCase));
+            if (site is not null)
+            {
+                personal.Website = CleanUrl(site);
+            }
+        }
+    }
+
+    private static string CleanUrl(string url)
+    {
+        var u = url.Trim().TrimEnd('/');
+        foreach (var prefix in new[] { "https://", "http://" })
+        {
+            if (u.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            {
+                u = u[prefix.Length..];
+            }
+        }
+
+        return u.StartsWith("www.", StringComparison.OrdinalIgnoreCase) ? u[4..] : u;
     }
 
     private static List<ExperienceItem> ParseExperiences(List<string> lines)
@@ -515,11 +613,18 @@ public sealed partial class ResumeTextParser : IResumeTextParser
         ["korece"] = "Korece", ["portekizce"] = "Portekizce", ["felemenkce"] = "Felemenkçe"
     };
 
+    /// <summary>Türkiye'nin 81 ili (şehir tespiti ve maaş katsayısı için).</summary>
     public static readonly string[] TurkishCities =
     [
-        "İstanbul", "Ankara", "İzmir", "Bursa", "Kocaeli", "Antalya", "Konya", "Adana", "Gaziantep", "Kayseri",
-        "Eskişehir", "Mersin", "Sakarya", "Tekirdağ", "Denizli", "Samsun", "Trabzon", "Manisa", "Muğla", "Aydın",
-        "Balıkesir", "Malatya", "Diyarbakır", "Şanlıurfa", "Hatay", "Erzurum", "Edirne", "Çanakkale", "Bolu", "Düzce"
+        "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Aksaray", "Amasya", "Ankara", "Antalya", "Ardahan", "Artvin",
+        "Aydın", "Balıkesir", "Bartın", "Batman", "Bayburt", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur",
+        "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Düzce", "Edirne", "Elazığ", "Erzincan",
+        "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Iğdır", "Isparta", "İstanbul",
+        "İzmir", "Kahramanmaraş", "Karabük", "Karaman", "Kars", "Kastamonu", "Kayseri", "Kırıkkale", "Kırklareli", "Kırşehir",
+        "Kilis", "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Mardin", "Mersin", "Muğla", "Muş",
+        "Nevşehir", "Niğde", "Ordu", "Osmaniye", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas",
+        "Şanlıurfa", "Şırnak", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Uşak", "Van", "Yalova", "Yozgat",
+        "Zonguldak"
     ];
 }
 

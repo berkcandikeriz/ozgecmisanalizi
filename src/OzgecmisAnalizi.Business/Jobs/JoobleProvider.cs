@@ -13,9 +13,12 @@ public sealed partial class JoobleProvider(HttpClient http, IOptions<JobSearchOp
 
     public string Name => "Jooble";
     public bool IsEnabled => _o.Enabled;
+    public JobProviderScope Scope => JobProviderScope.Turkey;
+    public string Homepage => "https://tr.jooble.org";
 
-    public async Task<IReadOnlyList<RawJob>> SearchAsync(string keywords, string? location, int page, CancellationToken ct)
+    public async Task<IReadOnlyList<RawJob>> SearchAsync(JobQuery query, CancellationToken ct)
     {
+        var (keywords, location, page) = (query.Keywords, query.Location, query.Page);
         var url = _o.BaseUrl.TrimEnd('/') + "/" + _o.ApiKey;
         using var response = await http.PostAsJsonAsync(url, new { keywords, location = location ?? string.Empty, page = page.ToString() }, ct);
         response.EnsureSuccessStatusCode();

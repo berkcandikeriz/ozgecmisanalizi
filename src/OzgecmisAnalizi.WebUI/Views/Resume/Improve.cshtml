@@ -1,0 +1,164 @@
+@model ImprovementPreviewDto
+@{
+    ViewData["Title"] = "Önerileri uygula";
+    var changes = Model.Changes;
+    string KindLabel(string kind) => kind switch { "added" => "Eklendi", "removed" => "Kaldırıldı", "reordered" => "Sıra değişti", _ => "Değişti" };
+}
+
+<div class="page-head">
+    <div>
+        <h1>Önerileri uygula</h1>
+        <p>
+            <strong>@Model.ResumeTitle</strong> için @changes.Count değişiklik hazırlandı. Henüz hiçbir şey kaydedilmedi:
+            istemediklerinizin işaretini kaldırın, metinleri dilerseniz düzenleyin, sonra kaydedin.
+        </p>
+    </div>
+    <div class="actions">
+        @if (Model.AnalysisId is not null)
+        {
+            <a class="btn" href="/analiz/@Model.AnalysisId">Analize dön@(Model.Score is null ? "" : $" ({Model.Score})")</a>
+        }
+        <a class="btn" href="/cv/@Model.ResumeId/duzenle"><svg class="icon"><use href="#i-pen" /></svg>Elle düzenle</a>
+    </div>
+</div>
+
+<form method="post" asp-antiforgery="true" action="/cv/@Model.ResumeId/iyilestir" id="improve-form">
+    <input type="hidden" name="PreviousScore" value="@Model.Score" />
+
+    <div class="layout-aside">
+        <div class="stack">
+            @if (changes.Count == 0)
+            {
+                <div class="empty">
+                    <h2>Otomatik uygulanacak öneri kalmadı</h2>
+                    <p>Kalan iyileştirmeler sizin bilginizi gerektiriyor (sayılar, bağlantılar, diller). Sağdaki listeye göre CV'nizi düzenleyin.</p>
+                    <a class="btn btn-primary" href="/cv/@Model.ResumeId/duzenle">CV'yi düzenle</a>
+                </div>
+            }
+            else
+            {
+                <div class="diff-toolbar">
+                    <span class="small"><b id="selected-count">@changes.Count</b> / @changes.Count değişiklik seçili</span>
+                    <span class="actions">
+                        <button type="button" class="btn btn-sm btn-ghost" data-select="all">Tümünü seç</button>
+                        <button type="button" class="btn btn-sm btn-ghost" data-select="none">Hiçbirini seçme</button>
+                    </span>
+                    <span class="diff-legend small"><del>silinen</del> <ins>eklenen</ins></span>
+                </div>
+            }
+
+            @for (var i = 0; i < changes.Count; i++)
+            {
+                var c = changes[i];
+                <article class="change" data-change>
+                    <header class="change-head">
+                        <label class="check">
+                            <input type="checkbox" name="Selected" value="@i" checked data-change-toggle />
+                            <span><span class="muted">@c.Section ·</span> <b>@c.Label</b></span>
+                        </label>
+                        <span class="badge @(c.Kind == "added" ? "badge-good" : c.Kind == "reordered" ? "badge-accent" : "badge-mid")">@KindLabel(c.Kind)</span>
+                        @if (c.Source != "Kural motoru") { <span class="badge badge-accent">@c.Source</span> }
+                    </header>
+                    <p class="change-reason">@c.Reason</p>
+                    @if (c.Tip is not null)
+                    {
+                        <p class="change-tip"><b>Daha da güçlendirmek için:</b> @c.Tip</p>
+                    }
+
+                    <input type="hidden" name="Changes[@i].Path" value="@c.Path" />
+
+                    @if (c.Format == "list")
+                    {
+                        var (kept, added, removed) = TextDiff.Items(c.Before, c.After);
+                        <div class="chips">
+                            @foreach (var s in added) { <span class="chip chip-add">+ @s</span> }
+                            @foreach (var s in removed) { <span class="chip chip-del">– @s</span> }
+                            @foreach (var s in kept) { <span class="chip">@s</span> }
+                        </div>
+                        <input type="hidden" name="Changes[@i].After" value="@c.After" />
+                    }
+                    else if (c.Format == "order")
+                    {
+                        <div class="diff-panes">
+                            <div class="diff-pane"><div class="diff-pane-title">Önce</div><ol class="diff-order">@foreach (var line in (c.Before ?? "").Split('\n')) { <li>@line</li> }</ol></div>
+                            <div class="diff-pane"><div class="diff-pane-title">Sonra</div><ol class="diff-order">@foreach (var line in (c.After ?? "").Split('\n')) { <li>@line</li> }</ol></div>
+                        </div>
+                        <input type="hidden" name="Changes[@i].After" value="@c.After" />
+                    }
+                    else
+                    {
+                        var segments = TextDiff.Words(c.Before, c.After);
+                        <div class="diff-panes">
+                            <div class="diff-pane">
+                                <div class="diff-pane-title">Önce</div>
+                                <div class="diff-text">@if (string.IsNullOrWhiteSpace(c.Before)) { <span class="muted">(boş)</span> } else { foreach (var seg in segments.Where(s => s.Kind != DiffKind.Added)) { if (seg.Kind == DiffKind.Removed) { <del>@seg.Text</del> } else { @seg.Text } } }</div>
+                            </div>
+                            <div class="diff-pane">
+                                <div class="diff-pane-title">Sonra</div>
+                                <div class="diff-text">@foreach (var seg in segments.Where(s => s.Kind != DiffKind.Removed)) { if (seg.Kind == DiffKind.Added) { <ins>@seg.Text</ins> } else { @seg.Text } }</div>
+                            </div>
+                        </div>
+                        <details class="change-edit">
+                            <summary>Önerilen metni düzenle</summary>
+                            <textarea class="textarea" name="Changes[@i].After" rows="@Math.Clamp((c.After ?? "").Split('\n').Length + 1, 2, 14)">@c.After</textarea>
+                            <span class="hint">Kaydedilecek metin budur. Karşılaştırma yukarıda öneriyi gösterir.</span>
+                        </details>
+                    }
+                </article>
+            }
+        </div>
+
+        <aside class="aside stack">
+            @if (Model.ManualTodos.Count > 0)
+            {
+                <section class="panel">
+                    <h2>Sizin tamamlamanız gerekenler</h2>
+                    <p class="small muted">Bunlar otomatik eklenmez; çünkü yalnızca sizin bildiğiniz bilgiler gerekir ve uydurulmuş bir sayı ya da bağlantı CV'nize zarar verir.</p>
+                    <ul class="ticks">
+                        @foreach (var t in Model.ManualTodos)
+                        {
+                            <li class="no"><span class="mark">!</span><span>@t</span></li>
+                        }
+                    </ul>
+                </section>
+            }
+            <p class="xs muted">Motor: @Model.Engine</p>
+        </aside>
+    </div>
+
+    @if (changes.Count > 0)
+    {
+        <div class="sticky-save">
+            <div class="actions">
+                <fieldset class="save-mode">
+                    <legend class="visually-hidden">Kaydetme biçimi</legend>
+                    <label class="check"><input type="radio" name="SaveAsCopy" value="false" checked /> Bu CV'nin üzerine kaydet</label>
+                    <label class="check"><input type="radio" name="SaveAsCopy" value="true" /> Kopya olarak kaydet (orijinal korunur)</label>
+                </fieldset>
+                <label class="check"><input type="checkbox" name="Reanalyze" value="true" checked /><input type="hidden" name="Reanalyze" value="false" /> Kaydettikten sonra yeniden analiz et</label>
+                <button type="submit" class="btn btn-primary" data-loading-text>Seçilenleri uygula (<span id="apply-count">@changes.Count</span>)</button>
+            </div>
+        </div>
+    }
+</form>
+
+@section Scripts {
+    <script>
+        (function () {
+            const boxes = [...document.querySelectorAll("[data-change-toggle]")];
+            const sync = () => {
+                const n = boxes.filter(b => b.checked).length;
+                document.querySelectorAll("#selected-count, #apply-count").forEach(el => el.textContent = n);
+                boxes.forEach(b => b.closest("[data-change]").classList.toggle("is-off", !b.checked));
+                const submit = document.querySelector("#improve-form button[type=submit]");
+                if (submit) submit.disabled = n === 0;
+            };
+            boxes.forEach(b => b.addEventListener("change", sync));
+            document.querySelectorAll("[data-select]").forEach(btn => btn.addEventListener("click", () => {
+                boxes.forEach(b => b.checked = btn.dataset.select === "all");
+                sync();
+            }));
+            sync();
+        })();
+    </script>
+}

@@ -12,11 +12,19 @@ public sealed class AnalysisController(ApiClient api) : AppController(api)
         View(await Api.GetAsync<IReadOnlyList<AnalysisListItemDto>>("api/analyses", ct));
 
     [HttpGet("/analiz/{id:guid}")]
-    public async Task<IActionResult> Details(Guid id, CancellationToken ct)
+    public async Task<IActionResult> Details(Guid id, [FromQuery(Name = "onceki")] int? previousScore, CancellationToken ct)
     {
         var analysis = await Api.GetAsync<AnalysisDto>($"api/analyses/{id}", ct);
         var professions = await Api.GetAsync<IReadOnlyList<ProfessionListItemDto>>("api/professions", ct);
-        return View(new AnalysisViewModel { Analysis = analysis, Professions = professions });
+
+        if (previousScore is null)
+        {
+            // Aynı CV'nin bir önceki analizi varsa puan farkı gösterilir.
+            var history = await Api.GetAsync<IReadOnlyList<AnalysisListItemDto>>($"api/analyses?resumeId={analysis.ResumeId}", ct);
+            previousScore = history.Where(h => h.CreatedAt < analysis.CreatedAt).OrderByDescending(h => h.CreatedAt).FirstOrDefault()?.OverallScore;
+        }
+
+        return View(new AnalysisViewModel { Analysis = analysis, Professions = professions, PreviousScore = previousScore });
     }
 
     [HttpGet("/analiz/{id:guid}/rapor")]

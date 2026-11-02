@@ -1,0 +1,92 @@
+@model ChatViewModel
+@{ ViewData["Title"] = "CV danışmanı"; }
+<div class="page-head">
+    <div>
+        <h1>CV danışmanı</h1>
+        <p><strong>@Model.Resume.Title</strong> hakkında soru sorun: bir maddeyi nasıl yazacağınız, özetin nasıl olacağı, hangi becerinin eksik olduğu.</p>
+    </div>
+    <div class="actions">
+        <a class="btn" href="/cv/@Model.Resume.Id/duzenle"><svg class="icon"><use href="#i-pen" /></svg>CV'yi düzenle</a>
+        @if (Model.LastAnalysis is not null)
+        {
+            <a class="btn" href="/analiz/@Model.LastAnalysis.Id">Son analiz: @Model.LastAnalysis.OverallScore</a>
+        }
+    </div>
+</div>
+
+<div class="layout-aside">
+    <section class="panel chat" aria-label="Sohbet">
+        <div class="chat-log" id="chat-log" aria-live="polite">
+            <div class="msg msg-ai">
+                Merhaba. CV'nizi ve @(Model.LastAnalysis is null ? "henüz yapılmamış analizinizi" : "son analizinizi") inceledim. Ne üzerinde çalışmak istersiniz?
+            </div>
+        </div>
+        <form class="chat-form" id="chat-form" data-no-loading>
+            @Html.AntiForgeryToken()
+            <label class="visually-hidden" for="chat-input">Sorunuz</label>
+            <textarea id="chat-input" class="textarea" rows="2" placeholder="Örn. Son işimdeki maddeleri ölçülebilir hale getirir misin?" required></textarea>
+            <button type="submit" class="btn btn-primary">Gönder</button>
+        </form>
+    </section>
+    <aside class="aside panel-flat">
+        <h3>Örnek sorular</h3>
+        <div class="stack" style="--gap:8px">
+            @foreach (var q in new[] { "Özetimi 70 kelimelik, ilana uygun hale getir.", "Deneyim maddelerimi eylem fiilleriyle yeniden yaz.", "Hangi becerileri önce öğrenmeliyim?", "ATS açısından CV'mde ne sorun var?", "Bir sonraki kariyer adımım için ne yapmalıyım?" })
+            {
+                <button type="button" class="btn btn-sm" style="justify-content:flex-start;white-space:normal;text-align:left;height:auto;padding:8px 12px" data-suggest="@q">@q</button>
+            }
+        </div>
+        <p class="xs muted" style="margin-top:var(--s-4)">Yapay zeka sağlayıcısı tanımlı değilse yanıtlar son analizinizden derlenir. Gemini, Groq veya bilgisayarınızda çalışan Ollama ücretsiz olarak bağlanabilir.</p>
+    </aside>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const log = document.getElementById("chat-log");
+            const form = document.getElementById("chat-form");
+            const input = document.getElementById("chat-input");
+            const token = form.querySelector("input[name=__RequestVerificationToken]").value;
+            const history = [];
+
+            function add(role, text) {
+                const div = document.createElement("div");
+                div.className = "msg " + (role === "user" ? "msg-user" : "msg-ai");
+                div.textContent = text;
+                log.appendChild(div);
+                log.scrollTop = log.scrollHeight;
+                return div;
+            }
+
+            async function send(text) {
+                if (!text.trim()) return;
+                add("user", text);
+                history.push({ role: "user", content: text });
+                input.value = "";
+                const pending = add("assistant", "Yazıyor…");
+                pending.classList.add("is-pending");
+                form.querySelector("button").disabled = true;
+                try {
+                    const res = await fetch(location.pathname, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json", "RequestVerificationToken": token },
+                        body: JSON.stringify({ messages: history })
+                    });
+                    const data = await res.json();
+                    pending.textContent = data.reply;
+                    pending.classList.remove("is-pending");
+                    history.push({ role: "assistant", content: data.reply });
+                } catch {
+                    pending.textContent = "Yanıt alınamadı. Bağlantınızı kontrol edip tekrar deneyin.";
+                } finally {
+                    form.querySelector("button").disabled = false;
+                    input.focus();
+                }
+            }
+
+            form.addEventListener("submit", e => { e.preventDefault(); send(input.value); });
+            input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input.value); } });
+            document.querySelectorAll("[data-suggest]").forEach(b => b.addEventListener("click", () => send(b.dataset.suggest)));
+        })();
+    </script>
+}

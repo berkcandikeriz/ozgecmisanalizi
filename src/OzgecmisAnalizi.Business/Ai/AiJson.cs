@@ -94,11 +94,12 @@ public static class AiPrompts
         ---
         """;
 
-    public static string CoverLetter(string resumeText, string jobTitle, string company, string? jobDescription, string tone) =>
+    public static string CoverLetter(string resumeText, string jobTitle, string company, string? jobDescription, string tone, string? styleReference = null) =>
         $"""
         Aşağıdaki CV'ye dayanarak "{company}" şirketindeki "{jobTitle}" pozisyonu için Türkçe bir ön yazı (cover letter) yaz.
-        Ton: {tone}. Uzunluk: 220-320 kelime, 4 paragraf. Selamlama ile başla, imza olarak CV'deki adı kullan.
+        Ton: {tone}. Uzunluk: 220-320 kelime, 4 paragraf; paragrafları boş satırla ayır. Selamlama ile başla, imza olarak CV'deki adı kullan.
         CV'de olmayan deneyim veya başarı uydurma. Yalnızca mektup metnini döndür.
+        {(styleReference is null ? "" : "Kullanıcının daha önce yazdığı şu ön yazının üslubunu, cümle uzunluğunu ve hitap biçimini örnek al; içeriğini kopyalama:\n---\n" + styleReference + "\n---")}
 
         İLAN (varsa):
         ---
@@ -108,5 +109,38 @@ public static class AiPrompts
         ---
         {resumeText}
         ---
+        """;
+}
+
+public sealed class AiImproveResponse
+{
+    public string? Summary { get; set; }
+    public List<AiImprovedExperience>? Experiences { get; set; }
+}
+
+public sealed class AiImprovedExperience
+{
+    public int Index { get; set; }
+    public List<string>? Bullets { get; set; }
+}
+
+public static class AiImprovePrompt
+{
+    public static string Build(string resumeJson, string? profession, IEnumerable<string> improvements) =>
+        $$"""
+        Aşağıdaki CV bölümlerini {{(profession is null ? "genel" : $"\"{profession}\"")}} pozisyonu için iyileştir.
+        Analiz önerileri: {{string.Join(" | ", improvements.Take(8))}}
+
+        KURALLAR:
+        - Kişinin yazmadığı hiçbir deneyimi, aracı, sayıyı, yüzdeyi veya başarıyı EKLEME. Sayı yoksa sayı uydurma.
+        - Her maddeyi güçlü bir eylem fiiliyle başlat, tek fikir ve en fazla 2 satır olsun, birinci tekil zamir kullanma.
+        - Özet 60-90 kelime, kalıp ifade (takım oyuncusu, dinamik vb.) içermesin.
+        - Türkçe yaz; teknoloji adlarını olduğu gibi bırak.
+
+        Yalnızca şu JSON biçiminde yanıt ver:
+        { "summary": "...", "experiences": [ { "index": 0, "bullets": ["...", "..."] } ] }
+
+        CV:
+        {{resumeJson}}
         """;
 }

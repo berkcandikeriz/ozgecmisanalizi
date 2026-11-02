@@ -69,8 +69,69 @@ public sealed class JobSearchOptions
         ["Eleman.net"] = "https://www.eleman.net/is-ilanlari?aranan={q}"
     };
 
+    /// <summary>Türkiye'den başvurulabilecek uzaktan iş bölgeleri (ilan konumunda geçmesi yeterli).</summary>
+    public List<string> RemoteRegions { get; set; } =
+        ["Worldwide", "Anywhere", "Global", "Europe", "EMEA", "EU", "Turkey", "Türkiye", "CET", "UTC"];
+
+    /// <summary>Uzaktan iş sağlayıcıları (Remotive, Jobicy, Arbeitnow) sonuçlara varsayılan olarak eklensin mi.</summary>
+    public bool IncludeRemoteByDefault { get; set; } = true;
+
     public JoobleOptions Jooble { get; set; } = new();
     public JSearchOptions JSearch { get; set; } = new();
+    public CareerjetOptions Careerjet { get; set; } = new();
+    public RemotiveOptions Remotive { get; set; } = new();
+    public JobicyOptions Jobicy { get; set; } = new();
+    public ArbeitnowOptions Arbeitnow { get; set; } = new();
+}
+
+/// <summary>
+/// Careerjet v4 — Türkiye (tr_TR) ilanları. Ücretsiz yayıncı hesabı: https://www.careerjet.com/partners/
+/// Anahtar girilmezse kapalıdır.
+/// </summary>
+public sealed class CareerjetOptions
+{
+    public string? ApiKey { get; set; }
+    public string BaseUrl { get; set; } = "https://search.api.careerjet.net/v4/query";
+    public string LocaleCode { get; set; } = "tr_TR";
+    public int PageSize { get; set; } = 20;
+    public int CacheMinutes { get; set; } = 30;
+
+    /// <summary>Yayıncı hesabında kayıtlı site adresi; Referer başlığı olarak gönderilir.</summary>
+    public string? Referer { get; set; }
+
+    /// <summary>Kullanıcı IP'si alınamazsa gönderilecek değer.</summary>
+    public string FallbackUserIp { get; set; } = "127.0.0.1";
+
+    public bool Enabled => !string.IsNullOrWhiteSpace(ApiKey);
+}
+
+/// <summary>Remotive herkese açık API'si — anahtar gerekmez. Koşullar gereği günde birkaç istek: besleme önbelleğe alınır.</summary>
+public sealed class RemotiveOptions
+{
+    public bool Enabled { get; set; } = true;
+    public string BaseUrl { get; set; } = "https://remotive.com/api/remote-jobs";
+    public int CacheHours { get; set; } = 6;
+    public int MaxResults { get; set; } = 15;
+}
+
+/// <summary>Jobicy herkese açık API'si (v2) — anahtar gerekmez. Saatte birden sık sorgulanmaz.</summary>
+public sealed class JobicyOptions
+{
+    public bool Enabled { get; set; } = true;
+    public string BaseUrl { get; set; } = "https://jobicy.com/api/v2/remote-jobs";
+    public int Count { get; set; } = 50;
+    public int CacheHours { get; set; } = 2;
+    public int MaxResults { get; set; } = 15;
+}
+
+/// <summary>Arbeitnow herkese açık API'si — anahtar gerekmez. Yalnızca uzaktan ilanlar alınır.</summary>
+public sealed class ArbeitnowOptions
+{
+    public bool Enabled { get; set; } = true;
+    public string BaseUrl { get; set; } = "https://www.arbeitnow.com/api/job-board-api";
+    public int Pages { get; set; } = 3;
+    public int CacheHours { get; set; } = 2;
+    public int MaxResults { get; set; } = 10;
 }
 
 /// <summary>Jooble ücretsiz API'si (Türkiye ilanlarını kapsar). Anahtar: https://jooble.org/api/about</summary>

@@ -16,3 +16,9 @@
 
 Daha zor çıkan: CV metninden yapı çıkarma (sezgisel; kullanıcı düzeltebilsin diye editöre yönlendiriliyor).
 Bulut ortamında .NET SDK indirilemediği için derleme ve testler kullanıcı makinesinde `kurulum.ps1` ile yapılır.
+
+## İş arama modülü revizyonu
+- Araştırma: LinkedIn (iş ortağı API), Indeed (Publisher API kapatıldı), Kariyer.net / Yenibiris / Eleman.net (herkese açık API yok).
+- Eklenen sağlayıcılar: Remotive, Jobicy, Arbeitnow (anahtarsız, önbellekli, atıflı) ve Careerjet v4 (tr_TR, ücretsiz anahtar).
+- Uzaktan ilanlar Türkçe unvanlar için katalogdaki İngilizce unvanlarla eşleştirilir; "Uzaktan ilanları da göster" seçeneği eklendi.
+- "Henüz bir ilan API'si yapılandırılmadı" uyarısı kaldırıldı; yerine sitelerin API durumunu açıklayan bilgi notu gösterilir.

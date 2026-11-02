@@ -6,6 +6,9 @@ public class JobSearchQuery
     public string? Location { get; set; }
     public Guid? ResumeId { get; set; }
     public int Page { get; set; } = 1;
+
+    /// <summary>Dünya genelindeki uzaktan çalışma ilanları da eklensin mi (boşsa sunucu varsayılanı).</summary>
+    public bool? IncludeRemote { get; set; }
 }
 
 public record JobListingDto(
@@ -20,7 +23,12 @@ public record JobListingDto(
     string? Salary,
     string? EmploymentType,
     int MatchScore,
-    IReadOnlyList<string> MatchedSkills);
+    IReadOnlyList<string> MatchedSkills,
+    bool IsTracked = false,
+    bool IsRemote = false);
+
+/// <summary>Sorgulanan ilan kaynağı ve kullanım koşullarının istediği atıf bağlantısı.</summary>
+public record JobProviderDto(string Name, string Homepage, string Scope, int Count);
 
 /// <summary>API anahtarı olmadan da çalışan, ilgili sitenin arama sonuç sayfasına giden bağlantı.</summary>
 public record JobSiteLinkDto(string Site, string Url, string Description);
@@ -31,4 +39,9 @@ public record JobSearchResultDto(
     IReadOnlyList<JobListingDto> Listings,
     IReadOnlyList<JobSiteLinkDto> SiteLinks,
     IReadOnlyList<string> ActiveProviders,
-    IReadOnlyList<string> Warnings);
+    IReadOnlyList<string> Warnings,
+    int Page = 1,
+    int HiddenCount = 0,
+    IReadOnlyList<JobProviderDto>? Providers = null,
+    IReadOnlyList<string>? Notices = null,
+    bool IncludeRemote = true);

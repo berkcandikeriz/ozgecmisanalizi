@@ -32,6 +32,19 @@
                     <option value="kısa ve öz">Kısa ve öz</option>
                 </select>
             </label>
+            @if (Model.Letters.Count > 0)
+            {
+                <label class="field"><span class="label">Üslup örneği (isteğe bağlı)</span>
+                    <select class="select" name="Form.StyleReferenceId">
+                        <option value="">Kullanma</option>
+                        @foreach (var l in Model.Letters)
+                        {
+                            <option value="@l.Id">@l.JobTitle, @l.Company</option>
+                        }
+                    </select>
+                    <span class="hint">Seçtiğiniz eski ön yazının üslubu örnek alınır, içeriği kopyalanmaz (yapay zeka gerekir).</span>
+                </label>
+            }
             <button type="submit" class="btn btn-primary btn-lg">Ön yazı oluştur</button>
         </form>
     }

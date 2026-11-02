@@ -169,6 +169,76 @@ public sealed class ResumeController(ApiClient api) : AppController(api)
         return View(model);
     }
 
+    [HttpPost("{id:guid}/uyarla/uygula")]
+    public async Task<IActionResult> ApplyTailoring(Guid id, TailorApplyRequest request, CancellationToken ct)
+    {
+        var result = await Api.PostAsync<TailorApplyResultDto>($"api/resumes/{id}/tailor/apply", request, ct);
+        Success(result.ApplicationId is null
+            ? "Uyarlanmış CV kopyası oluşturuldu. Kontrol edip PDF olarak indirebilirsiniz."
+            : "Uyarlanmış CV oluşturuldu ve başvuru panonuza \"Hazırlık\" aşamasında eklendi.");
+        return RedirectToAction(nameof(Edit), new { id = result.Resume.Id });
+    }
+
+    /// <summary>"Önerileri uygula": öneriler CV'ye uygulanmış hâliyle, önce/sonra karşılaştırmalı gösterilir.</summary>
+    [HttpGet("{id:guid}/iyilestir")]
+    public async Task<IActionResult> Improve(Guid id, [FromQuery(Name = "analiz")] Guid? analysisId, CancellationToken ct)
+    {
+        var url = $"api/resumes/{id}/improve" + (analysisId is null ? string.Empty : $"?analysisId={analysisId}");
+        return View(await Api.PostAsync<ImprovementPreviewDto>(url, null, ct));
+    }
+
+    [HttpPost("{id:guid}/iyilestir")]
+    public async Task<IActionResult> Improve(Guid id, ImproveFormModel form, CancellationToken ct)
+    {
+        var selected = form.Selected.Distinct().Where(i => i >= 0 && i < form.Changes.Count).Select(i => form.Changes[i]).ToList();
+        if (selected.Count == 0)
+        {
+            Error("Uygulamak için en az bir değişiklik seçin.");
+            return RedirectToAction(nameof(Improve), new { id });
+        }
+
+        var result = await Api.PostAsync<ImprovementApplyResultDto>($"api/resumes/{id}/improve/apply", new ImprovementApplyRequest
+        {
+            Changes = selected,
+            SaveAsCopy = form.SaveAsCopy,
+            Reanalyze = form.Reanalyze,
+            ProfessionId = form.ProfessionId,
+            City = User.FindFirst("city")?.Value
+        }, ct);
+
+        if (result.AnalysisId is { } newAnalysis)
+        {
+            var delta = form.PreviousScore is int before && result.NewScore is int after ? $" Puan: {before} → {after}." : string.Empty;
+            Success($"{result.AppliedCount} değişiklik uygulandı.{delta}");
+            return Redirect($"/analiz/{newAnalysis}" + (form.PreviousScore is int p ? $"?onceki={p}" : string.Empty));
+        }
+
+        Success($"{result.AppliedCount} değişiklik uygulandı. Kalan düzenlemeleri burada yapabilirsiniz.");
+        return RedirectToAction(nameof(Edit), new { id = result.Resume.Id });
+    }
+
+    [HttpGet("{id:guid}/danisman")]
+    public async Task<IActionResult> Chat(Guid id, CancellationToken ct)
+    {
+        var resume = await Api.GetAsync<ResumeDto>($"api/resumes/{id}", ct);
+        var analyses = await Api.GetAsync<IReadOnlyList<AnalysisListItemDto>>($"api/analyses?resumeId={id}", ct);
+        return View(new ChatViewModel { Resume = resume, LastAnalysis = analyses.FirstOrDefault() });
+    }
+
+    /// <summary>Sayfadaki sohbet kutusu bu uç noktayı fetch ile çağırır; geçmiş tarayıcıda tutulur.</summary>
+    [HttpPost("{id:guid}/danisman")]
+    public async Task<IActionResult> ChatSend(Guid id, [FromBody] ResumeChatRequest request, CancellationToken ct)
+    {
+        try
+        {
+            return Json(await Api.PostAsync<ResumeChatResponse>($"api/resumes/{id}/chat", request, ct));
+        }
+        catch (ApiException ex) when (ex.StatusCode is not System.Net.HttpStatusCode.Unauthorized)
+        {
+            return Json(new ResumeChatResponse(ex.Errors.FirstOrDefault() ?? ex.Message, "Hata"));
+        }
+    }
+
     private async Task<ResumeEditViewModel> BuildEditModelAsync(Guid id, ResumeSaveRequest request, CancellationToken ct)
     {
         var professions = await Api.GetAsync<IReadOnlyList<ProfessionListItemDto>>("api/professions", ct);

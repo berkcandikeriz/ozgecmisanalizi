@@ -34,7 +34,14 @@
     <header class="site-header">
         <div class="container bar">
             <a class="brand" href="@(signedIn ? "/panel" : "/")"><partial name="_Brand" />ÖzgeçmişAnalizi</a>
+            <div class="nav-backdrop" data-menu-close aria-hidden="true"></div>
             <nav class="nav" id="site-nav" aria-label="Ana menü">
+                <div class="nav-drawer-head">
+                    <span class="nav-drawer-title">Menü</span>
+                    <button type="button" class="btn btn-ghost btn-icon" data-menu-close aria-label="Menüyü kapat">
+                        <svg class="icon"><use href="#i-x" /></svg>
+                    </button>
+                </div>
                 @if (signedIn)
                 {
                     <a href="/panel" aria-current="@Current("/panel")">Panel</a>
@@ -52,6 +59,20 @@
                     <a href="/meslekler" aria-current="@Current("/meslekler")">Meslekler</a>
                     <a href="/#sss">Sorular</a>
                 }
+                <div class="nav-drawer-foot">
+                    @if (signedIn)
+                    {
+                        <span class="small muted">@User.Identity!.Name</span>
+                        <form method="post" asp-antiforgery="true" action="/hesap/cikis" data-no-loading>
+                            <button type="submit" class="btn" style="width:100%">Çıkış yap</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a class="btn" href="/hesap/giris">Giriş yap</a>
+                        <a class="btn btn-primary" href="/hesap/kayit">Ücretsiz başla</a>
+                    }
+                </div>
             </nav>
             <div class="bar-end">
                 <button type="button" class="btn btn-ghost btn-icon theme-toggle" data-theme-toggle aria-label="Temayı değiştir">

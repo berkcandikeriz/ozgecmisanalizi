@@ -35,6 +35,7 @@ public static class BusinessServiceRegistration
         services.AddSingleton<ISkillCatalog, SkillCatalog>();
         services.AddSingleton<ISalaryEstimator, SalaryEstimator>();
         services.AddSingleton<IResumeAnalyzer, ResumeAnalyzer>();
+        services.AddSingleton<IResumeImprover, ResumeImprover>();
         services.AddSingleton<IResumePdfRenderer, ResumePdfRenderer>();
         services.AddSingleton<IAnalysisReportRenderer, AnalysisReportRenderer>();
 
@@ -53,6 +54,24 @@ public static class BusinessServiceRegistration
         services.AddHttpClient<JSearchProvider>(c => c.Timeout = TimeSpan.FromSeconds(20));
         services.AddTransient<IJobProvider>(sp => sp.GetRequiredService<JoobleProvider>());
         services.AddTransient<IJobProvider>(sp => sp.GetRequiredService<JSearchProvider>());
+
+        // Herkese açık, anahtarsız ilan API'leri ve Careerjet (ücretsiz anahtar). Yanıtlar IMemoryCache'te tutulur.
+        services.AddMemoryCache();
+        services.AddHttpContextAccessor();
+        static void Ua(HttpClient c)
+        {
+            c.Timeout = TimeSpan.FromSeconds(20);
+            c.DefaultRequestHeaders.UserAgent.ParseAdd("OzgecmisAnalizi/1.0 (+https://github.com/berkcandikeriz/ozgecmisanalizi)");
+            c.DefaultRequestHeaders.Accept.ParseAdd("application/json");
+        }
+        services.AddHttpClient<CareerjetProvider>(Ua);
+        services.AddHttpClient<RemotiveProvider>(Ua);
+        services.AddHttpClient<JobicyProvider>(Ua);
+        services.AddHttpClient<ArbeitnowProvider>(Ua);
+        services.AddTransient<IJobProvider>(sp => sp.GetRequiredService<CareerjetProvider>());
+        services.AddTransient<IJobProvider>(sp => sp.GetRequiredService<RemotiveProvider>());
+        services.AddTransient<IJobProvider>(sp => sp.GetRequiredService<JobicyProvider>());
+        services.AddTransient<IJobProvider>(sp => sp.GetRequiredService<ArbeitnowProvider>());
         services.AddSingleton<JobSiteLinkBuilder>();
 
         // Uygulama servisleri
@@ -66,6 +85,7 @@ public static class BusinessServiceRegistration
         services.AddScoped<IApplicationService, ApplicationService>();
         services.AddScoped<ICoverLetterService, CoverLetterService>();
         services.AddScoped<IDashboardService, DashboardService>();
+        services.AddScoped<IResumeImprovementService, ResumeImprovementService>();
 
         return services;
     }

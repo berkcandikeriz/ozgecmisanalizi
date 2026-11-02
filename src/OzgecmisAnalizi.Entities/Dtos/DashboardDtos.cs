@@ -7,4 +7,5 @@ public record DashboardDto(
     int? BestScore,
     IReadOnlyList<ResumeListItemDto> RecentResumes,
     IReadOnlyList<AnalysisListItemDto> RecentAnalyses,
-    IReadOnlyDictionary<string, int> ApplicationsByStage);
+    IReadOnlyDictionary<string, int> ApplicationsByStage,
+    IReadOnlyList<JobApplicationDto> UpcomingInterviews);

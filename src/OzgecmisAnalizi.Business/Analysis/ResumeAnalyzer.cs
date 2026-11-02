@@ -32,20 +32,25 @@ public interface IResumeAnalyzer
 /// </summary>
 public sealed partial class ResumeAnalyzer(IResumeTextParser parser, ISalaryEstimator salaryEstimator) : IResumeAnalyzer
 {
+    /// <summary>
+    /// Eylem fiili kökleri (katlanmış). Türkçe CV'lerde aynı fiil "geliştirdim / geliştirdi / geliştirilmesi / geliştirme"
+    /// biçimlerinde geçer; bu yüzden tam kelime yerine kök aranır.
+    /// </summary>
     private static readonly string[] ActionVerbs =
     [
-        "gelistirdim", "gelistirdi", "yonettim", "yonetti", "tasarladim", "olusturdum", "artirdim", "azalttim", "sagladim",
-        "koordine ettim", "uyguladim", "kurdum", "iyilestirdim", "optimize ettim", "hazirladim", "yuruttum", "gerceklestirdim",
-        "analiz ettim", "raporladim", "egittim", "basardim", "tamamladim", "liderlik ettim", "otomatiklestirdim", "devreye aldim",
-        "hayata gecirdim", "planladim", "kazandirdim", "dusurdum", "yukselttim", "entegre ettim", "tasidim", "modernize ettim",
-        "developed", "led", "managed", "designed", "built", "implemented", "improved", "increased", "reduced", "delivered",
-        "launched", "created", "optimized", "automated", "achieved", "coordinated", "migrated", "negotiated", "trained"
+        "gelistir", "yonet", "tasarla", "olustur", "artir", "azalt", "sagla", "koordine", "uygula", "kurdu", "kurul",
+        "iyilestir", "optimize", "optimiz", "hazirla", "yurut", "gerceklestir", "analiz et", "analiz ed", "raporla", "egittim", "egitim verdim",
+        "basar", "tamamla", "liderlik", "otomatiklestir", "otomasyon", "devreye al", "hayata gecir", "planla", "kazandir",
+        "dusur", "yukselt", "entegre", "tasidim", "tasindi", "modernize", "kisalt", "hizlandir", "olcekle", "yonlendir", "denetle",
+        "sorumluluk", "muzakere", "sattim", "satis hedef", "pazarla", "kurgula", "uret", "test et", "dokumante", "mentor",
+        "develop", "led ", "lead", "manag", "design", "built", "build", "implement", "improv", "increas", "reduc", "deliver",
+        "launch", "creat", "optimi", "automat", "achiev", "coordinat", "migrat", "negotiat", "trained", "owned", "drove", "scaled"
     ];
 
     private static readonly string[] Cliches =
     [
-        "takim oyuncusu", "takim calismasina yatkin", "motivasyonu yuksek", "dinamik", "sorumluluk sahibi", "ogrenmeye acik",
-        "detayci", "cok calisan", "hard working", "team player", "self motivated", "detail oriented", "problem cozme yetenegi yuksek"
+        "takim oyuncusu", "takim calismasina yatkin", "motivasyonu yuksek", "dinamik bir", "sorumluluk sahibi", "ogrenmeye acik",
+        "detayci", "cok calisan", "hard working", "team player", "self motivated", "detail oriented", "problem cozme yetenegi yuksek", "stres altinda calisabilen"
     ];
 
     [GeneratedRegex(@"\d+([.,]\d+)?\s*(%|yüzde|kat|x\b|kişi|kisi|müşteri|musteri|proje|milyon|bin|tl|₺|\$|€|saat|gün|gun|ay\b|users|clients|projects)|%\s*\d+", RegexOptions.IgnoreCase)]
@@ -127,7 +132,7 @@ public sealed partial class ResumeAnalyzer(IResumeTextParser parser, ISalaryEsti
 
         // --- Alt puanlar
         var sectionFeedback = new List<SectionFeedback>();
-        var comprehensiveness = ScoreComprehensiveness(content, words, sectionFeedback);
+        var comprehensiveness = ScoreComprehensiveness(content, text, words, sectionFeedback);
         var structure = ScoreStructure(content, sections, words, sectionFeedback);
         var clarity = ScoreClarity(content, text, sectionFeedback);
         var ats = ScoreAts(content, text, sections, words, profession, prepared, details.AtsChecks);
@@ -158,6 +163,15 @@ public sealed partial class ResumeAnalyzer(IResumeTextParser parser, ISalaryEsti
             Details = details
         };
     }
+
+    /// <summary>
+    /// LinkedIn adresi bulunamadığında doğru öneriyi verir: CV'de "LinkedIn" yazısı/ikonu varsa sorun adresin okunamaması,
+    /// yoksa bağlantının hiç eklenmemiş olmasıdır.
+    /// </summary>
+    private static string LinkedInAdvice(string text) =>
+        text.Contains("linkedin", StringComparison.OrdinalIgnoreCase)
+            ? "CV'de \"LinkedIn\" yazısı var ama profil adresi okunamadı. Adresi ikon veya gizli bağlantı yerine açık metin olarak yazın (linkedin.com/in/kullanici-adi); ATS'ler tıklanabilir ikonları okuyamaz."
+            : "LinkedIn profil adresinizi (linkedin.com/in/kullanici-adi) iletişim bilgilerinin yanına ekleyin.";
 
     public static string LabelFor(int score) => score switch
     {
@@ -207,7 +221,7 @@ public sealed partial class ResumeAnalyzer(IResumeTextParser parser, ISalaryEsti
         return Math.Max(0, total);
     }
 
-    private static int ScoreComprehensiveness(ResumeContent c, int words, List<SectionFeedback> feedback)
+    private static int ScoreComprehensiveness(ResumeContent c, string text, int words, List<SectionFeedback> feedback)
     {
         var score = 0;
         var personalTips = new List<string>();
@@ -216,7 +230,7 @@ public sealed partial class ResumeAnalyzer(IResumeTextParser parser, ISalaryEsti
         if (p.Email.HasValue()) score += 8; else personalTips.Add("Profesyonel bir e-posta adresi ekleyin.");
         if (p.Phone.HasValue()) score += 7; else personalTips.Add("Telefon numaranızı ekleyin (+90 5xx xxx xx xx).");
         if (p.City.HasValue()) score += 2; else personalTips.Add("Bulunduğunuz şehri yazın; işverenler konuma göre filtreler.");
-        if (p.LinkedIn.HasValue()) score += 3; else personalTips.Add("LinkedIn profil bağlantınızı ekleyin.");
+        if (p.LinkedIn.HasValue()) score += 3; else personalTips.Add(LinkedInAdvice(text));
         if (p.Title.HasValue()) score += 3; else personalTips.Add("Adınızın altına hedeflediğiniz unvanı yazın (örn. \"Backend Geliştirici\").");
         feedback.Add(new SectionFeedback { Section = "Kişisel bilgiler", Score = Math.Min(100, (int)(score / 28.0 * 100)), Tips = personalTips });
 
@@ -404,7 +418,7 @@ public sealed partial class ResumeAnalyzer(IResumeTextParser parser, ISalaryEsti
             tips.Add($"Kalıp ifadeler yerine kanıt sunun: \"{string.Join("\", \"", clicheHits.Take(3))}\" yerine bunu gösteren bir başarı yazın.");
         }
 
-        var firstPerson = Regex.Matches(" " + key + " ", @"\s(ben|benim|bana|i|my|me)\s").Count;
+        var firstPerson = Regex.Matches(" " + key + " ", @"\s(ben|benim|bana|kendim|my)\s").Count;
         score += firstPerson <= 2 ? 10 : 4;
         if (firstPerson > 2)
         {
@@ -444,7 +458,7 @@ public sealed partial class ResumeAnalyzer(IResumeTextParser parser, ISalaryEsti
         Add("Simge ve özel karakter", oddRatio < 0.02,
             oddRatio < 0.02 ? "Metin temiz; simge kullanımı düşük." : "Çok sayıda simge/ikon var; ATS bunları bozuk karakter olarak okuyabilir.");
 
-        Add("LinkedIn profili", c.Personal.LinkedIn.HasValue(), c.Personal.LinkedIn ?? "LinkedIn bağlantısı eklemeniz önerilir.");
+        Add("LinkedIn profili", c.Personal.LinkedIn.HasValue(), c.Personal.LinkedIn ?? LinkedInAdvice(text));
 
         if (profession is not null)
         {

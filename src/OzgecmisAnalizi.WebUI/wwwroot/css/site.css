@@ -119,18 +119,33 @@ main { flex: 1; }
 .nav a:hover { color: var(--text); background: var(--surface-2); }
 .nav a[aria-current="page"] { color: var(--text); background: var(--accent-soft); }
 .bar-end { margin-left: auto; display: flex; align-items: center; gap: var(--s-2); }
-.menu-toggle { display: none; }
+/* Menü düğmesi ve çekmece parçaları yalnızca mobilde. ".btn" kuralını ezmek için özgüllük artırıldı. */
+.btn.menu-toggle, .nav-drawer-head, .nav-drawer-foot, .nav-backdrop { display: none; }
 
 @media (max-width: 900px) {
-    .menu-toggle { display: inline-flex; }
+    .btn.menu-toggle { display: inline-flex; }
+
+    /* Sağdan açılan çekmece. Başlıktaki backdrop-filter sabit konumlu çocuklar için kapsayıcı oluşturduğundan
+       boyutlar inset yerine açıkça verilir. */
     .nav {
-        position: fixed; inset: var(--header) 0 auto 0; margin: 0; flex-direction: column; align-items: stretch;
-        background: var(--surface); border-bottom: 1px solid var(--border); padding: var(--s-3) var(--s-4) var(--s-4);
-        box-shadow: var(--shadow-pop); transform: translateY(-8px); opacity: 0; pointer-events: none;
-        transition: opacity .18s var(--ease), transform .18s var(--ease);
+        position: fixed; top: 0; right: 0; height: 100vh; height: 100dvh; width: min(320px, 86vw);
+        margin: 0; padding: 0 var(--s-4) var(--s-4); z-index: 60;
+        flex-direction: column; align-items: stretch; gap: 2px; overflow-y: auto;
+        background: var(--surface); border-left: 1px solid var(--border); box-shadow: var(--shadow-pop);
+        transform: translateX(100%); visibility: hidden;
+        transition: transform .24s var(--ease), visibility 0s linear .24s;
     }
     .nav a { padding: var(--s-3); font-size: var(--fs-base); }
-    body.nav-open .nav { opacity: 1; transform: none; pointer-events: auto; }
+    .nav-drawer-head { display: flex; align-items: center; justify-content: space-between; height: var(--header); border-bottom: 1px solid var(--border); margin-bottom: var(--s-2); position: sticky; top: 0; background: var(--surface); }
+    .nav-drawer-title { font-family: var(--font-display); font-weight: 700; }
+    .nav-drawer-foot { display: grid; gap: var(--s-2); margin-top: auto; padding-top: var(--s-4); border-top: 1px solid var(--border); }
+    .nav-backdrop {
+        display: block; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh; z-index: 55;
+        background: rgba(8, 14, 12, .45); opacity: 0; pointer-events: none; transition: opacity .24s var(--ease);
+    }
+    body.nav-open .nav { transform: none; visibility: visible; transition: transform .24s var(--ease); }
+    body.nav-open .nav-backdrop { opacity: 1; pointer-events: auto; }
+    body.nav-open { overflow: hidden; }
     .bar-end .hide-sm { display: none; }
 }
 
@@ -422,3 +437,43 @@ details.faq p { margin: var(--s-3) 0 0; color: var(--text-muted); max-width: 70c
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
+
+/* ---------- CV danışmanı ---------- */
+.chat { display: flex; flex-direction: column; min-height: 520px; padding: 0; overflow: hidden; }
+.chat-log { flex: 1; overflow-y: auto; padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-3); max-height: 62vh; }
+.msg { max-width: 82%; padding: var(--s-3) var(--s-4); border-radius: var(--r-md); white-space: pre-wrap; font-size: var(--fs-sm); line-height: 1.55; }
+.msg-ai { background: var(--surface-2); border-top-left-radius: 4px; align-self: flex-start; }
+.msg-user { background: var(--accent); color: var(--on-accent); border-top-right-radius: 4px; align-self: flex-end; }
+.msg.is-pending { color: var(--text-muted); font-style: italic; }
+.chat-form { display: flex; gap: var(--s-2); padding: var(--s-3); border-top: 1px solid var(--border); background: var(--surface); align-items: flex-end; }
+.chat-form .textarea { min-height: 44px; }
+.stack[style*="--gap"] > * + * { margin-top: var(--gap); }
+
+/* ---------- Önerileri uygula (diff) ---------- */
+.diff-toolbar { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; justify-content: space-between; padding: var(--s-3) var(--s-4); background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); }
+.diff-legend { display: inline-flex; gap: var(--s-2); }
+.change { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--r-md); padding: var(--s-4); transition: opacity .15s var(--ease); }
+.change.is-off { opacity: .5; border-left-color: var(--border-input); }
+.change-head { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center; }
+.change-head .check { flex: 1; min-width: 220px; }
+.change-reason { font-size: var(--fs-sm); color: var(--text-muted); margin: var(--s-2) 0 var(--s-3); }
+.diff-panes { display: grid; gap: var(--s-2); grid-template-columns: 1fr; }
+@media (min-width: 760px) { .diff-panes { grid-template-columns: 1fr 1fr; } }
+.diff-pane { border: 1px solid var(--border); border-radius: var(--r-sm); overflow: hidden; background: var(--bg); min-width: 0; }
+.diff-pane-title { font-size: var(--fs-xs); font-weight: 700; color: var(--text-muted); padding: 6px var(--s-3); border-bottom: 1px solid var(--border); background: var(--surface-2); }
+.diff-text { padding: var(--s-3); white-space: pre-wrap; word-break: break-word; font-size: var(--fs-sm); line-height: 1.6; }
+.diff-order { margin: 0; padding: var(--s-3) var(--s-3) var(--s-3) calc(var(--s-3) + 18px); font-size: var(--fs-sm); }
+del, .chip-del { background: var(--danger-soft); color: var(--danger); text-decoration: line-through; text-decoration-thickness: 1.5px; border-radius: 3px; }
+ins, .chip-add { background: var(--success-soft); color: var(--success); text-decoration: none; border-radius: 3px; font-weight: 600; }
+del, ins { padding: 0 2px; }
+.chip-add { border-color: color-mix(in srgb, var(--success) 40%, transparent); }
+.chip-del { border-color: color-mix(in srgb, var(--danger) 40%, transparent); }
+.change-edit { margin-top: var(--s-3); }
+.change-edit summary { cursor: pointer; font-size: var(--fs-sm); font-weight: 600; color: var(--accent); }
+.change-edit .textarea { margin-top: var(--s-2); }
+.save-mode { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--s-4); }
+.score-delta { display: inline-block; font-weight: 700; font-size: var(--fs-sm); padding: 2px 10px; border-radius: var(--r-pill); }
+.score-delta.up { background: var(--success-soft); color: var(--success); }
+.score-delta.down { background: var(--danger-soft); color: var(--danger); }
+.change-tip { font-size: var(--fs-sm); margin: 0 0 var(--s-3); padding: var(--s-2) var(--s-3); border-radius: var(--r-sm); background: var(--warning-soft); border-left: 3px solid var(--highlight); }
+.change-tip b { color: var(--highlight); }

@@ -10,7 +10,7 @@ namespace OzgecmisAnalizi.API.Controllers;
 
 /// <summary>CV oluşturma, yükleme, düzenleme, PDF ve ilana göre uyarlama.</summary>
 [Route("api/resumes")]
-public sealed class ResumesController(IResumeService resumes) : ApiControllerBase
+public sealed class ResumesController(IResumeService resumes, IResumeImprovementService improvements) : ApiControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<ApiResponse<IReadOnlyList<ResumeListItemDto>>>> List(CancellationToken ct) =>
@@ -66,4 +66,24 @@ public sealed class ResumesController(IResumeService resumes) : ApiControllerBas
     [HttpPost("{id:guid}/tailor")]
     public async Task<ActionResult<ApiResponse<TailorResultDto>>> Tailor(Guid id, TailorRequest request, CancellationToken ct) =>
         OkResponse(await resumes.TailorAsync(id, request, ct));
+
+    /// <summary>İlana uyarlanmış bir CV kopyası oluşturur ve isteğe bağlı olarak başvuru panosuna ekler.</summary>
+    [HttpPost("{id:guid}/tailor/apply")]
+    public async Task<ActionResult<ApiResponse<TailorApplyResultDto>>> ApplyTailoring(Guid id, TailorApplyRequest request, CancellationToken ct) =>
+        OkResponse(await resumes.ApplyTailoringAsync(id, request, ct), "Uyarlanmış CV oluşturuldu.");
+
+    /// <summary>Analiz önerilerini CV'ye uygular ama kaydetmez; önce/sonra değişiklik listesi döndürür.</summary>
+    [HttpPost("{id:guid}/improve")]
+    public async Task<ActionResult<ApiResponse<ImprovementPreviewDto>>> ImprovePreview(Guid id, [FromQuery] Guid? analysisId, CancellationToken ct) =>
+        OkResponse(await improvements.PreviewAsync(id, analysisId, ct));
+
+    /// <summary>Seçilen iyileştirmeleri kaydeder (üzerine veya kopya) ve isteğe bağlı yeniden analiz eder.</summary>
+    [HttpPost("{id:guid}/improve/apply")]
+    public async Task<ActionResult<ApiResponse<ImprovementApplyResultDto>>> ImproveApply(Guid id, ImprovementApplyRequest request, CancellationToken ct) =>
+        OkResponse(await improvements.ApplyAsync(id, request, ct), "İyileştirmeler uygulandı.");
+
+    /// <summary>CV danışmanı: CV ve son analiz hakkında soru-cevap.</summary>
+    [HttpPost("{id:guid}/chat")]
+    public async Task<ActionResult<ApiResponse<ResumeChatResponse>>> Chat(Guid id, ResumeChatRequest request, CancellationToken ct) =>
+        OkResponse(await resumes.ChatAsync(id, request, ct));
 }

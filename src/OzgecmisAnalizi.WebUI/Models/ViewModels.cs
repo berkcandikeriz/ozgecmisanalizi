@@ -70,7 +70,15 @@ public class TailorViewModel
     public ResumeDto Resume { get; set; } = default!;
     public string? JobTitle { get; set; }
     public string? JobDescription { get; set; }
+    public string? Company { get; set; }
+    public string? JobUrl { get; set; }
     public TailorResultDto? Result { get; set; }
+}
+
+public class ChatViewModel
+{
+    public ResumeDto Resume { get; set; } = default!;
+    public AnalysisListItemDto? LastAnalysis { get; set; }
 }
 
 public class JobsViewModel
@@ -108,12 +116,29 @@ public class CoverLetterFormModel
     public string? JobDescription { get; set; }
     public string? Tone { get; set; }
     public Guid? JobApplicationId { get; set; }
+    public Guid? StyleReferenceId { get; set; }
 }
 
 public class AnalysisViewModel
 {
     public AnalysisDto Analysis { get; set; } = default!;
     public IReadOnlyList<ProfessionListItemDto> Professions { get; set; } = [];
+
+    /// <summary>Aynı CV'nin bir önceki analiz puanı (ya da iyileştirme öncesi puan).</summary>
+    public int? PreviousScore { get; set; }
+}
+
+public class ImproveFormModel
+{
+    public List<ChangePatch> Changes { get; set; } = [];
+
+    /// <summary>Kullanıcının işaretli bıraktığı değişikliklerin sıra numaraları.</summary>
+    public List<int> Selected { get; set; } = [];
+
+    public bool SaveAsCopy { get; set; }
+    public bool Reanalyze { get; set; } = true;
+    public Guid? ProfessionId { get; set; }
+    public int? PreviousScore { get; set; }
 }
 
 public class ProfessionsViewModel
@@ -140,6 +165,7 @@ public static class Fmt
         ApplicationStage.Mulakat => "Mülakat",
         ApplicationStage.Teklif => "Teklif",
         ApplicationStage.Reddedildi => "Olumsuz",
+        ApplicationStage.UygunDegil => "Uygun değil",
         _ => s.ToString()
     };
 
@@ -159,6 +185,10 @@ public static class Fmt
         ResumeTemplate.Modern => "Modern (iki sütun)",
         ResumeTemplate.Kompakt => "Kompakt",
         ResumeTemplate.Profesyonel => "Profesyonel",
+        ResumeTemplate.Ortali => "Ortalı (serif)",
+        ResumeTemplate.Minimal => "Minimal",
+        ResumeTemplate.ZamanCizelgesi => "Zaman çizelgesi",
+        ResumeTemplate.Yonetici => "Yönetici (sağ sütun)",
         _ => t.ToString()
     };
 
