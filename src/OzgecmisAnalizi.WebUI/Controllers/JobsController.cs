@@ -28,11 +28,13 @@ public sealed class JobsController(ApiClient api) : AppController(api)
                     ["keywords"] = query.Keywords,
                     ["location"] = query.Location,
                     ["resumeId"] = query.ResumeId?.ToString(),
-                    ["page"] = query.Page.ToString()
+                    ["page"] = query.Page.ToString(),
+                    ["includeRemote"] = query.IncludeRemote?.ToString().ToLowerInvariant()
                 });
                 vm.Result = await Api.GetAsync<JobSearchResultDto>("api/jobs/search" + qs, ct);
                 vm.Query.Keywords ??= vm.Result.Keywords;
                 vm.Query.Location ??= vm.Result.Location;
+                vm.Query.IncludeRemote ??= vm.Result.IncludeRemote;
             }
             catch (ApiException ex) when (ex.StatusCode is System.Net.HttpStatusCode.BadRequest)
             {
@@ -41,6 +43,15 @@ public sealed class JobsController(ApiClient api) : AppController(api)
         }
 
         return View(vm);
+    }
+
+    [HttpPost("/isler/uygun-degil")]
+    public async Task<IActionResult> Dismiss(JobApplicationSaveRequest request, string? returnUrl, CancellationToken ct)
+    {
+        request.Stage = ApplicationStage.UygunDegil;
+        await Api.PostAsync<JobApplicationDto>("api/applications", request, ct);
+        Info($"\"{request.JobTitle}\" bir daha önerilmeyecek.");
+        return Url.IsLocalUrl(returnUrl) ? LocalRedirect(returnUrl!) : RedirectToAction(nameof(Index));
     }
 
     [HttpPost("/isler/takibe-al")]

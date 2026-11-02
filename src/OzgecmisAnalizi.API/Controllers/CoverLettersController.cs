@@ -3,6 +3,7 @@ using OzgecmisAnalizi.API.Infrastructure;
 using OzgecmisAnalizi.Business.Abstractions;
 using OzgecmisAnalizi.Core.Results;
 using OzgecmisAnalizi.Entities.Dtos;
+using OzgecmisAnalizi.Entities.Enums;
 
 namespace OzgecmisAnalizi.API.Controllers;
 
@@ -25,6 +26,15 @@ public sealed class CoverLettersController(ICoverLetterService letters) : ApiCon
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<ApiResponse<CoverLetterDto>>> Update(Guid id, CoverLetterUpdateRequest request, CancellationToken ct) =>
         OkResponse(await letters.UpdateAsync(id, request, ct));
+
+    /// <summary>Ön yazıyı, CV şablonuyla uyumlu PDF olarak indirir.</summary>
+    [HttpGet("{id:guid}/pdf")]
+    [Produces("application/pdf")]
+    public async Task<IActionResult> Pdf(Guid id, [FromQuery] ResumeTemplate? template, CancellationToken ct)
+    {
+        var (content, fileName) = await letters.RenderPdfAsync(id, template, ct);
+        return File(content, "application/pdf", fileName);
+    }
 
     [HttpDelete("{id:guid}")]
     public async Task<ActionResult<ApiResponse>> Delete(Guid id, CancellationToken ct)

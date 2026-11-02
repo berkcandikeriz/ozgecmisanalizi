@@ -74,8 +74,9 @@ public sealed class ResumeService(
 
     public async Task<ResumeDto> UploadAsync(Stream file, string fileName, string? title, CancellationToken ct = default)
     {
-        var text = await extractor.ExtractAsync(file, fileName, ct);
-        var content = parser.Parse(text);
+        var extracted = await extractor.ExtractAsync(file, fileName, ct);
+        var text = extracted.Text;
+        var content = parser.Parse(text, extracted.Links);
 
         // Beceri bölümü bulunamadıysa katalogdan metinde geçen becerileri öner.
         if (content.Skills.Count == 0)
@@ -175,6 +176,141 @@ public sealed class ResumeService(
         }
 
         return new TailorResultDto(percent, matched, missing, suggestions.Distinct().Take(10).ToList(), summary, engine);
+    }
+
+    public async Task<TailorApplyResultDto> ApplyTailoringAsync(Guid id, TailorApplyRequest request, CancellationToken ct = default)
+    {
+        var jobTitle = Guard.Required(request.JobTitle, "Pozisyon", 200);
+        var source = await LoadOwnedAsync(id, false, ct);
+        var content = Clone(source.Content);
+
+        // Kullanıcının "bende var" diye onayladığı anahtar kelimeler öne eklenir; ATS ilk becerilere daha çok ağırlık verir.
+        content.Skills = request.AddKeywords
+            .Where(k => k.HasValue())
+            .Select(k => k.Trim().Truncate(60))
+            .Concat(content.Skills)
+            .DistinctBySearchKey()
+            .Take(80)
+            .ToList();
+
+        if (request.Summary.HasValue())
+        {
+            content.Summary = request.Summary!.Trim().Truncate(3000);
+        }
+
+        if (request.UpdateTitle)
+        {
+            content.Personal.Title = jobTitle;
+        }
+
+        var label = request.Company.HasValue() ? $"{jobTitle} — {request.Company!.Trim()}" : jobTitle;
+        var copy = new Resume
+        {
+            UserId = source.UserId,
+            Title = label.Truncate(150),
+            Template = source.Template,
+            Source = ResumeSource.Manual,
+            TargetProfessionId = source.TargetProfessionId,
+            Content = content
+        };
+        await Resumes.AddAsync(copy, ct);
+
+        Guid? applicationId = null;
+        if (request.CreateApplication)
+        {
+            var application = new JobApplication
+            {
+                UserId = source.UserId,
+                ResumeId = copy.Id,
+                JobTitle = jobTitle,
+                Company = request.Company.HasValue() ? request.Company!.Trim().Truncate(200) : "Belirtilmedi",
+                Url = request.JobUrl.HasValue() && Uri.TryCreate(request.JobUrl, UriKind.Absolute, out _) ? request.JobUrl!.Trim().Truncate(1000) : null,
+                Description = request.JobDescription?.Trim().Truncate(20000),
+                Stage = ApplicationStage.Hazirlik,
+                Source = "İlana göre uyarlama"
+            };
+            await uow.Repository<JobApplication>().AddAsync(application, ct);
+            applicationId = application.Id;
+        }
+
+        await uow.SaveChangesAsync(ct);
+        return new TailorApplyResultDto(copy.ToDto(), applicationId);
+    }
+
+    public async Task<ResumeChatResponse> ChatAsync(Guid id, ResumeChatRequest request, CancellationToken ct = default)
+    {
+        var messages = (request.Messages ?? Array.Empty<ChatMessageDto>()).Where(m => m.Content.HasValue()).TakeLast(12).ToList();
+        Guard.Against(messages.Count == 0 || messages[^1].Role != "user", "Bir soru yazın.");
+        var resume = await LoadOwnedAsync(id, false, ct);
+        var lastAnalysis = await uow.Repository<ResumeAnalysis>().Query()
+            .Where(a => a.ResumeId == id)
+            .OrderByDescending(a => a.CreatedAt)
+            .FirstOrDefaultAsync(ct);
+
+        if (!ai.IsEnabled)
+        {
+            return new ResumeChatResponse(OfflineAdvice(messages[^1].Content, lastAnalysis), "Kural motoru");
+        }
+
+        var context = ResumeTextComposer.Compose(resume.Content).Truncate(9000);
+        var analysisNote = lastAnalysis is null
+            ? "Henüz analiz yapılmadı."
+            : $"Son analiz puanı {lastAnalysis.OverallScore}/100 ({lastAnalysis.Label}). Öncelikli iyileştirmeler: {string.Join(" | ", lastAnalysis.Details.Improvements.Take(6))}";
+        var transcript = string.Join("\n", messages.Select(m => $"{(m.Role == "user" ? "Kullanıcı" : "Danışman")}: {m.Content.Truncate(2000)}"));
+
+        var prompt = $"""
+            Sen kullanıcının CV danışmanısın. Yalnızca aşağıdaki CV'ye ve analize dayanarak, kısa ve uygulanabilir yanıt ver.
+            Gerekirse CV'ye doğrudan yapıştırılabilecek örnek madde veya özet yaz; CV'de olmayan deneyim uydurma.
+
+            ANALİZ: {analysisNote}
+
+            CV:
+            ---
+            {context}
+            ---
+
+            KONUŞMA:
+            {transcript}
+
+            Danışman:
+            """;
+
+        var reply = await ai.CompleteAsync(AiPrompts.System, prompt, jsonOutput: false, ct);
+        return reply.HasValue()
+            ? new ResumeChatResponse(reply!.Trim(), ai.Name)
+            : new ResumeChatResponse(OfflineAdvice(messages[^1].Content, lastAnalysis) + "\n\n(Yapay zeka sağlayıcısına şu anda ulaşılamadı.)", "Kural motoru");
+    }
+
+    /// <summary>Yapay zeka yokken, sorudaki anahtar kelimelere göre son analizden ilgili önerileri derler.</summary>
+    private static string OfflineAdvice(string question, ResumeAnalysis? analysis)
+    {
+        if (analysis is null)
+        {
+            return "Önce bu CV'yi analiz edin; ardından hangi bölümü nasıl iyileştireceğinizi buradan sorabilirsiniz. " +
+                   "Daha serbest bir sohbet için appsettings içinde ücretsiz bir yapay zeka sağlayıcısı (Gemini, Groq veya yerel Ollama) tanımlayabilirsiniz.";
+        }
+
+        var key = question.ToSearchKey();
+        var d = analysis.Details;
+        var topics = new (string[] Words, Func<IEnumerable<string>> Answer)[]
+        {
+            (new[] { "ozet", "summary", "profil" }, () => d.Sections.Where(s => s.Section == "Özet").SelectMany(s => s.Tips)),
+            (new[] { "deneyim", "madde", "is ", "experience" }, () => d.Sections.Where(s => s.Section is "İş deneyimi" or "Dil ve anlatım").SelectMany(s => s.Tips)),
+            (new[] { "beceri", "skill", "eksik", "ogren" }, () => d.MissingSkills.Take(6).Select(m => $"{m.Skill} ({m.Importance}){(m.HowToLearn is null ? "" : ": " + m.HowToLearn)}")),
+            (new[] { "ats", "okun", "format", "tasarim" }, () => d.AtsChecks.Where(a => !a.Passed).Select(a => $"{a.Name}: {a.Detail}")),
+            (new[] { "maas", "ucret", "salary" }, () => d.Salary is null ? Enumerable.Empty<string>() : new[] { $"{d.Salary.Level}: {d.Salary.MinNet:N0} – {d.Salary.MaxNet:N0} TL net. {d.Salary.Basis}" }),
+            (new[] { "kariyer", "terfi", "sonraki" }, () => d.CareerPath.Where(c => !c.IsCurrent).Take(2).Select(c => $"{c.Title}: {string.Join(", ", c.Focus)}"))
+        };
+
+        var hits = topics.Where(t => t.Words.Any(w => key.Contains(w))).SelectMany(t => t.Answer()).Distinct().Take(6).ToList();
+        if (hits.Count == 0)
+        {
+            hits = d.Improvements.Take(5).ToList();
+        }
+
+        return hits.Count == 0
+            ? $"Son analizde puanınız {analysis.OverallScore}/100 ({analysis.Label}); kritik bir eksik görünmüyor. İlana göre uyarlama yaparak CV'nizi belirli bir pozisyona odaklayabilirsiniz."
+            : "Son analizinize göre öneriler:\n• " + string.Join("\n• ", hits);
     }
 
     private async Task<Resume> LoadOwnedAsync(Guid id, bool tracked, CancellationToken ct)

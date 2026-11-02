@@ -7,9 +7,19 @@
 <div class="layout-aside">
     <form method="post" asp-antiforgery="true" class="panel">
         <div asp-validation-summary="All" class="alert alert-error" role="alert"></div>
+        <div class="grid-2">
+            <div class="field">
+                <label for="JobTitle">İlandaki pozisyon adı</label>
+                <input id="JobTitle" name="JobTitle" value="@Model.JobTitle" class="input" placeholder="Örn. Kıdemli .NET Geliştirici" />
+            </div>
+            <div class="field">
+                <label for="Company">Şirket</label>
+                <input id="Company" name="Company" value="@Model.Company" class="input" />
+            </div>
+        </div>
         <div class="field">
-            <label for="JobTitle">İlandaki pozisyon adı</label>
-            <input id="JobTitle" name="JobTitle" value="@Model.JobTitle" class="input" placeholder="Örn. Kıdemli .NET Geliştirici" />
+            <label for="JobUrl">İlan bağlantısı (isteğe bağlı)</label>
+            <input id="JobUrl" name="JobUrl" value="@Model.JobUrl" class="input" type="url" placeholder="https://" />
         </div>
         <div class="field">
             <label for="JobDescription">İlan metni</label>
@@ -47,6 +57,34 @@
                 </div>
                 <p class="xs muted">Motor: @r.Engine</p>
             </div>
+
+            <form method="post" asp-antiforgery="true" action="/cv/@Model.Resume.Id/uyarla/uygula" class="panel stack" style="margin-top:var(--s-4)">
+                <h2 style="margin:0">Uyarlanmış kopya oluştur</h2>
+                <p class="small muted" style="margin:0">Orijinal CV'niz değişmez. Bu ilana özel bir kopya oluşturulur ve isterseniz başvuru panonuza eklenir.</p>
+                <input type="hidden" name="JobTitle" value="@(Model.JobTitle ?? Model.Resume.Content.Personal.Title)" />
+                <input type="hidden" name="Company" value="@Model.Company" />
+                <input type="hidden" name="JobUrl" value="@Model.JobUrl" />
+                <input type="hidden" name="JobDescription" value="@Model.JobDescription" />
+                @if (r.MissingKeywords.Count > 0)
+                {
+                    <fieldset style="border:0;padding:0;margin:0">
+                        <legend class="label" style="margin-bottom:6px">Bende olanları becerilere ekle</legend>
+                        <div class="chips">
+                            @foreach (var k in r.MissingKeywords)
+                            {
+                                <label class="chip check"><input type="checkbox" name="AddKeywords" value="@k" /> @k</label>
+                            }
+                        </div>
+                        <p class="hint" style="margin-top:6px">Yalnızca gerçekten sahip olduğunuz becerileri işaretleyin.</p>
+                    </fieldset>
+                }
+                <label class="field" style="margin:0"><span class="label">Özet (isteğe bağlı)</span>
+                    <textarea class="textarea" name="Summary" placeholder="Boş bırakırsanız mevcut özet korunur.">@r.SuggestedSummary</textarea>
+                </label>
+                <label class="check"><input type="checkbox" name="UpdateTitle" value="true" checked /><input type="hidden" name="UpdateTitle" value="false" /> CV unvanını ilandaki pozisyon yap</label>
+                <label class="check"><input type="checkbox" name="CreateApplication" value="true" checked /><input type="hidden" name="CreateApplication" value="false" /> Başvuru panosuna ekle</label>
+                <button type="submit" class="btn btn-primary">Uyarlanmış CV'yi oluştur</button>
+            </form>
         }
         else
         {

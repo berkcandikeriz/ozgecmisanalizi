@@ -19,6 +19,17 @@ public sealed class BearerTokenHandler(IHttpContextAccessor accessor) : Delegati
         if (context is not null)
         {
             request.Headers.TryAddWithoutValidation(Core.Middleware.CorrelationIdMiddleware.HeaderName, context.TraceIdentifier);
+
+            // Bazı ilan API'leri (Careerjet) son kullanıcının IP ve tarayıcı bilgisini ister; API'ye iletilir.
+            if (context.Connection.RemoteIpAddress is { } ip)
+            {
+                request.Headers.TryAddWithoutValidation("X-Forwarded-For", ip.ToString());
+            }
+
+            if (context.Request.Headers.UserAgent.ToString() is { Length: > 0 } ua)
+            {
+                request.Headers.TryAddWithoutValidation("X-Client-User-Agent", ua);
+            }
         }
 
         return base.SendAsync(request, cancellationToken);

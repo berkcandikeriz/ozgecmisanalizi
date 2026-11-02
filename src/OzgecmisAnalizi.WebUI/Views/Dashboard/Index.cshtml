@@ -71,6 +71,24 @@ else
             </section>
         </div>
         <aside class="aside stack">
+            @if (Model.UpcomingInterviews.Count > 0)
+            {
+                <section class="panel">
+                    <h2>Yaklaşan mülakatlar</h2>
+                    <ul class="list">
+                        @foreach (var i in Model.UpcomingInterviews)
+                        {
+                            <li>
+                                <div class="grow">
+                                    <div class="title"><a href="/basvurular/@i.Id">@i.JobTitle</a></div>
+                                    <div class="xs muted">@i.Company</div>
+                                </div>
+                                <span class="badge badge-accent">@i.InterviewAt!.Value.ToLocalTime().ToString("d MMM HH:mm", System.Globalization.CultureInfo.GetCultureInfo("tr-TR"))</span>
+                            </li>
+                        }
+                    </ul>
+                </section>
+            }
             <section class="panel">
                 <div class="panel-head"><h2>Başvurular</h2><a href="/basvurular" class="small">Panoyu aç</a></div>
                 <ul class="list">

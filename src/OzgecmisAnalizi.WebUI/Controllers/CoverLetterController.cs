@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OzgecmisAnalizi.Entities.Dtos;
+using OzgecmisAnalizi.Entities.Enums;
 using OzgecmisAnalizi.WebUI.Models;
 using OzgecmisAnalizi.WebUI.Services;
 
@@ -36,7 +37,7 @@ public sealed class CoverLetterController(ApiClient api) : AppController(api)
         }
 
         var letter = await Api.PostAsync<CoverLetterDto>("api/cover-letters",
-            new CoverLetterRequest(form.ResumeId, form.JobTitle, form.Company, form.JobDescription, form.Tone, form.JobApplicationId), ct);
+            new CoverLetterRequest(form.ResumeId, form.JobTitle, form.Company, form.JobDescription, form.Tone, form.JobApplicationId, form.StyleReferenceId), ct);
         Success("Ön yazınız hazır. Göndermeden önce okuyup kişiselleştirin.");
         return RedirectToAction(nameof(Details), new { id = letter.Id });
     }
@@ -50,6 +51,13 @@ public sealed class CoverLetterController(ApiClient api) : AppController(api)
         await Api.PutAsync<CoverLetterDto>($"api/cover-letters/{id}", new CoverLetterUpdateRequest(content), ct);
         Success("Ön yazı kaydedildi.");
         return RedirectToAction(nameof(Details), new { id });
+    }
+
+    [HttpGet("{id:guid}/pdf")]
+    public async Task<IActionResult> Pdf(Guid id, ResumeTemplate? template, CancellationToken ct)
+    {
+        var url = $"api/cover-letters/{id}/pdf" + (template is null ? string.Empty : $"?template={template}");
+        return PdfFile(await Api.GetFileAsync(url, ct));
     }
 
     [HttpPost("{id:guid}/sil")]

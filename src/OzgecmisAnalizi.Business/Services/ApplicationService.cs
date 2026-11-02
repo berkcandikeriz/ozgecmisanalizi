@@ -97,7 +97,7 @@ public sealed class ApplicationService(IUnitOfWork uow, ICurrentUser currentUser
 
     private static void SetStage(JobApplication e, ApplicationStage stage)
     {
-        if (stage >= ApplicationStage.Basvuruldu && e.AppliedAt is null && stage != ApplicationStage.Reddedildi)
+        if (stage is ApplicationStage.Basvuruldu or ApplicationStage.Mulakat or ApplicationStage.Teklif && e.AppliedAt is null)
         {
             e.AppliedAt = DateTime.UtcNow;
         }

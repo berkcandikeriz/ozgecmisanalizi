@@ -22,9 +22,10 @@
         <p>@(a.ProfessionName is null ? "Genel değerlendirme" : a.ProfessionName + " pozisyonuna göre değerlendirildi") — @Fmt.Date(a.CreatedAt)</p>
     </div>
     <div class="actions">
-        <a class="btn" href="/cv/@a.ResumeId/duzenle"><svg class="icon"><use href="#i-pen" /></svg>Önerileri uygula</a>
+        <a class="btn btn-primary" href="/cv/@a.ResumeId/iyilestir?analiz=@a.Id"><svg class="icon"><use href="#i-pen" /></svg>Önerileri uygula</a>
+        <a class="btn" href="/cv/@a.ResumeId/danisman">Danışmana sor</a>
         <a class="btn" href="/analiz/@a.Id/rapor"><svg class="icon"><use href="#i-download" /></svg>PDF rapor</a>
-        <a class="btn btn-primary" href="/isler?resumeId=@a.ResumeId"><svg class="icon"><use href="#i-briefcase" /></svg>Uygun işleri bul</a>
+        <a class="btn" href="/isler?resumeId=@a.ResumeId"><svg class="icon"><use href="#i-briefcase" /></svg>Uygun işleri bul</a>
     </div>
 </div>
 
@@ -33,6 +34,11 @@
         <partial name="_ScoreRing" model="(a.OverallScore, 168)" />
         <div>
             <div class="badge badge-@Fmt.Tone(a.OverallScore)" style="font-size:var(--fs-sm)">@a.Label</div>
+            @if (Model.PreviousScore is int prev && prev != a.OverallScore)
+            {
+                var delta = a.OverallScore - prev;
+                <p class="score-delta @(delta > 0 ? "up" : "down")" style="margin:var(--s-2) 0 0">@prev → @a.OverallScore (@(delta > 0 ? "+" : "")@delta)</p>
+            }
             <p style="margin:var(--s-2) 0 0;font-size:var(--fs-lg);font-weight:600">Tahmini ilk %@a.TopPercent</p>
             <p class="small muted" style="margin:0">Benzer CV'lere göre konumunuz</p>
             @if (d.ExperienceYears > 0) { <p class="small muted" style="margin:var(--s-2) 0 0">Toplam deneyim: yaklaşık @d.ExperienceYears.ToString("0.#") yıl</p> }

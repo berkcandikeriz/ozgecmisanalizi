@@ -4,6 +4,17 @@
     <div><h1>@Model.JobTitle, @Model.Company</h1><p>Taslağı okuyun, size ait olmayan ifadeleri değiştirin ve kaydedin.</p></div>
     <div class="actions">
         <button type="button" class="btn" data-copy="#letter">Kopyala</button>
+        <form method="get" action="/on-yazi/@Model.Id/pdf" class="actions">
+            <label class="visually-hidden" for="tpl">Şablon</label>
+            <select class="select" id="tpl" name="template" style="max-width:200px">
+                <option value="">CV ile aynı şablon</option>
+                @foreach (var t in Enum.GetValues<ResumeTemplate>())
+                {
+                    <option value="@t">@Fmt.Template(t)</option>
+                }
+            </select>
+            <button type="submit" class="btn" data-no-loading><svg class="icon"><use href="#i-download" /></svg>PDF indir</button>
+        </form>
         <form method="post" asp-antiforgery="true" action="/on-yazi/@Model.Id/sil" data-confirm="Bu ön yazı silinsin mi?"><button class="btn btn-ghost btn-danger" type="submit">Sil</button></form>
     </div>
 </div>

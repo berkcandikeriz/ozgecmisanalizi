@@ -19,5 +19,5 @@ public static class Mappers
             j.AppliedAt, j.InterviewAt, j.Notes, j.CreatedAt);
 
     public static CoverLetterDto ToDto(this CoverLetter c) =>
-        new(c.Id, c.ResumeId, c.JobTitle, c.Company, c.Content, c.Engine, c.CreatedAt);
+        new(c.Id, c.ResumeId, c.JobTitle, c.Company, c.Content, c.Engine, c.CreatedAt, c.JobApplicationId);
 }

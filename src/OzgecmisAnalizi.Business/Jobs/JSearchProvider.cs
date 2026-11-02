@@ -14,11 +14,14 @@ public sealed class JSearchProvider(HttpClient http, IOptions<JobSearchOptions> 
 
     public string Name => "JSearch";
     public bool IsEnabled => _o.Enabled;
+    public JobProviderScope Scope => JobProviderScope.Turkey;
+    public string Homepage => "https://rapidapi.com";
 
-    public async Task<IReadOnlyList<RawJob>> SearchAsync(string keywords, string? location, int page, CancellationToken ct)
+    public async Task<IReadOnlyList<RawJob>> SearchAsync(JobQuery query, CancellationToken ct)
     {
-        var query = string.IsNullOrWhiteSpace(location) ? keywords : $"{keywords} {location}";
-        var url = $"https://{_o.Host}/search?query={Uri.EscapeDataString(query)}&page={page}&num_pages=1&country={_o.Country}&date_posted=month";
+        var (keywords, location, page) = (query.Keywords, query.Location, query.Page);
+        var searchText = string.IsNullOrWhiteSpace(location) ? keywords : $"{keywords} {location}";
+        var url = $"https://{_o.Host}/search?query={Uri.EscapeDataString(searchText)}&page={page}&num_pages=1&country={_o.Country}&date_posted=month";
 
         using var request = new HttpRequestMessage(HttpMethod.Get, url);
         request.Headers.Add("X-RapidAPI-Key", _o.ApiKey);

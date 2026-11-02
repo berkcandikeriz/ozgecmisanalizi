@@ -24,7 +24,15 @@
         <label class="field"><span class="label">Pozisyon / anahtar kelime</span><input class="input" name="Keywords" value="@q.Keywords" placeholder="Boşsa CV'nizden belirlenir" /></label>
         <label class="field"><span class="label">Konum</span><input class="input" name="Location" value="@q.Location" placeholder="İstanbul, Ankara, Uzaktan..." /></label>
     </div>
-    <button type="submit" class="btn btn-primary">İş ara</button>
+    <div class="actions" style="justify-content:space-between">
+        <label class="check">
+            @if (q.IncludeRemote != false) { <input type="checkbox" name="IncludeRemote" value="true" checked /> }
+            else { <input type="checkbox" name="IncludeRemote" value="true" /> }
+            <input type="hidden" name="IncludeRemote" value="false" />
+            Uzaktan (yurt dışı) ilanları da göster
+        </label>
+        <button type="submit" class="btn btn-primary">İş ara</button>
+    </div>
 </form>
 
 @if (res is null)
@@ -37,15 +45,28 @@ else
     {
         <div class="alert alert-warning" role="status"><span>@w</span></div>
     }
+    foreach (var n in res.Notices ?? [])
+    {
+        <div class="alert alert-info" role="note"><span>@n</span></div>
+    }
     <div class="layout-aside">
         <section>
             <div class="panel-head">
                 <h2>"@res.Keywords" için @res.Listings.Count ilan</h2>
-                @if (res.ActiveProviders.Count > 0) { <span class="small muted">Kaynak: @string.Join(", ", res.ActiveProviders)</span> }
+                @if (res.Providers is { Count: > 0 } providers)
+                {
+                    <span class="small muted">Kaynak:
+                        @for (var p = 0; p < providers.Count; p++)
+                        {
+                            var pr = providers[p];
+                            <a href="@pr.Homepage" target="_blank" rel="noopener noreferrer" title="@pr.Scope">@pr.Name</a><span> (@pr.Count)</span>@(p < providers.Count - 1 ? ", " : "")
+                        }
+                    </span>
+                }
             </div>
             @if (res.Listings.Count == 0)
             {
-                <div class="empty"><h2>Doğrudan ilan listesi yok</h2><p>Sağdaki bağlantılarla aynı aramayı LinkedIn, Indeed ve Kariyer.net'te açabilirsiniz.</p></div>
+                <div class="empty"><h2>Bu aramaya uyan doğrudan ilan bulunamadı</h2><p>Pozisyonu İngilizce ya da daha genel yazmayı deneyin (ör. "frontend developer"). Sağdaki bağlantılarla aynı aramayı LinkedIn, Indeed, Kariyer.net, Yenibiris ve Eleman.net'te açabilirsiniz.</p></div>
             }
             else
             {
@@ -54,7 +75,7 @@ else
                     {
                         <article class="job">
                             <div>
-                                <h3>@j.Title</h3>
+                                <h3>@j.Title @if (j.IsRemote) { <span class="badge badge-mid" style="vertical-align:middle">Uzaktan</span> } @if (j.IsTracked) { <span class="badge badge-accent" style="vertical-align:middle">Takipte</span> }</h3>
                                 <div class="meta">@j.Company@(j.Location is null ? "" : ", " + j.Location)</div>
                                 <div class="xs muted">@j.Source@(j.PostedAt is null ? "" : " — " + Fmt.Ago(j.PostedAt))@(j.EmploymentType is null ? "" : " — " + j.EmploymentType)</div>
                             </div>
@@ -76,7 +97,8 @@ else
                                         <input type="hidden" name="MatchScore" value="@j.MatchScore" />
                                         <input type="hidden" name="ResumeId" value="@q.ResumeId" />
                                         <input type="hidden" name="returnUrl" value="@returnUrl" />
-                                        <button type="submit" class="btn btn-sm">Takibe al</button>
+                                        @if (!j.IsTracked) { <button type="submit" class="btn btn-sm">Takibe al</button> }
+                                        <button type="submit" class="btn btn-sm btn-ghost" formaction="/isler/uygun-degil" title="Bu ilan bir daha önerilmez">Uygun değil</button>
                                     </form>
                                     <a class="btn btn-sm btn-primary" href="@j.Url" target="_blank" rel="noopener noreferrer">İlanı aç <svg class="icon"><use href="#i-external" /></svg></a>
                                 </div>
@@ -85,11 +107,24 @@ else
                     }
                 </div>
             }
+            @{
+                var qs = new Dictionary<string, string?> { ["Keywords"] = q.Keywords, ["Location"] = q.Location, ["ResumeId"] = q.ResumeId?.ToString(), ["IncludeRemote"] = q.IncludeRemote?.ToString().ToLowerInvariant() };
+                string PageUrl(int page) => "/isler" + QueryString.Create(qs.Append(new KeyValuePair<string, string?>("Page", page.ToString())));
+            }
+            @if (res.HiddenCount > 0) { <p class="xs muted" style="margin-top:var(--s-3)">"Uygun değil" olarak işaretlediğiniz @res.HiddenCount ilan gizlendi.</p> }
+            @if (res.ActiveProviders.Count > 0)
+            {
+                <nav class="actions" style="margin-top:var(--s-4)" aria-label="Sayfalar">
+                    @if (res.Page > 1) { <a class="btn btn-sm" href="@PageUrl(res.Page - 1)">Önceki sayfa</a> }
+                    <span class="small muted">Sayfa @res.Page</span>
+                    @if (res.Listings.Count > 0) { <a class="btn btn-sm" href="@PageUrl(res.Page + 1)">Sonraki sayfa</a> }
+                </nav>
+            }
         </section>
         <aside class="aside">
             <div class="panel">
                 <h2>Sitelerde ara</h2>
-                <p class="small muted">Aynı arama, sitelerin kendi sonuç sayfasında açılır.</p>
+                <p class="small muted">Bu siteler herkese açık ilan API'si sunmadığı için aynı arama, sitelerin kendi sonuç sayfasında açılır.</p>
                 <div class="sites">
                     @foreach (var s in res.SiteLinks)
                     {

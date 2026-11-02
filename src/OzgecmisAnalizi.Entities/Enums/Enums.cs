@@ -11,7 +11,11 @@ public enum ResumeTemplate
     Klasik = 0,
     Modern = 1,
     Kompakt = 2,
-    Profesyonel = 3
+    Profesyonel = 3,
+    Ortali = 4,
+    Minimal = 5,
+    ZamanCizelgesi = 6,
+    Yonetici = 7
 }
 
 public enum ResumeSource
@@ -46,7 +50,9 @@ public enum ApplicationStage
     Basvuruldu = 2,
     Mulakat = 3,
     Teklif = 4,
-    Reddedildi = 5
+    Reddedildi = 5,
+    /// <summary>İş önerisinin "uygun değil" olarak işaretlenmesi; bu ilan bir daha önerilmez.</summary>
+    UygunDegil = 6
 }
 
 public enum LanguageLevel

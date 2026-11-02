@@ -5,6 +5,8 @@ using OzgecmisAnalizi.Business.Ai;
 using OzgecmisAnalizi.Business.Analysis;
 using OzgecmisAnalizi.Business.Mapping;
 using OzgecmisAnalizi.Business.Parsing;
+using OzgecmisAnalizi.Business.Pdf;
+using OzgecmisAnalizi.Entities.Enums;
 using OzgecmisAnalizi.Core.Abstractions;
 using OzgecmisAnalizi.Core.Extensions;
 using OzgecmisAnalizi.Core.Tools;
@@ -15,7 +17,7 @@ using OzgecmisAnalizi.Entities.Dtos;
 
 namespace OzgecmisAnalizi.Business.Services;
 
-public sealed class CoverLetterService(IUnitOfWork uow, ICurrentUser currentUser, IAiProvider ai, ISkillCatalog catalog) : ICoverLetterService
+public sealed class CoverLetterService(IUnitOfWork uow, ICurrentUser currentUser, IAiProvider ai, ISkillCatalog catalog, IResumePdfRenderer pdf) : ICoverLetterService
 {
     private IRepository<CoverLetter> Letters => uow.Repository<CoverLetter>();
 
@@ -33,10 +35,16 @@ public sealed class CoverLetterService(IUnitOfWork uow, ICurrentUser currentUser
         string? content = null;
         var engine = "Şablon";
 
+        string? styleReference = null;
+        if (request.StyleReferenceId is { } refId)
+        {
+            styleReference = await Letters.Query().Where(l => l.Id == refId && l.UserId == userId).Select(l => l.Content).FirstOrDefaultAsync(ct);
+        }
+
         if (ai.IsEnabled)
         {
             content = (await ai.CompleteAsync(AiPrompts.System,
-                AiPrompts.CoverLetter(resumeText.Truncate(9000), jobTitle, company, request.JobDescription?.Truncate(6000), tone),
+                AiPrompts.CoverLetter(resumeText.Truncate(9000), jobTitle, company, request.JobDescription?.Truncate(6000), tone, styleReference?.Truncate(4000)),
                 jsonOutput: false, ct))?.Trim();
             if (content.HasValue())
             {
@@ -67,7 +75,7 @@ public sealed class CoverLetterService(IUnitOfWork uow, ICurrentUser currentUser
     public async Task<IReadOnlyList<CoverLetterDto>> ListAsync(CancellationToken ct = default)
     {
         var userId = currentUser.RequireId();
-        var rows = await Letters.Query().Where(l => l.UserId == userId).OrderByDescending(l => l.CreatedAt).Take(100).ToListAsync(ct);
+        var rows = await Letters.Query().Where(l => l.UserId == userId).OrderByDescending(l => l.CreatedAt).ToListAsync(ct);
         return rows.Select(r => r.ToDto()).ToList();
     }
 
@@ -86,6 +94,17 @@ public sealed class CoverLetterService(IUnitOfWork uow, ICurrentUser currentUser
         var letter = await LoadAsync(id, true, ct);
         Letters.Remove(letter);
         await uow.SaveChangesAsync(ct);
+    }
+
+    public async Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, CancellationToken ct = default)
+    {
+        var letter = await LoadAsync(id, false, ct);
+        var resume = letter.ResumeId is { } rid
+            ? await uow.Repository<Resume>().Query().FirstOrDefaultAsync(r => r.Id == rid && r.UserId == letter.UserId, ct)
+            : null;
+        var sender = resume?.Content.Personal ?? new PersonalInfo { FullName = currentUser.Email };
+        var bytes = pdf.RenderCoverLetter(sender, letter.Company, letter.JobTitle, letter.Content, template ?? resume?.Template ?? ResumeTemplate.Modern);
+        return (bytes, $"on-yazi-{letter.Company.ToSlug()}.pdf");
     }
 
     private async Task<CoverLetter> LoadAsync(Guid id, bool tracked, CancellationToken ct)

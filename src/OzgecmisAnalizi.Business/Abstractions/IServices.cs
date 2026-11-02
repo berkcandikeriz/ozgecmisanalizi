@@ -21,6 +21,8 @@ public interface IResumeService
     Task<ResumeDto> DuplicateAsync(Guid id, CancellationToken ct = default);
     Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, CancellationToken ct = default);
     Task<TailorResultDto> TailorAsync(Guid id, TailorRequest request, CancellationToken ct = default);
+    Task<TailorApplyResultDto> ApplyTailoringAsync(Guid id, TailorApplyRequest request, CancellationToken ct = default);
+    Task<ResumeChatResponse> ChatAsync(Guid id, ResumeChatRequest request, CancellationToken ct = default);
 }
 
 public interface IAnalysisService
@@ -61,6 +63,16 @@ public interface ICoverLetterService
     Task<CoverLetterDto> GetAsync(Guid id, CancellationToken ct = default);
     Task<CoverLetterDto> UpdateAsync(Guid id, CoverLetterUpdateRequest request, CancellationToken ct = default);
     Task DeleteAsync(Guid id, CancellationToken ct = default);
+    Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, CancellationToken ct = default);
+}
+
+public interface IResumeImprovementService
+{
+    /// <summary>Önerileri uygular ama kaydetmez; değişiklik listesini döndürür.</summary>
+    Task<ImprovementPreviewDto> PreviewAsync(Guid resumeId, Guid? analysisId, CancellationToken ct = default);
+
+    /// <summary>Seçilen değişiklikleri kaydeder (üzerine veya kopya olarak) ve isteğe bağlı yeniden analiz eder.</summary>
+    Task<ImprovementApplyResultDto> ApplyAsync(Guid resumeId, ImprovementApplyRequest request, CancellationToken ct = default);
 }
 
 public interface IDashboardService

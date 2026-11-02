@@ -1,13 +1,14 @@
 @model ApplicationsViewModel
 @{
     ViewData["Title"] = "Başvurular";
-    var stages = Enum.GetValues<ApplicationStage>();
+    var stages = Enum.GetValues<ApplicationStage>().Where(s => s != ApplicationStage.UygunDegil).ToArray();
+    var dismissedCount = Model.Items.Count(i => i.Stage == ApplicationStage.UygunDegil);
 }
 <div class="page-head">
     <div><h1>Başvuru panosu</h1><p>Kaydettiğiniz ilanları aşamalar arasında taşıyın; mülakat tarihlerini ve notlarınızı tek yerde tutun.</p></div>
 </div>
 
-<details class="panel" style="margin-bottom:var(--s-5)" open="@(Model.Items.Count == 0)">
+<details class="panel" style="margin-bottom:var(--s-5)" open="@(Model.Items.Count(i => i.Stage != ApplicationStage.UygunDegil) == 0)">
     <summary style="cursor:pointer;font-weight:700">Elle başvuru ekle</summary>
     <form method="post" asp-antiforgery="true" action="/basvurular/ekle" style="margin-top:var(--s-4)">
         <div class="grid-3">
@@ -28,6 +29,10 @@
     </form>
 </details>
 
+@if (dismissedCount > 0)
+{
+    <p class="xs muted">"Uygun değil" olarak işaretlenen @dismissedCount ilan panoda gösterilmiyor ve iş önerilerinden çıkarıldı.</p>
+}
 <div class="board" role="list">
     @foreach (var stage in stages)
     {

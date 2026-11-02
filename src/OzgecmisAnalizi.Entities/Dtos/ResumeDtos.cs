@@ -42,3 +42,29 @@ public record TailorResultDto(
     IReadOnlyList<string> Suggestions,
     string? SuggestedSummary,
     string Engine);
+
+/// <summary>İlana göre uyarlanmış bir CV kopyası oluşturur; isteğe bağlı olarak başvuru panosuna ekler.</summary>
+public class TailorApplyRequest
+{
+    public string JobTitle { get; set; } = string.Empty;
+    public string? Company { get; set; }
+    public string? JobUrl { get; set; }
+    public string? JobDescription { get; set; }
+
+    /// <summary>Kullanıcının "bende var" diye onayladığı eksik anahtar kelimeler; beceriler listesine eklenir.</summary>
+    public List<string> AddKeywords { get; set; } = [];
+
+    /// <summary>Doluysa özet bölümü bununla değiştirilir.</summary>
+    public string? Summary { get; set; }
+
+    public bool UpdateTitle { get; set; } = true;
+    public bool CreateApplication { get; set; } = true;
+}
+
+public record TailorApplyResultDto(ResumeDto Resume, Guid? ApplicationId);
+
+public record ChatMessageDto(string Role, string Content);
+
+public record ResumeChatRequest(IReadOnlyList<ChatMessageDto> Messages);
+
+public record ResumeChatResponse(string Reply, string Engine);

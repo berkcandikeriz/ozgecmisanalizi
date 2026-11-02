@@ -29,7 +29,7 @@ public sealed class AnalysisService(
     public async Task<AnalysisDto> AnalyzeAsync(Guid resumeId, AnalyzeRequest request, CancellationToken ct = default)
     {
         var userId = currentUser.RequireId();
-        var resume = await uow.Repository<Resume>().Tracked()
+        var resume = await uow.Repository<Resume>().Query()
             .FirstOrDefaultAsync(r => r.Id == resumeId && r.UserId == userId, ct);
         Guard.Found(resume, "CV", resumeId);
 
@@ -65,7 +65,12 @@ public sealed class AnalysisService(
 
         if (outcome.Profession is not null && resume.TargetProfessionId is null)
         {
-            resume.TargetProfessionId = outcome.Profession.Id;
+            // Doğrudan güncelleme: CV'nin "düzenlendi" zamanı değişmesin. Aksi halde sonraki analizler orijinal dosya
+            // metni yerine ayrıştırılmış içeriği kullanır ve aynı CV iki analizde farklı puan alır.
+            Guid? professionToSet = outcome.Profession.Id;
+            await uow.Repository<Resume>().Tracked()
+                .Where(r => r.Id == resume.Id)
+                .ExecuteUpdateAsync(setters => setters.SetProperty(r => r.TargetProfessionId, professionToSet), ct);
         }
 
         var entity = new ResumeAnalysis
@@ -112,7 +117,6 @@ public sealed class AnalysisService(
 
         return await query
             .OrderByDescending(a => a.CreatedAt)
-            .Take(100)
             .Select(a => new AnalysisListItemDto(a.Id, a.ResumeId, a.Resume!.Title, a.Profession != null ? a.Profession.Name : null, a.OverallScore, a.Label, a.CreatedAt))
             .ToListAsync(ct);
     }

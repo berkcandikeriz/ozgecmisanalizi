@@ -20,20 +20,27 @@
         });
     });
 
-    // ---- Mobil menü
+    // ---- Mobil menü: sağdan açılan çekmece
     const menuBtn = document.querySelector("[data-menu-toggle]");
-    if (menuBtn) {
-        menuBtn.addEventListener("click", () => {
-            const open = document.body.classList.toggle("nav-open");
+    const drawer = document.getElementById("site-nav");
+    if (menuBtn && drawer) {
+        const setOpen = open => {
+            document.body.classList.toggle("nav-open", open);
             menuBtn.setAttribute("aria-expanded", String(open));
-        });
-        document.addEventListener("keydown", e => {
-            if (e.key === "Escape" && document.body.classList.contains("nav-open")) {
-                document.body.classList.remove("nav-open");
-                menuBtn.setAttribute("aria-expanded", "false");
+            if (open) {
+                drawer.querySelector("[data-menu-close]")?.focus();
+            } else {
                 menuBtn.focus();
             }
+        };
+        menuBtn.addEventListener("click", () => setOpen(!document.body.classList.contains("nav-open")));
+        document.querySelectorAll("[data-menu-close]").forEach(el => el.addEventListener("click", () => setOpen(false)));
+        drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", () => document.body.classList.remove("nav-open")));
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape" && document.body.classList.contains("nav-open")) setOpen(false);
         });
+        // Masaüstü genişliğine dönülürse çekmece açık kalmasın.
+        window.matchMedia("(min-width: 901px)").addEventListener("change", e => { if (e.matches) document.body.classList.remove("nav-open"); });
     }
 
     // ---- Uyarıları kapatma
