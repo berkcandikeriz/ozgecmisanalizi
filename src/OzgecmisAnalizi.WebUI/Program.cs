@@ -7,6 +7,10 @@ using OzgecmisAnalizi.WebUI.Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.AddCoreLogging("ozgecmisanalizi-web");
 
+// Mobil (Android) uygulama aynı Wi-Fi ağından düz HTTP ile bağlanır: "Security:RequireHttps" false
+// olduğunda HTTPS yönlendirmesi kapatılır ve oturum çerezi isteğin şemasına göre işaretlenir.
+var requireHttps = builder.Configuration.GetValue("Security:RequireHttps", true);
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<BearerTokenHandler>();
 builder.Services.AddHttpClient<ApiClient>(client =>
@@ -25,7 +29,7 @@ builder.Services
         options.AccessDeniedPath = "/hesap/giris";
         options.Cookie.Name = "ozgecmis.auth";
         options.Cookie.HttpOnly = true;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.SecurePolicy = requireHttps ? CookieSecurePolicy.Always : CookieSecurePolicy.SameAsRequest;
         options.Cookie.SameSite = SameSiteMode.Lax;
         options.SlidingExpiration = false;
     });
@@ -49,7 +53,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseStatusCodePagesWithReExecute("/durum/{0}");
-app.UseHttpsRedirection();
+if (requireHttps)
+{
+    app.UseHttpsRedirection();
+}
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
