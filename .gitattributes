@@ -5,8 +5,3 @@
 *.png binary
 *.jpg binary
 *.pdf binary
-*.jar binary
-*.keystore binary
-*.jks binary
-gradlew text eol=lf
-*.bat text eol=crlf

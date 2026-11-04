@@ -28,7 +28,6 @@ src/
   OzgecmisAnalizi.Business    İş kuralları: CV ayrıştırma, analiz motoru, maaş, kariyer, PDF, iş arama, AI
   OzgecmisAnalizi.API         REST API (JWT, OpenAPI + Scalar, rate limit, CORS)
   OzgecmisAnalizi.WebUI       ASP.NET Core MVC arayüz — veriye yalnızca API üzerinden erişir
-android/                      Android uygulaması (WebView istemcisi, Gradle) — APK GitHub Actions ile derlenir
 replica/                      Klon planlama dokümanları (recon, mimari, tasarım tokenları, özellik matrisi)
 ```
 
@@ -58,38 +57,6 @@ dotnet run --project src/OzgecmisAnalizi.WebUI    # https://localhost:7201
 
 API ilk açılışta bekleyen migration'ları uygular ve meslek kataloğunu yükler.
 
-## Android uygulaması (APK)
-
-`android/` klasörü, web arayüzünü telefonda tam ekran açan yerel bir Android uygulamasıdır (Android 7.0+, tüm işlemci mimarileri,
-ek kütüphane yok). Analiz, PDF üretimi ve veritabanı sunucuda kalır; uygulama bilgisayarınızdaki sunucuya aynı
-Wi-Fi ağından bağlanır.
-
-1. **Bilgisayarda sunucuyu mobil modda başlatın** (arayüz `http://<bilgisayar-ip>:5201` adresinde yerel ağa açılır,
-   güvenlik duvarı kuralı eklenir ve girilecek adres ekrana yazdırılır):
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File .\calistir.ps1 -Mobil
-   ```
-2. **APK'yı indirin:** GitHub → *Actions* → *Android APK* → son çalıştırma → *Artifacts* → `OzgecmisAnalizi-apk`
-   (zip içinden `OzgecmisAnalizi-1.0.N-release.apk`). `v1.0.0` gibi bir etiket gönderirseniz APK *Releases* sayfasına da eklenir.
-3. Telefonda APK'yı açın ve "bilinmeyen kaynaklardan yüklemeye" izin verin.
-4. İlk açılışta ekrandaki adresi girin (ör. `http://192.168.1.20:5201`).
-
-Uygulama özellikleri: CV yükleme (PDF/DOCX/TXT dosya seçici), PDF indirme (CV, ön yazı, analiz raporu →
-*İndirilenler/ÖzgeçmişAnalizi* klasörüne kaydedilir ve açılır), ilan bağlantılarının telefonun tarayıcısında/uygulamasında
-açılması, panoya kopyalama, açık/koyu tema, geri tuşu ile gezinme, bağlantı hatası ekranı. Ana sayfadayken geri tuşu
-*yenile / sunucu adresini değiştir / çık* menüsünü açar.
-
-Notlar:
-
-- Mobil modda (`Security:RequireHttps=false`) HTTPS yönlendirmesi kapanır ve oturum çerezi HTTP üzerinden de gönderilir.
-  Bu mod yalnızca güvendiğiniz ev/ofis ağı içindir; sunucuyu internete açacaksanız HTTPS (ters vekil sunucu) kullanın.
-- Sunucuyu internette yayınladıysanız adresi APK'ya gömebilirsiniz: *Actions → Android APK → Run workflow → server_url*
-  veya depo değişkeni `ANDROID_SERVER_URL`. Yerelde: `cd android && ./gradlew assembleRelease -PserverUrl=https://...`
-- APK depodaki herkese açık geliştirme anahtarıyla (`android/app/ozgecmis-dev.keystore`) imzalanır; böylece yeni sürümler
-  eskisinin üzerine kurulur. Kendi anahtarınız için `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`,
-  `ANDROID_KEY_ALIAS`, `ANDROID_KEY_PASSWORD` gizli değişkenlerini tanımlayın (imza değişince eski sürümü kaldırıp kurun).
-- Yerelde derleme: JDK 17+ ve Android SDK (platform 35) gerekir — `cd android && ./gradlew assembleRelease`.
-
 ## Yapılandırma (`src/OzgecmisAnalizi.API/appsettings.json`)
 
 | Ayar | Açıklama |
@@ -103,7 +70,6 @@ Notlar:
 | `JobSearch:JSearch:ApiKey` | JSearch (RapidAPI) — Google for Jobs üzerinden ilanlar |
 | `JobSearch:Remotive/Jobicy/Arbeitnow:Enabled` | Anahtarsız uzaktan ilan kaynakları (varsayılan açık). Kullanım koşulları gereği yanıtlar 2–6 saat önbellekte tutulur ve kaynak bağlantısı gösterilir |
 | `JobSearch:IncludeRemoteByDefault` | İş aramasında uzaktan ilanlar varsayılan olarak eklensin mi |
-| `Security:RequireHttps` | WebUI ayarı. `false`: HTTPS yönlendirmesi kapalı, çerez HTTP'de de gönderilir (Android/yerel ağ modu) |
 | `JobSearch:SiteLinks` | Site arama bağlantı şablonları (`{q}`, `{l}`, `{qslug}`) |
 | `Salary:MinimumNetWage` | Net asgari ücret (2026: 28.075,50 TL). Yıllık güncelleyin |
 
