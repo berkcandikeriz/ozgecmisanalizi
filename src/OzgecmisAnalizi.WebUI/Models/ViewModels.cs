@@ -85,6 +85,9 @@ public class TranslateViewModel
 
     /// <summary>Analiz sayfasından gelindiyse geri dönüş için.</summary>
     public Guid? AnalysisId { get; set; }
+
+    /// <summary>Varsayılan: İngilizce (ABD/İngiltere) çıktılarda kapalı, diğer dillerde açık.</summary>
+    public bool IncludePhoto { get; set; } = true;
 }
 
 public class TranslateFormModel
@@ -94,6 +97,8 @@ public class TranslateFormModel
 
     /// <summary>"pdf" ya da "copy".</summary>
     public string? Output { get; set; }
+
+    public bool IncludePhoto { get; set; }
 }
 
 public class ChatViewModel

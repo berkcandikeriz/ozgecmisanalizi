@@ -13,7 +13,8 @@ public interface IResumePdfRenderer
 {
     /// <summary>CV'yi PDF'e çevirir. <paramref name="language"/> bölüm başlıklarının, dil seviyelerinin ve "Günümüz" ifadesinin dilidir;
     /// içerik metni çağıran tarafından önceden çevrilmiş olmalıdır.</summary>
-    byte[] Render(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default);
+    /// <param name="includePhoto">CV'de vesikalık fotoğraf varsa basılsın mı (ABD/İngiltere/Kanada başvurularında kapatın).</param>
+    byte[] Render(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default, bool includePhoto = true);
 
     /// <summary>Ön yazıyı, CV ile aynı şablonun başlık ve renkleriyle PDF'e çevirir.</summary>
     byte[] RenderCoverLetter(PersonalInfo sender, string company, string jobTitle, string body, ResumeTemplate template);
@@ -60,10 +61,15 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
         public static Loc For(string? language) => new(CvLanguages.Labels(language), CvLanguages.Culture(language));
     }
 
-    public byte[] Render(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default)
+    // Vesikalık oranı 3:4; başlıkta ad/unvan/iletişim metninin sağında, ayrı bir görsel olarak durur.
+    private const float PhotoWidth = 66;
+    private const float PhotoHeight = 88;
+
+    public byte[] Render(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default, bool includePhoto = true)
     {
         var st = Styles.GetValueOrDefault(template, Styles[ResumeTemplate.Modern]);
         var loc = Loc.For(language);
+        var photo = includePhoto && ResumePhoto.TryDecode(content.Personal.Photo, out var photoBytes) ? photoBytes : null;
 
         return Document.Create(container =>
         {
@@ -79,7 +85,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
                         {
                             if (st.Header == HeaderStyle.Band)
                             {
-                                Header(outer, content.Personal, st, loc, includeContact: false);
+                                Header(outer, content.Personal, st, loc, photo, includeContact: false);
                                 outer.Item().PaddingTop(12);
                             }
 
@@ -91,7 +97,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
                                     main.Spacing(8);
                                     if (st.Header != HeaderStyle.Band)
                                     {
-                                        Header(main, content.Personal, st, loc, includeContact: false);
+                                        Header(main, content.Personal, st, loc, photo, includeContact: false);
                                     }
 
                                     MainSections(main, content, st, loc, includeSkills: false);
@@ -114,7 +120,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
                         page.Content().Column(col =>
                         {
                             col.Spacing(st.BaseSize < 10 ? 5 : 8);
-                            Header(col, content.Personal, st, loc, includeContact: true);
+                            Header(col, content.Personal, st, loc, photo, includeContact: true);
                             MainSections(col, content, st, loc, includeSkills: true);
                         });
                         break;
@@ -136,7 +142,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
                 page.Content().Column(col =>
                 {
                     col.Spacing(10);
-                    Header(col, sender, st, Loc.Turkish, includeContact: true);
+                    Header(col, sender, st, Loc.Turkish, null, includeContact: true);
                     col.Item().PaddingTop(8).Text(DateTime.Now.ToString("d MMMM yyyy", Tr)).FontColor(st.Muted);
                     col.Item().Text(t =>
                     {
@@ -173,39 +179,58 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
         });
     }
 
-    private static void Header(ColumnDescriptor col, PersonalInfo p, Style st, Loc loc, bool includeContact)
+    private static void Header(ColumnDescriptor col, PersonalInfo p, Style st, Loc loc, byte[]? photo, bool includeContact)
     {
         var contact = string.Join("  |  ", new[] { p.Email, p.Phone, p.City, p.LinkedIn, p.Website }.Where(x => x.HasValue()));
         var band = st.Header == HeaderStyle.Band;
         var centered = st.Header == HeaderStyle.Centered;
 
-        col.Item().Element(e => band ? e.Background(st.Accent).Padding(16) : e.PaddingBottom(4)).Column(h =>
+        col.Item().Element(e => band ? e.Background(st.Accent).Padding(16) : e.PaddingBottom(4)).Row(row =>
         {
-            var nameColor = band ? "#ffffff" : st.Accent;
-            var subColor = band ? "#e5e7eb" : st.Muted;
+            row.Spacing(12);
 
-            var name = h.Item();
-            if (centered) name = name.AlignCenter();
-            name.Text(p.FullName.HasValue() ? p.FullName! : loc.L.NamePlaceholder).FontSize(22).Bold().FontColor(nameColor);
-
-            if (p.Title.HasValue())
+            // Ortalı başlıkta metin sayfa ortasında kalsın diye fotoğraf genişliği kadar boşluk bırakılır.
+            if (photo is not null && centered)
             {
-                var title = h.Item();
-                if (centered) title = title.AlignCenter();
-                title.Text(p.Title!).FontSize(12).FontColor(subColor);
+                row.ConstantItem(PhotoWidth);
             }
 
-            if ((includeContact || band) && contact.Length > 0)
+            // Ad soyad ilk metin satırı olarak kalır; fotoğraf okuma sırasında metnin arkasından gelir.
+            row.RelativeItem().AlignMiddle().Column(h => HeaderText(h, p, st, loc, band, centered, includeContact, contact));
+
+            if (photo is not null)
             {
-                var line = h.Item().PaddingTop(4);
-                if (centered) line = line.AlignCenter();
-                line.Text(contact).FontSize(8.5f).FontColor(subColor);
+                row.ConstantItem(PhotoWidth).Height(PhotoHeight).Image(photo).FitArea();
             }
         });
 
         if (!band)
         {
             col.Item().LineHorizontal(centered ? 0.75f : 1).LineColor(st.Accent);
+        }
+    }
+
+    private static void HeaderText(ColumnDescriptor h, PersonalInfo p, Style st, Loc loc, bool band, bool centered, bool includeContact, string contact)
+    {
+        var nameColor = band ? "#ffffff" : st.Accent;
+        var subColor = band ? "#e5e7eb" : st.Muted;
+
+        var name = h.Item();
+        if (centered) name = name.AlignCenter();
+        name.Text(p.FullName.HasValue() ? p.FullName! : loc.L.NamePlaceholder).FontSize(22).Bold().FontColor(nameColor);
+
+        if (p.Title.HasValue())
+        {
+            var title = h.Item();
+            if (centered) title = title.AlignCenter();
+            title.Text(p.Title!).FontSize(12).FontColor(subColor);
+        }
+
+        if ((includeContact || band) && contact.Length > 0)
+        {
+            var line = h.Item().PaddingTop(4);
+            if (centered) line = line.AlignCenter();
+            line.Text(contact).FontSize(8.5f).FontColor(subColor);
         }
     }
 

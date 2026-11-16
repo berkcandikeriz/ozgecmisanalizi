@@ -121,7 +121,7 @@ public sealed class ResumeService(
         return copy.ToDto();
     }
 
-    public async Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, string? language = null, CancellationToken ct = default)
+    public async Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, string? language = null, bool includePhoto = true, CancellationToken ct = default)
     {
         Guard.Against(language.HasValue() && !CvLanguages.IsSupported(language), $"Desteklenmeyen dil: {language}.");
         var resume = await LoadOwnedAsync(id, false, ct);
@@ -130,7 +130,7 @@ public sealed class ResumeService(
 
         // Dil istenmediyse ya da CV zaten o dildeyse içerik olduğu gibi basılır; yalnızca başlıklar CV'nin diline göre seçilir.
         var content = lang == own ? resume.Content : (await translator.TranslateAsync(resume.Content, lang, ct)).Content;
-        var bytes = pdf.Render(content, template ?? resume.Template, lang);
+        var bytes = pdf.Render(content, template ?? resume.Template, lang, includePhoto);
         var name = (resume.Content.Personal.FullName ?? resume.Title).ToSlug();
         var suffix = lang == own ? "cv" : $"cv-{lang}";
         return (bytes, $"{(name.Length > 0 ? name : "cv")}-{suffix}.pdf");
@@ -168,6 +168,11 @@ public sealed class ResumeService(
                 TargetProfessionId = source.TargetProfessionId,
                 Content = Sanitize(outcome.Content)
             };
+            if (!request.IncludePhoto)
+            {
+                copy.Content.Personal.Photo = null;
+            }
+
             await Resumes.AddAsync(copy, ct);
             await uow.SaveChangesAsync(ct);
             copyDto = copy.ToDto();
@@ -384,6 +389,7 @@ public sealed class ResumeService(
         c.Language = c.Language.HasValue() && CvLanguages.IsSupported(c.Language) && CvLanguages.Normalize(c.Language) != CvLanguages.Default
             ? CvLanguages.Normalize(c.Language)
             : null;
+        c.Personal.Photo = ResumePhoto.Normalize(c.Personal.Photo);
         c.Summary = c.Summary?.Trim().Truncate(3000);
         c.Experiences = c.Experiences.Where(e => e.Position.HasValue() || e.Company.HasValue()).Take(30).ToList();
         foreach (var e in c.Experiences)

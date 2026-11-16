@@ -54,6 +54,27 @@
             </label>
         </div>
 
+        @if (Model.Resume.Content.Personal.Photo is not null)
+        {
+            <label class="check">
+                @if (Model.IncludePhoto)
+                {
+                    <input type="checkbox" name="IncludePhoto" value="true" checked />
+                }
+                else
+                {
+                    <input type="checkbox" name="IncludePhoto" value="true" />
+                }
+                <input type="hidden" name="IncludePhoto" value="false" />
+                Vesikalık fotoğrafı ekle
+            </label>
+            <p class="hint" style="margin:0">ABD, İngiltere, Kanada ve İrlanda'da işverenler ayrımcılık riski nedeniyle fotoğraflı CV istemez; bu ülkelere başvururken işareti kaldırın. Almanya, Fransa ve Türkiye'de fotoğraf yaygındır.</p>
+        }
+        else
+        {
+            <input type="hidden" name="IncludePhoto" value="false" />
+        }
+
         @if (!o.FullTranslation)
         {
             <div class="alert alert-warning" role="status" style="margin:0">

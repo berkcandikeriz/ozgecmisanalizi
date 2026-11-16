@@ -20,6 +20,7 @@ Mülakat tarihi kaydı,tracker,could,yes,yes,
 Başvuruya belge bağlama,tracker,could,yes,yes,uyarlanmış CV kopyası + ön yazı başvuruya bağlanır
 Haftalık otomatik iş önerisi e-postası,jobs,could,yes,no,
 Çoklu dil arayüzü,platform,could,yes,no,arayüz yalnızca Türkçe
+Vesikalık fotoğraf (isteğe bağlı; PDF'te ayrı görsel; fotoğrafsız indirme),resume,could,yes,yes,data URL JSON'da; tarayıcıda 300x400 küçültme
 CV'yi yabancı dile çevirme (PDF + düzenlenebilir kopya),resume,should,yes,yes,AI → LibreTranslate → TR-EN sözlük; 9 dil PDF başlıkları
 Ücretli abonelik,platform,could,yes,skip,platform ücretsiz
 56+ meslek için eksik beceri tespiti,analysis,must,no,yes,eklediğimiz özellik

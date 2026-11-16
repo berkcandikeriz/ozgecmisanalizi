@@ -477,3 +477,10 @@ del, ins { padding: 0 2px; }
 .score-delta.down { background: var(--danger-soft); color: var(--danger); }
 .change-tip { font-size: var(--fs-sm); margin: 0 0 var(--s-3); padding: var(--s-2) var(--s-3); border-radius: var(--r-sm); background: var(--warning-soft); border-left: 3px solid var(--highlight); }
 .change-tip b { color: var(--highlight); }
+
+/* Vesikalık fotoğraf alanı (CV düzenleyici) */
+.photo-field { display: flex; gap: var(--s-4); align-items: flex-start; margin-bottom: var(--s-4); }
+.photo-preview { flex: 0 0 auto; width: 90px; aspect-ratio: 3 / 4; border-radius: var(--r-sm); border: 1px dashed var(--border); background: var(--surface-2); display: grid; place-items: center; overflow: hidden; font-size: var(--fs-xs); color: var(--text-muted); text-align: center; }
+.photo-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-preview img[hidden], .photo-preview span[hidden] { display: none; }
+@media (max-width: 480px) { .photo-field { flex-direction: column; } }

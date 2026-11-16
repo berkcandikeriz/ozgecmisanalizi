@@ -20,7 +20,8 @@ public interface IResumeService
     Task<ResumeDto> UploadAsync(Stream file, string fileName, string? title, CancellationToken ct = default);
     Task<ResumeDto> DuplicateAsync(Guid id, CancellationToken ct = default);
     /// <param name="language">Boş ya da "tr" ise CV olduğu gibi; aksi halde önce hedef dile çevrilir (örn. "en").</param>
-    Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, string? language = null, CancellationToken ct = default);
+    /// <param name="includePhoto">CV'de vesikalık varsa PDF'e eklensin mi.</param>
+    Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, string? language = null, bool includePhoto = true, CancellationToken ct = default);
 
     /// <summary>Desteklenen çıktı dilleri ve etkin çeviri motoru.</summary>
     TranslationOptionsDto GetTranslationOptions();

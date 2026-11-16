@@ -53,12 +53,13 @@ public sealed class ResumesController(IResumeService resumes, IResumeImprovement
     public async Task<ActionResult<ApiResponse<ResumeDto>>> Duplicate(Guid id, CancellationToken ct) =>
         OkResponse(await resumes.DuplicateAsync(id, ct));
 
-    /// <summary>CV'yi seçilen şablonla PDF olarak indirir. <paramref name="language"/> verilirse (örn. "en") CV önce o dile çevrilir.</summary>
+    /// <summary>CV'yi seçilen şablonla PDF olarak indirir. <paramref name="language"/> verilirse (örn. "en") CV önce o dile çevrilir.
+    /// <paramref name="photo"/>=false vesikalık fotoğrafı çıkarır (ABD/İngiltere/Kanada başvuruları için).</summary>
     [HttpGet("{id:guid}/pdf")]
     [Produces("application/pdf")]
-    public async Task<IActionResult> Pdf(Guid id, [FromQuery] ResumeTemplate? template, [FromQuery] string? language, CancellationToken ct)
+    public async Task<IActionResult> Pdf(Guid id, [FromQuery] ResumeTemplate? template, [FromQuery] string? language, [FromQuery] bool photo = true, CancellationToken ct = default)
     {
-        var (content, fileName) = await resumes.RenderPdfAsync(id, template, language, ct);
+        var (content, fileName) = await resumes.RenderPdfAsync(id, template, language, photo, ct);
         return File(content, "application/pdf", fileName);
     }
 

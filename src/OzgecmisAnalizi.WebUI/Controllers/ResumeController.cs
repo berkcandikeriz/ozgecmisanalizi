@@ -114,10 +114,11 @@ public sealed class ResumeController(ApiClient api) : AppController(api)
     }
 
     [HttpGet("{id:guid}/pdf")]
-    public async Task<IActionResult> Pdf(Guid id, ResumeTemplate? template, [FromQuery(Name = "dil")] string? language, CancellationToken ct)
+    public async Task<IActionResult> Pdf(Guid id, ResumeTemplate? template, [FromQuery(Name = "dil")] string? language, [FromQuery(Name = "foto")] bool photo = true, CancellationToken ct = default)
     {
         var query = new List<string>();
         if (template is not null) query.Add($"template={template}");
+        if (!photo) query.Add("photo=false");
         if (!string.IsNullOrWhiteSpace(language)) query.Add($"language={Uri.EscapeDataString(language)}");
         var url = $"api/resumes/{id}/pdf" + (query.Count == 0 ? string.Empty : "?" + string.Join("&", query));
         return PdfFile(await Api.GetFileAsync(url, ct));
@@ -133,7 +134,7 @@ public sealed class ResumeController(ApiClient api) : AppController(api)
         var target = options.Languages.Any(l => l.Code == language && l.Code != current)
             ? language!
             : options.Languages.Select(l => l.Code).FirstOrDefault(c => c == "en" && c != current) ?? options.Languages.First(l => l.Code != current).Code;
-        return View(new TranslateViewModel { Resume = resume, Options = options, Language = target, Template = resume.Template, AnalysisId = analysisId });
+        return View(new TranslateViewModel { Resume = resume, Options = options, Language = target, Template = resume.Template, AnalysisId = analysisId, IncludePhoto = target != "en" });
     }
 
     [HttpPost("{id:guid}/cevir")]
@@ -141,13 +142,13 @@ public sealed class ResumeController(ApiClient api) : AppController(api)
     {
         if (form.Output == "pdf")
         {
-            return RedirectToAction(nameof(Pdf), new { id, template = form.Template, dil = form.Language });
+            return RedirectToAction(nameof(Pdf), new { id, template = form.Template, dil = form.Language, foto = form.IncludePhoto });
         }
 
         try
         {
             var result = await Api.PostAsync<ResumeTranslationResultDto>($"api/resumes/{id}/translate",
-                new ResumeTranslateRequest { Language = form.Language, SaveAsCopy = true }, ct);
+                new ResumeTranslateRequest { Language = form.Language, SaveAsCopy = true, IncludePhoto = form.IncludePhoto }, ct);
             if (result.Note is not null)
             {
                 Info(result.Note);

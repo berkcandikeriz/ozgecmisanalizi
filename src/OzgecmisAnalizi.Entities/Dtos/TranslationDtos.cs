@@ -14,6 +14,9 @@ public class ResumeTranslateRequest
 
     /// <summary>Çevrilmiş içerik yeni bir CV olarak kaydedilsin mi (düzenlenebilir kopya).</summary>
     public bool SaveAsCopy { get; set; } = true;
+
+    /// <summary>Çevrilmiş kopyada vesikalık fotoğraf korunsun mu (ABD/İngiltere/Kanada için genellikle false).</summary>
+    public bool IncludePhoto { get; set; } = true;
 }
 
 /// <param name="TranslatedCount">Çevrilen metin parçası sayısı.</param>

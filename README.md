@@ -9,6 +9,7 @@ CV'nizi ücretsiz analiz eden, düzenleyip PDF olarak indirmenizi sağlayan ve s
 - **Kariyer yolu:** bulunduğunuz basamak ve sonraki basamak için odak becerileri
 - **CV oluşturucu:** yüklenen PDF/DOCX'i (köprü bağlantıları dahil) düzenlenebilir CV'ye çevirir, 8 ATS uyumlu PDF şablonu
 - **İlana göre uyarlama** ve ilana özel CV kopyasını başvuru panosuna bağlama
+- **Vesikalık fotoğraf (isteğe bağlı):** tarayıcıda 3:4 kırpılıp 300×400 JPEG'e küçültülür, PDF başlığında adın yanında ayrı görsel olarak basılır (ad soyad ilk satırda düz metin kalır, ATS metin çıkarımı etkilenmez); ABD/İngiltere/Kanada başvuruları için fotoğrafsız indirme seçeneği
 - **Yabancı dilde CV:** analiz edilen CV'yi İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Felemenkçe, Portekizce veya Rusçaya çevirip PDF indirme ya da düzenlenebilir kopya oluşturma; PDF başlıkları ve dil seviyeleri hedef dilde basılır
 - **Ön yazı:** CV ile aynı şablonda PDF, eski ön yazının üslubunu örnek alma
 - **CV danışmanı:** CV ve son analiz hakkında sohbet (yapay zeka yoksa analizden derlenen yanıtlar)

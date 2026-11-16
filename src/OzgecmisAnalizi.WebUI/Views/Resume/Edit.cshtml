@@ -69,6 +69,23 @@
 
             <section class="editor-section">
                 <h2>Kişisel bilgiler</h2>
+                <div class="photo-field" data-photo-field>
+                    <div class="photo-preview" aria-hidden="true">
+                        <img data-photo-preview src="@p.Photo" alt="" hidden="@(p.Photo is null)" />
+                        <span data-photo-empty hidden="@(p.Photo is not null)">Fotoğraf yok</span>
+                    </div>
+                    <div class="stack" style="--gap:var(--s-2)">
+                        <span class="label">Vesikalık fotoğraf (isteğe bağlı)</span>
+                        <input type="hidden" name="@(Base).Personal.Photo" value="@p.Photo" data-photo-value />
+                        <div class="actions">
+                            <label class="btn btn-sm"><svg class="icon"><use href="#i-upload" /></svg>Fotoğraf seç<input type="file" accept="image/jpeg,image/png" class="visually-hidden" data-photo-input /></label>
+                            <button type="button" class="btn btn-sm btn-ghost" data-photo-remove hidden="@(p.Photo is null)">Kaldır</button>
+                        </div>
+                        <span class="hint">JPEG veya PNG. Tarayıcınızda 3:4 vesikalık oranında kırpılıp küçültülür; sunucuya yalnızca küçük kopya gider.
+                            PDF'te adınızın yanında ayrı bir görsel olarak durur, ATS'nin metni okumasını etkilemez. ABD, İngiltere ve Kanada başvurularında fotoğrafsız indirin.</span>
+                        <span class="hint" data-photo-error role="alert" hidden></span>
+                    </div>
+                </div>
                 <div class="grid-2">
                     <label class="field"><span class="label">Ad soyad</span><input class="input" name="@(Base).Personal.FullName" value="@p.FullName" autocomplete="name" /></label>
                     <label class="field"><span class="label">Unvan</span><input class="input" name="@(Base).Personal.Title" value="@p.Title" placeholder="Örn. Kıdemli İK Uzmanı" /></label>

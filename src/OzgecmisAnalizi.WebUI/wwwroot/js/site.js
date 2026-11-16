@@ -112,6 +112,53 @@
             item.querySelectorAll("label[for]").forEach(el => { el.htmlFor = el.htmlFor.replace(/_(\d+|__i__)_/, `_${i}_`); });
         });
     }
+    // ---- Vesikalık fotoğraf: tarayıcıda 3:4 kırpılır, 300×400 JPEG'e küçültülür ve gizli alana data URL olarak yazılır.
+    document.querySelectorAll("[data-photo-field]").forEach(field => {
+        const input = field.querySelector("[data-photo-input]");
+        const value = field.querySelector("[data-photo-value]");
+        const preview = field.querySelector("[data-photo-preview]");
+        const empty = field.querySelector("[data-photo-empty]");
+        const remove = field.querySelector("[data-photo-remove]");
+        const error = field.querySelector("[data-photo-error]");
+        const show = url => {
+            value.value = url || "";
+            preview.hidden = !url;
+            if (url) preview.src = url; else preview.removeAttribute("src");
+            empty.hidden = !!url;
+            remove.hidden = !url;
+            value.dispatchEvent(new Event("input", { bubbles: true }));
+        };
+        const fail = msg => { error.textContent = msg; error.hidden = false; };
+        input.addEventListener("change", () => {
+            error.hidden = true;
+            const file = input.files && input.files[0];
+            input.value = "";
+            if (!file) return;
+            if (!/^image\/(jpeg|png)$/.test(file.type)) { fail("Yalnızca JPEG veya PNG seçin."); return; }
+            if (file.size > 15 * 1024 * 1024) { fail("Dosya 15 MB'tan büyük."); return; }
+            const img = new Image();
+            const src = URL.createObjectURL(file);
+            img.onload = () => {
+                const W = 300, H = 400;
+                const ratio = W / H;
+                let sw = img.naturalWidth, sh = img.naturalHeight, sx = 0, sy = 0;
+                if (sw / sh > ratio) { sw = sh * ratio; sx = (img.naturalWidth - sw) / 2; }
+                else { sh = sw / ratio; sy = Math.max(0, (img.naturalHeight - sh) * 0.3); } // yüz genelde üst kısımdadır
+                const canvas = document.createElement("canvas");
+                canvas.width = W; canvas.height = H;
+                const ctx = canvas.getContext("2d");
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, W, H);
+                ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
+                URL.revokeObjectURL(src);
+                show(canvas.toDataURL("image/jpeg", 0.85));
+            };
+            img.onerror = () => { URL.revokeObjectURL(src); fail("Görsel okunamadı."); };
+            img.src = src;
+        });
+        remove.addEventListener("click", () => show(""));
+    });
+
     document.querySelectorAll("form[data-resume-editor]").forEach(form => {
         form.addEventListener("submit", () => form.querySelectorAll("[data-collection]").forEach(reindex));
         // Kaydedilmemiş değişiklik uyarısı

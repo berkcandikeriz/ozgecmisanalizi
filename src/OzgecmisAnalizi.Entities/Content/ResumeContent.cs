@@ -27,6 +27,9 @@ public class PersonalInfo
     public string? City { get; set; }
     public string? LinkedIn { get; set; }
     public string? Website { get; set; }
+
+    /// <summary>İsteğe bağlı vesikalık fotoğraf: "data:image/jpeg;base64,..." (tarayıcıda 300×400'e küçültülür).</summary>
+    public string? Photo { get; set; }
 }
 
 public class ExperienceItem
