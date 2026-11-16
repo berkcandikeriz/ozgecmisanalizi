@@ -113,6 +113,27 @@ public sealed class ResumeController(ApiClient api) : AppController(api)
         }
     }
 
+    /// <summary>Editör formunun o anki hâliyle (kaydetmeden) PDF önizlemesi; şablon seçimi ve içerik değişince fetch ile çağrılır.</summary>
+    [HttpPost("{id:guid}/onizleme")]
+    public async Task<IActionResult> Preview(Guid id, ResumeEditViewModel model, CancellationToken ct)
+    {
+        var content = model.Resume.Content ?? new ResumeContent();
+        content.Skills = (model.SkillsText ?? string.Empty)
+            .Split([',', '\n', ';'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .ToList();
+
+        try
+        {
+            return Json(await Api.PostAsync<ResumePreviewDto>("api/resumes/preview",
+                new ResumePreviewRequest { Template = model.Resume.Template, Content = content }, ct));
+        }
+        catch (ApiException ex) when (ex.StatusCode is not System.Net.HttpStatusCode.Unauthorized)
+        {
+            Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+            return Json(new { error = ex.Errors.FirstOrDefault() ?? ex.Message });
+        }
+    }
+
     [HttpGet("{id:guid}/pdf")]
     public async Task<IActionResult> Pdf(Guid id, ResumeTemplate? template, [FromQuery(Name = "dil")] string? language, [FromQuery(Name = "foto")] bool photo = true, CancellationToken ct = default)
     {

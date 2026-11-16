@@ -23,6 +23,9 @@ public interface IResumeService
     /// <param name="includePhoto">CV'de vesikalık varsa PDF'e eklensin mi.</param>
     Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, string? language = null, bool includePhoto = true, CancellationToken ct = default);
 
+    /// <summary>Editördeki (kaydedilmemiş olabilir) içeriği seçilen şablonla sayfa görsellerine çevirir.</summary>
+    ResumePreviewDto Preview(ResumePreviewRequest request);
+
     /// <summary>Desteklenen çıktı dilleri ve etkin çeviri motoru.</summary>
     TranslationOptionsDto GetTranslationOptions();
 

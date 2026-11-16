@@ -112,6 +112,63 @@
             item.querySelectorAll("label[for]").forEach(el => { el.htmlFor = el.htmlFor.replace(/_(\d+|__i__)_/, `_${i}_`); });
         });
     }
+    // ---- PDF önizlemesi: editör formunun o anki hâli (kaydetmeden) seçili şablonla sayfa görsellerine çevrilir.
+    document.querySelectorAll("[data-preview]").forEach(panel => {
+        const form = document.querySelector("form[data-resume-editor]");
+        if (!form) return;
+        const pages = panel.querySelector("[data-preview-pages]");
+        const count = panel.querySelector("[data-preview-count]");
+        const status = panel.querySelector("[data-preview-status]");
+        const more = panel.querySelector("[data-preview-more]");
+        let timer = null, controller = null;
+
+        const refresh = async () => {
+            controller?.abort();
+            controller = new AbortController();
+            form.querySelectorAll("[data-collection]").forEach(reindex);
+            const data = new FormData(form);
+            data.delete("next");
+            panel.setAttribute("aria-busy", "true");
+            status.textContent = "Önizleme hazırlanıyor…";
+            try {
+                const res = await fetch(panel.dataset.preview, { method: "POST", body: data, signal: controller.signal, headers: { "X-Requested-With": "fetch" } });
+                const json = await res.json();
+                if (!res.ok) throw new Error(json.error || "Önizleme oluşturulamadı.");
+                count.textContent = json.pageCount + " sayfa";
+                pages.replaceChildren(...json.pages.map((src, i) => {
+                    const fig = document.createElement("figure");
+                    const img = document.createElement("img");
+                    img.src = src;
+                    img.alt = (i + 1) + ". sayfa önizlemesi";
+                    img.loading = "lazy";
+                    const cap = document.createElement("figcaption");
+                    cap.textContent = (i + 1) + " / " + json.pageCount;
+                    fig.append(img, cap);
+                    return fig;
+                }));
+                more.hidden = json.pageCount <= json.pages.length;
+                more.textContent = more.hidden ? "" : `İlk ${json.pages.length} sayfa gösteriliyor. Tamamı için PDF'i indirin.`;
+                status.textContent = json.pageCount > 2
+                    ? "CV 2 sayfayı aşıyor; işe alımcılar ve ATS için 1–2 sayfa idealdir."
+                    : "Seçili şablonla PDF'in sayfaları; kaydetmeden günceller.";
+            } catch (err) {
+                if (err.name === "AbortError") return;
+                status.textContent = err instanceof SyntaxError
+                    ? "Önizleme alınamadı; oturumunuz sona ermiş olabilir. Sayfayı yenileyin."
+                    : (err.message || "Önizleme oluşturulamadı.");
+            } finally {
+                panel.removeAttribute("aria-busy");
+            }
+        };
+        const schedule = delay => { clearTimeout(timer); timer = setTimeout(refresh, delay); };
+
+        // Şablon değişince hemen, yazarken 1,2 sn duraklamadan sonra güncelle.
+        form.addEventListener("change", e => schedule(e.target.name === "Resume.Template" ? 50 : 600));
+        form.addEventListener("input", () => schedule(1200));
+        form.addEventListener("click", e => { if (e.target.closest("button[type=button]")) schedule(400); });
+        schedule(0);
+    });
+
     // ---- Vesikalık fotoğraf: tarayıcıda 3:4 kırpılır, 300×400 JPEG'e küçültülür ve gizli alana data URL olarak yazılır.
     document.querySelectorAll("[data-photo-field]").forEach(field => {
         const input = field.querySelector("[data-photo-input]");

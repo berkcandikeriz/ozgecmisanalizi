@@ -63,6 +63,11 @@ public sealed class ResumesController(IResumeService resumes, IResumeImprovement
         return File(content, "application/pdf", fileName);
     }
 
+    /// <summary>Editördeki içeriği kaydetmeden, seçilen şablonla sayfa görselleri olarak önizler (toplam sayfa sayısı + ilk 6 sayfa).</summary>
+    [HttpPost("preview")]
+    public ActionResult<ApiResponse<ResumePreviewDto>> Preview(ResumePreviewRequest request) =>
+        OkResponse(resumes.Preview(request));
+
     /// <summary>CV çıktısı için desteklenen diller ve etkin çeviri motoru.</summary>
     [HttpGet("translation/languages")]
     public ActionResult<ApiResponse<TranslationOptionsDto>> TranslationLanguages() =>

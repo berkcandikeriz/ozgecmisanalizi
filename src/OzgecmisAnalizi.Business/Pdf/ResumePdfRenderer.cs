@@ -17,6 +17,9 @@ public interface IResumePdfRenderer
     byte[] Render(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default, bool includePhoto = true);
 
     /// <summary>Ön yazıyı, CV ile aynı şablonun başlık ve renkleriyle PDF'e çevirir.</summary>
+    /// <summary>CV sayfalarını önizleme için JPEG görseller olarak üretir (sayfa başına bir görsel).</summary>
+    IReadOnlyList<byte[]> RenderPageImages(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default, bool includePhoto = true, int dpi = 72);
+
     byte[] RenderCoverLetter(PersonalInfo sender, string company, string jobTitle, string body, ResumeTemplate template);
 }
 
@@ -65,7 +68,20 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
     private const float PhotoWidth = 66;
     private const float PhotoHeight = 88;
 
-    public byte[] Render(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default, bool includePhoto = true)
+    public byte[] Render(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default, bool includePhoto = true) =>
+        Build(content, template, language, includePhoto).GeneratePdf();
+
+    public IReadOnlyList<byte[]> RenderPageImages(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default, bool includePhoto = true, int dpi = 72) =>
+        Build(content, template, language, includePhoto)
+            .GenerateImages(new ImageGenerationSettings
+            {
+                ImageFormat = ImageFormat.Jpeg,
+                ImageCompressionQuality = ImageCompressionQuality.High,
+                RasterDpi = Math.Clamp(dpi, 36, 150)
+            })
+            .ToList();
+
+    private static IDocument Build(ResumeContent content, ResumeTemplate template, string language, bool includePhoto)
     {
         var st = Styles.GetValueOrDefault(template, Styles[ResumeTemplate.Modern]);
         var loc = Loc.For(language);
@@ -128,7 +144,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
 
                 Footer(page, st);
             });
-        }).GeneratePdf();
+        });
     }
 
     public byte[] RenderCoverLetter(PersonalInfo sender, string company, string jobTitle, string body, ResumeTemplate template)

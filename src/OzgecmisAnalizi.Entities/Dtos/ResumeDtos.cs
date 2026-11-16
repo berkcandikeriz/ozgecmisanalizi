@@ -33,6 +33,18 @@ public class ResumeSaveRequest
     public ResumeContent Content { get; set; } = new();
 }
 
+/// <summary>Kaydedilmemiş editör içeriğinden PDF önizlemesi.</summary>
+public class ResumePreviewRequest
+{
+    public ResumeTemplate Template { get; set; } = ResumeTemplate.Modern;
+    public ResumeContent Content { get; set; } = new();
+    public bool IncludePhoto { get; set; } = true;
+}
+
+/// <param name="PageCount">PDF'in toplam sayfa sayısı.</param>
+/// <param name="Pages">Sayfa görselleri (data:image/jpeg;base64,...); en fazla ilk birkaç sayfa.</param>
+public record ResumePreviewDto(int PageCount, IReadOnlyList<string> Pages);
+
 public record TailorRequest(string JobDescription, string? JobTitle);
 
 public record TailorResultDto(

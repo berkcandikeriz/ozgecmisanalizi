@@ -136,6 +136,18 @@ public sealed class ResumeService(
         return (bytes, $"{(name.Length > 0 ? name : "cv")}-{suffix}.pdf");
     }
 
+    private const int MaxPreviewPages = 6;
+
+    public ResumePreviewDto Preview(ResumePreviewRequest request)
+    {
+        currentUser.RequireId();
+        var content = Sanitize(Clone(request.Content ?? new ResumeContent()));
+        var pages = pdf.RenderPageImages(content, request.Template, CvLanguages.Normalize(content.Language), request.IncludePhoto);
+        return new ResumePreviewDto(
+            pages.Count,
+            pages.Take(MaxPreviewPages).Select(p => "data:image/jpeg;base64," + Convert.ToBase64String(p)).ToList());
+    }
+
     public TranslationOptionsDto GetTranslationOptions() =>
         new(CvLanguages.List(), translator.EngineName, translator.FullTranslationAvailable);
 
