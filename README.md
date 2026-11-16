@@ -9,6 +9,7 @@ CV'nizi ücretsiz analiz eden, düzenleyip PDF olarak indirmenizi sağlayan ve s
 - **Kariyer yolu:** bulunduğunuz basamak ve sonraki basamak için odak becerileri
 - **CV oluşturucu:** yüklenen PDF/DOCX'i (köprü bağlantıları dahil) düzenlenebilir CV'ye çevirir, 8 ATS uyumlu PDF şablonu
 - **İlana göre uyarlama** ve ilana özel CV kopyasını başvuru panosuna bağlama
+- **Yabancı dilde CV:** analiz edilen CV'yi İngilizce, Almanca, Fransızca, İspanyolca, İtalyanca, Felemenkçe, Portekizce veya Rusçaya çevirip PDF indirme ya da düzenlenebilir kopya oluşturma; PDF başlıkları ve dil seviyeleri hedef dilde basılır
 - **Ön yazı:** CV ile aynı şablonda PDF, eski ön yazının üslubunu örnek alma
 - **CV danışmanı:** CV ve son analiz hakkında sohbet (yapay zeka yoksa analizden derlenen yanıtlar)
 - **Başvuru takip panosu**, yaklaşan mülakatlar, "uygun değil" işaretleme, PDF analiz raporu
@@ -71,6 +72,8 @@ API ilk açılışta bekleyen migration'ları uygular ve meslek kataloğunu yük
 | `JobSearch:Remotive/Jobicy/Arbeitnow:Enabled` | Anahtarsız uzaktan ilan kaynakları (varsayılan açık). Kullanım koşulları gereği yanıtlar 2–6 saat önbellekte tutulur ve kaynak bağlantısı gösterilir |
 | `JobSearch:IncludeRemoteByDefault` | İş aramasında uzaktan ilanlar varsayılan olarak eklensin mi |
 | `JobSearch:SiteLinks` | Site arama bağlantı şablonları (`{q}`, `{l}`, `{qslug}`) |
+| `Translation:LibreTranslateUrl` | CV çevirisi için isteğe bağlı [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) adresi (ücretsiz, yerelde: `docker run -p 5000:5000 libretranslate/libretranslate` → `http://localhost:5000`). Çeviri sırası: `Ai` → LibreTranslate → yerleşik TR→EN sözlük. Hiçbiri yoksa yalnızca başlıklar ve sözlükteki unvan/beceri/bölüm adları çevrilir |
+| `Translation:CacheMinutes` | Aynı CV ve dil için çevirinin bellekte tutulma süresi (varsayılan 120) |
 | `Salary:MinimumNetWage` | Net asgari ücret (2026: 28.075,50 TL). Yıllık güncelleyin |
 
 Gizli anahtarları depoya koymayın:

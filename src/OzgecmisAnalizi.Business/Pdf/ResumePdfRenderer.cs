@@ -1,4 +1,5 @@
 using System.Globalization;
+using OzgecmisAnalizi.Business.Translation;
 using OzgecmisAnalizi.Core.Extensions;
 using OzgecmisAnalizi.Entities.Content;
 using OzgecmisAnalizi.Entities.Enums;
@@ -10,7 +11,9 @@ namespace OzgecmisAnalizi.Business.Pdf;
 
 public interface IResumePdfRenderer
 {
-    byte[] Render(ResumeContent content, ResumeTemplate template);
+    /// <summary>CV'yi PDF'e çevirir. <paramref name="language"/> bölüm başlıklarının, dil seviyelerinin ve "Günümüz" ifadesinin dilidir;
+    /// içerik metni çağıran tarafından önceden çevrilmiş olmalıdır.</summary>
+    byte[] Render(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default);
 
     /// <summary>Ön yazıyı, CV ile aynı şablonun başlık ve renkleriyle PDF'e çevirir.</summary>
     byte[] RenderCoverLetter(PersonalInfo sender, string company, string jobTitle, string body, ResumeTemplate template);
@@ -50,9 +53,17 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
         [ResumeTemplate.Yonetici] = new("#3f2a56", "#57534e", "Georgia", HeaderStyle.Band, LayoutStyle.SidebarRight, 10, 30, false, "#f4f1f8")
     };
 
-    public byte[] Render(ResumeContent content, ResumeTemplate template)
+    /// <summary>Dile bağlı başlıklar ve büyük harf dönüşümü için kültür ("Skills".ToUpper(tr) → "SKİLLS" hatasını önler).</summary>
+    private sealed record Loc(CvLabels L, CultureInfo Culture)
+    {
+        public static readonly Loc Turkish = new(CvLanguages.Labels(CvLanguages.Default), Tr);
+        public static Loc For(string? language) => new(CvLanguages.Labels(language), CvLanguages.Culture(language));
+    }
+
+    public byte[] Render(ResumeContent content, ResumeTemplate template, string language = CvLanguages.Default)
     {
         var st = Styles.GetValueOrDefault(template, Styles[ResumeTemplate.Modern]);
+        var loc = Loc.For(language);
 
         return Document.Create(container =>
         {
@@ -68,22 +79,22 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
                         {
                             if (st.Header == HeaderStyle.Band)
                             {
-                                Header(outer, content.Personal, st, includeContact: false);
+                                Header(outer, content.Personal, st, loc, includeContact: false);
                                 outer.Item().PaddingTop(12);
                             }
 
                             outer.Item().Row(row =>
                             {
-                                void Side(IContainer c) => c.Background(st.SidebarBg).Padding(14).Column(side => Sidebar(side, content, st));
+                                void Side(IContainer c) => c.Background(st.SidebarBg).Padding(14).Column(side => Sidebar(side, content, st, loc));
                                 void Main(IContainer c) => c.Column(main =>
                                 {
                                     main.Spacing(8);
                                     if (st.Header != HeaderStyle.Band)
                                     {
-                                        Header(main, content.Personal, st, includeContact: false);
+                                        Header(main, content.Personal, st, loc, includeContact: false);
                                     }
 
-                                    MainSections(main, content, st, includeSkills: false);
+                                    MainSections(main, content, st, loc, includeSkills: false);
                                 });
 
                                 if (st.Layout == LayoutStyle.SidebarLeft)
@@ -103,8 +114,8 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
                         page.Content().Column(col =>
                         {
                             col.Spacing(st.BaseSize < 10 ? 5 : 8);
-                            Header(col, content.Personal, st, includeContact: true);
-                            MainSections(col, content, st, includeSkills: true);
+                            Header(col, content.Personal, st, loc, includeContact: true);
+                            MainSections(col, content, st, loc, includeSkills: true);
                         });
                         break;
                 }
@@ -125,7 +136,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
                 page.Content().Column(col =>
                 {
                     col.Spacing(10);
-                    Header(col, sender, st, includeContact: true);
+                    Header(col, sender, st, Loc.Turkish, includeContact: true);
                     col.Item().PaddingTop(8).Text(DateTime.Now.ToString("d MMMM yyyy", Tr)).FontColor(st.Muted);
                     col.Item().Text(t =>
                     {
@@ -162,7 +173,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
         });
     }
 
-    private static void Header(ColumnDescriptor col, PersonalInfo p, Style st, bool includeContact)
+    private static void Header(ColumnDescriptor col, PersonalInfo p, Style st, Loc loc, bool includeContact)
     {
         var contact = string.Join("  |  ", new[] { p.Email, p.Phone, p.City, p.LinkedIn, p.Website }.Where(x => x.HasValue()));
         var band = st.Header == HeaderStyle.Band;
@@ -175,7 +186,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
 
             var name = h.Item();
             if (centered) name = name.AlignCenter();
-            name.Text(p.FullName.HasValue() ? p.FullName! : "Ad Soyad").FontSize(22).Bold().FontColor(nameColor);
+            name.Text(p.FullName.HasValue() ? p.FullName! : loc.L.NamePlaceholder).FontSize(22).Bold().FontColor(nameColor);
 
             if (p.Title.HasValue())
             {
@@ -198,20 +209,20 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
         }
     }
 
-    private static void MainSections(ColumnDescriptor col, ResumeContent c, Style st, bool includeSkills)
+    private static void MainSections(ColumnDescriptor col, ResumeContent c, Style st, Loc loc, bool includeSkills)
     {
         if (c.Summary.HasValue())
         {
-            SectionTitle(col, "Profesyonel Özet", st);
+            SectionTitle(col, loc.L.Summary, st, loc);
             col.Item().Text(c.Summary!);
         }
 
         if (c.Experiences.Count > 0)
         {
-            SectionTitle(col, "İş Deneyimi", st);
+            SectionTitle(col, loc.L.Experience, st, loc);
             foreach (var e in c.Experiences)
             {
-                var dates = DateRange(e.StartDate, e.IsCurrent ? "Günümüz" : e.EndDate);
+                var dates = DateRange(e.StartDate, e.IsCurrent ? loc.L.Present : e.EndDate, loc);
                 Entry(col, st, dates, item =>
                 {
                     item.Item().Text(t =>
@@ -235,10 +246,10 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
 
         if (c.Educations.Count > 0)
         {
-            SectionTitle(col, "Eğitim", st);
+            SectionTitle(col, loc.L.Education, st, loc);
             foreach (var e in c.Educations)
             {
-                Entry(col, st, DateRange(e.StartDate, e.EndDate), x =>
+                Entry(col, st, DateRange(e.StartDate, e.EndDate, loc), x =>
                 {
                     x.Item().Text(e.School ?? string.Empty).Bold();
                     var degree = string.Join(", ", new[] { e.Degree, e.Field }.Where(v => v.HasValue()));
@@ -250,19 +261,19 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
 
         if (includeSkills && c.Skills.Count > 0)
         {
-            SectionTitle(col, "Beceriler", st);
+            SectionTitle(col, loc.L.Skills, st, loc);
             col.Item().Text(string.Join("  •  ", c.Skills));
         }
 
         if (includeSkills && c.Languages.Count > 0)
         {
-            SectionTitle(col, "Yabancı Dil", st);
-            col.Item().Text(string.Join("  •  ", c.Languages.Select(l => $"{l.Name} ({LanguageLevelName(l.Level)})")));
+            SectionTitle(col, loc.L.Languages, st, loc);
+            col.Item().Text(string.Join("  •  ", c.Languages.Select(l => $"{l.Name} ({loc.L.Level(l.Level)})")));
         }
 
         if (c.Projects.Count > 0)
         {
-            SectionTitle(col, "Projeler", st);
+            SectionTitle(col, loc.L.Projects, st, loc);
             foreach (var p in c.Projects)
             {
                 col.Item().ShowEntire().Column(x =>
@@ -279,7 +290,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
 
         if (c.Certificates.Count > 0)
         {
-            SectionTitle(col, "Sertifikalar ve Kurslar", st);
+            SectionTitle(col, loc.L.Certificates, st, loc);
             foreach (var cert in c.Certificates)
             {
                 col.Item().Text(t =>
@@ -314,11 +325,11 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
         });
     }
 
-    private static void Sidebar(ColumnDescriptor side, ResumeContent c, Style st)
+    private static void Sidebar(ColumnDescriptor side, ResumeContent c, Style st, Loc loc)
     {
         side.Spacing(6);
         var p = c.Personal;
-        SideTitle(side, "İletişim", st);
+        SideTitle(side, loc.L.Contact, st, loc);
         foreach (var item in new[] { p.Email, p.Phone, p.City, p.LinkedIn, p.Website }.Where(x => x.HasValue()))
         {
             side.Item().Text(item!).FontSize(8.5f);
@@ -326,7 +337,7 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
 
         if (c.Skills.Count > 0)
         {
-            SideTitle(side, "Beceriler", st);
+            SideTitle(side, loc.L.Skills, st, loc);
             foreach (var s in c.Skills.Take(30))
             {
                 side.Item().Text("• " + s).FontSize(8.5f);
@@ -335,17 +346,17 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
 
         if (c.Languages.Count > 0)
         {
-            SideTitle(side, "Yabancı Dil", st);
+            SideTitle(side, loc.L.Languages, st, loc);
             foreach (var l in c.Languages)
             {
-                side.Item().Text($"{l.Name} – {LanguageLevelName(l.Level)}").FontSize(8.5f);
+                side.Item().Text($"{l.Name} – {loc.L.Level(l.Level)}").FontSize(8.5f);
             }
         }
     }
 
-    private static void SectionTitle(ColumnDescriptor col, string title, Style st)
+    private static void SectionTitle(ColumnDescriptor col, string title, Style st, Loc loc)
     {
-        var text = st.UpperTitles ? title.ToUpper(Tr) : title;
+        var text = st.UpperTitles ? title.ToUpper(loc.Culture) : title;
         var item = col.Item().PaddingTop(6);
         if (st.Header == HeaderStyle.Centered && !st.UpperTitles)
         {
@@ -360,9 +371,9 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
         item.Text(text).FontSize(st.UpperTitles ? 10.5f : 12).Bold().FontColor(st.Accent).LetterSpacing(st.UpperTitles ? 0.04f : 0);
     }
 
-    private static void SideTitle(ColumnDescriptor col, string title, Style st)
+    private static void SideTitle(ColumnDescriptor col, string title, Style st, Loc loc)
     {
-        col.Item().PaddingTop(8).Text(st.UpperTitles ? title.ToUpper(Tr) : title).FontSize(9.5f).Bold().FontColor(st.Accent);
+        col.Item().PaddingTop(8).Text(st.UpperTitles ? title.ToUpper(loc.Culture) : title).FontSize(9.5f).Bold().FontColor(st.Accent);
     }
 
     private static void Bullets(ColumnDescriptor col, string? description)
@@ -383,11 +394,11 @@ public sealed class ResumePdfRenderer : IResumePdfRenderer
         }
     }
 
-    private static string DateRange(string? start, string? end)
+    private static string DateRange(string? start, string? end, Loc loc)
     {
         if (!start.HasValue() && !end.HasValue()) return string.Empty;
         if (!start.HasValue()) return end!;
-        return $"{start} – {(end.HasValue() ? end : "Günümüz")}";
+        return $"{start} – {(end.HasValue() ? end : loc.L.Present)}";
     }
 
     public static string LanguageLevelName(LanguageLevel level) => level switch

@@ -1,0 +1,85 @@
+@model TranslateViewModel
+@{
+    ViewData["Title"] = "CV'yi çevir";
+    var o = Model.Options;
+    var current = Model.Resume.Content.Language ?? "tr";
+    var currentName = o.Languages.FirstOrDefault(l => l.Code == current)?.Name ?? "Türkçe";
+}
+<div class="page-head">
+    <div>
+        <h1>CV'yi yabancı dile çevir</h1>
+        <p><strong>@Model.Resume.Title</strong> (@currentName) — yurt dışı ya da yabancı şirket başvuruları için İngilizce veya başka bir dilde CV alın.</p>
+    </div>
+    <div class="actions">
+        @if (Model.AnalysisId is not null)
+        {
+            <a class="btn" href="/analiz/@Model.AnalysisId">Analize dön</a>
+        }
+        <a class="btn" href="/cv/@Model.Resume.Id/duzenle"><svg class="icon"><use href="#i-pen" /></svg>CV'yi düzenle</a>
+    </div>
+</div>
+
+<div class="layout-aside">
+    <form method="post" asp-antiforgery="true" action="/cv/@Model.Resume.Id/cevir" class="panel stack">
+        <div class="grid-2">
+            <label class="field" style="margin:0"><span class="label">Hedef dil</span>
+                <select class="select" name="Language">
+                    @foreach (var l in o.Languages.Where(l => l.Code != current))
+                    {
+                        if (l.Code == Model.Language)
+                        {
+                            <option value="@l.Code" selected>@l.Name (@l.NativeName)</option>
+                        }
+                        else
+                        {
+                            <option value="@l.Code">@l.Name (@l.NativeName)</option>
+                        }
+                    }
+                </select>
+            </label>
+            <label class="field" style="margin:0"><span class="label">PDF şablonu</span>
+                <select class="select" name="Template">
+                    @foreach (var t in Enum.GetValues<ResumeTemplate>())
+                    {
+                        if (t == Model.Template)
+                        {
+                            <option value="@t" selected>@Fmt.Template(t)</option>
+                        }
+                        else
+                        {
+                            <option value="@t">@Fmt.Template(t)</option>
+                        }
+                    }
+                </select>
+            </label>
+        </div>
+
+        @if (!o.FullTranslation)
+        {
+            <div class="alert alert-warning" role="status" style="margin:0">
+                <span>Yapay zeka veya LibreTranslate tanımlı değil: bölüm başlıkları, dil seviyeleri ve sözlükteki unvan, beceri ve bölüm adları çevrilir;
+                özet ve deneyim maddeleri Türkçe kalır. Tam çeviri için appsettings'te <code>Ai</code> (ücretsiz Gemini ya da yerel Ollama) veya
+                <code>Translation:LibreTranslateUrl</code> tanımlayın ya da düzenlenebilir kopyayı oluşturup kalan metinleri elle çevirin.</span>
+            </div>
+        }
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary" name="Output" value="copy" data-loading-text>Çevrilmiş kopya oluştur ve düzenle</button>
+            <button type="submit" class="btn" name="Output" value="pdf" data-no-loading><svg class="icon"><use href="#i-download" /></svg>Doğrudan PDF indir</button>
+        </div>
+        <p class="xs muted" style="margin:0">Çeviri motoru: @o.Engine. Orijinal CV'niz değişmez.</p>
+    </form>
+
+    <aside class="aside stack">
+        <div class="panel-flat">
+            <h3>Neler çevrilir?</h3>
+            <p class="small muted">Unvan, özet, deneyim maddeleri, eğitim bilgileri, beceriler, diller, sertifika ve proje açıklamaları. Bölüm başlıkları, dil seviyeleri ve "Günümüz" ifadesi PDF'te hedef dile göre basılır.</p>
+            <p class="small muted">Adınız, iletişim bilgileri, şirket adları, teknoloji adları (C#, SAP, Excel…), sayılar ve tarihler değiştirilmez; çeviride yeni bilgi eklenmez.</p>
+        </div>
+        <div class="panel-flat">
+            <h3>Hangisini seçmeliyim?</h3>
+            <p class="small muted"><strong>Kopya oluştur</strong>: çeviriyi gözden geçirip düzeltebilir, sonra istediğiniz şablonla PDF indirebilirsiniz. Başvuru öncesi önerilen yol budur.</p>
+            <p class="small muted"><strong>Doğrudan PDF</strong>: hızlı bir önizleme; çeviri kaydedilmez.</p>
+        </div>
+    </aside>
+</div>

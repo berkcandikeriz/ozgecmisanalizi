@@ -5,6 +5,9 @@ namespace OzgecmisAnalizi.Entities.Content;
 /// <summary>Yapılandırılmış CV içeriği. Veritabanında tek JSON kolonu olarak saklanır, API'de aynen taşınır.</summary>
 public class ResumeContent
 {
+    /// <summary>İçeriğin dili (ISO 639-1, örn. "en"). Boşsa Türkçe kabul edilir; PDF başlıkları bu dile göre basılır.</summary>
+    public string? Language { get; set; }
+
     public PersonalInfo Personal { get; set; } = new();
     public string? Summary { get; set; }
     public List<ExperienceItem> Experiences { get; set; } = [];

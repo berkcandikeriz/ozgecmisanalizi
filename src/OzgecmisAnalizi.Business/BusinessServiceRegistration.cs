@@ -10,6 +10,7 @@ using OzgecmisAnalizi.Business.Options;
 using OzgecmisAnalizi.Business.Parsing;
 using OzgecmisAnalizi.Business.Pdf;
 using OzgecmisAnalizi.Business.Services;
+using OzgecmisAnalizi.Business.Translation;
 using OzgecmisAnalizi.Core.Security;
 using OzgecmisAnalizi.Entities.Concrete;
 using QuestPDF.Infrastructure;
@@ -28,6 +29,7 @@ public static class BusinessServiceRegistration
         services.Configure<AiOptions>(configuration.GetSection(AiOptions.SectionName));
         services.Configure<SalaryOptions>(configuration.GetSection(SalaryOptions.SectionName));
         services.Configure<JobSearchOptions>(configuration.GetSection(JobSearchOptions.SectionName));
+        services.Configure<TranslationOptions>(configuration.GetSection(TranslationOptions.SectionName));
 
         // Ayrıştırma ve analiz
         services.AddSingleton<IResumeTextExtractor, ResumeTextExtractor>();
@@ -48,6 +50,10 @@ public static class BusinessServiceRegistration
             AiProviderKind.Gemini => sp.GetRequiredService<GeminiProvider>(),
             _ => new NullAiProvider()
         });
+
+        // CV çevirisi: yapay zeka → LibreTranslate → yerleşik sözlük. Sonuçlar IMemoryCache'te tutulur.
+        services.AddHttpClient<LibreTranslateClient>(c => c.Timeout = TimeSpan.FromSeconds(60));
+        services.AddScoped<IResumeTranslator, ResumeTranslator>();
 
         // İş arama
         services.AddHttpClient<JoobleProvider>(c => c.Timeout = TimeSpan.FromSeconds(20));

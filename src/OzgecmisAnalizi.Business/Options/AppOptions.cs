@@ -25,6 +25,27 @@ public sealed class AiOptions
     public int MaxInputChars { get; set; } = 12000;
 }
 
+/// <summary>
+/// CV çevirisi. Sıra: yapay zeka (Ai bölümü) → LibreTranslate (ücretsiz, kendi sunucunuzda çalışabilir) → yerleşik sözlük.
+/// Hiçbiri yoksa yalnızca başlıklar, dil seviyeleri ve sözlükteki unvan/beceri adları çevrilir.
+/// </summary>
+public sealed class TranslationOptions
+{
+    public const string SectionName = "Translation";
+
+    /// <summary>LibreTranslate adresi, örn. http://localhost:5000 (docker run -p 5000:5000 libretranslate/libretranslate). Boşsa kapalı.</summary>
+    public string? LibreTranslateUrl { get; set; }
+
+    /// <summary>LibreTranslate sunucusu anahtar istiyorsa.</summary>
+    public string? LibreTranslateApiKey { get; set; }
+
+    /// <summary>Aynı CV içeriği ve dil için çeviri sonucunun bellekte tutulacağı süre.</summary>
+    public int CacheMinutes { get; set; } = 120;
+
+    /// <summary>Yapay zekaya tek istekte gönderilecek en fazla karakter; uzun CV'ler parçalara bölünür.</summary>
+    public int AiChunkChars { get; set; } = 6000;
+}
+
 public sealed class SalaryOptions
 {
     public const string SectionName = "Salary";

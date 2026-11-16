@@ -20,11 +20,12 @@
 
 <div class="page-head">
     <div>
-        <h1>@r.Title</h1>
+        <h1>@r.Title @if (c.Language is not null) { <span class="badge" title="CV dili">@c.Language.ToUpperInvariant()</span> }</h1>
         <p>Değişiklikleri kaydettikten sonra yeniden analiz ederek puanınızın nasıl değiştiğini görün.</p>
     </div>
     <div class="actions">
         <a class="btn" href="/cv/@Model.Id/uyarla"><svg class="icon"><use href="#i-target" /></svg>İlana uyarla</a>
+        <a class="btn" href="/cv/@Model.Id/cevir"><svg class="icon"><use href="#i-globe" /></svg>Çevir</a>
         @if (Model.LastAnalysisId is not null)
         {
             <a class="btn" href="/analiz/@Model.LastAnalysisId">Son analiz: @Model.LastScore</a>
@@ -34,6 +35,8 @@
 
 <form method="post" asp-antiforgery="true" action="/cv/@Model.Id/duzenle" data-resume-editor>
     <div asp-validation-summary="ModelOnly" class="alert alert-error" role="alert"></div>
+    @* Çevrilmiş kopyalarda içerik dili korunur; PDF başlıkları bu dile göre basılır. *@
+    <input type="hidden" name="@(Base).Language" value="@c.Language" />
     <div class="layout-aside">
         <div class="panel">
             <section class="editor-section">

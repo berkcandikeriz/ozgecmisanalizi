@@ -114,10 +114,56 @@ public sealed class ResumeController(ApiClient api) : AppController(api)
     }
 
     [HttpGet("{id:guid}/pdf")]
-    public async Task<IActionResult> Pdf(Guid id, ResumeTemplate? template, CancellationToken ct)
+    public async Task<IActionResult> Pdf(Guid id, ResumeTemplate? template, [FromQuery(Name = "dil")] string? language, CancellationToken ct)
     {
-        var url = $"api/resumes/{id}/pdf" + (template is null ? string.Empty : $"?template={template}");
+        var query = new List<string>();
+        if (template is not null) query.Add($"template={template}");
+        if (!string.IsNullOrWhiteSpace(language)) query.Add($"language={Uri.EscapeDataString(language)}");
+        var url = $"api/resumes/{id}/pdf" + (query.Count == 0 ? string.Empty : "?" + string.Join("&", query));
         return PdfFile(await Api.GetFileAsync(url, ct));
+    }
+
+    /// <summary>CV'yi yabancı dile çevirme ekranı (örn. İngilizce PDF).</summary>
+    [HttpGet("{id:guid}/cevir")]
+    public async Task<IActionResult> Translate(Guid id, [FromQuery(Name = "dil")] string? language, [FromQuery(Name = "analiz")] Guid? analysisId, CancellationToken ct)
+    {
+        var resume = await Api.GetAsync<ResumeDto>($"api/resumes/{id}", ct);
+        var options = await Api.GetAsync<TranslationOptionsDto>("api/resumes/translation/languages", ct);
+        var current = resume.Content.Language ?? "tr";
+        var target = options.Languages.Any(l => l.Code == language && l.Code != current)
+            ? language!
+            : options.Languages.Select(l => l.Code).FirstOrDefault(c => c == "en" && c != current) ?? options.Languages.First(l => l.Code != current).Code;
+        return View(new TranslateViewModel { Resume = resume, Options = options, Language = target, Template = resume.Template, AnalysisId = analysisId });
+    }
+
+    [HttpPost("{id:guid}/cevir")]
+    public async Task<IActionResult> Translate(Guid id, TranslateFormModel form, CancellationToken ct)
+    {
+        if (form.Output == "pdf")
+        {
+            return RedirectToAction(nameof(Pdf), new { id, template = form.Template, dil = form.Language });
+        }
+
+        try
+        {
+            var result = await Api.PostAsync<ResumeTranslationResultDto>($"api/resumes/{id}/translate",
+                new ResumeTranslateRequest { Language = form.Language, SaveAsCopy = true }, ct);
+            if (result.Note is not null)
+            {
+                Info(result.Note);
+            }
+            else
+            {
+                Success($"CV çevrildi ({result.Engine}). Çeviriyi kontrol edip PDF olarak indirebilirsiniz.");
+            }
+
+            return RedirectToAction(nameof(Edit), new { id = result.Copy!.Id });
+        }
+        catch (ApiException ex) when (ex.StatusCode is System.Net.HttpStatusCode.BadRequest or System.Net.HttpStatusCode.UnprocessableEntity)
+        {
+            Error(string.Join(" ", ex.Errors.DefaultIfEmpty(ex.Message)));
+            return RedirectToAction(nameof(Translate), new { id, dil = form.Language });
+        }
     }
 
     [HttpPost("{id:guid}/analiz-et")]

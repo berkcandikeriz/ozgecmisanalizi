@@ -5,6 +5,7 @@ using OzgecmisAnalizi.Business.Analysis;
 using OzgecmisAnalizi.Business.Mapping;
 using OzgecmisAnalizi.Business.Parsing;
 using OzgecmisAnalizi.Business.Pdf;
+using OzgecmisAnalizi.Business.Translation;
 using OzgecmisAnalizi.Core.Abstractions;
 using OzgecmisAnalizi.Core.Extensions;
 using OzgecmisAnalizi.Core.Tools;
@@ -23,7 +24,8 @@ public sealed class ResumeService(
     IResumeTextParser parser,
     IResumePdfRenderer pdf,
     ISkillCatalog catalog,
-    IAiProvider ai) : IResumeService
+    IAiProvider ai,
+    IResumeTranslator translator) : IResumeService
 {
     private IRepository<Resume> Resumes => uow.Repository<Resume>();
 
@@ -119,12 +121,59 @@ public sealed class ResumeService(
         return copy.ToDto();
     }
 
-    public async Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, CancellationToken ct = default)
+    public async Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, string? language = null, CancellationToken ct = default)
     {
+        Guard.Against(language.HasValue() && !CvLanguages.IsSupported(language), $"Desteklenmeyen dil: {language}.");
         var resume = await LoadOwnedAsync(id, false, ct);
-        var bytes = pdf.Render(resume.Content, template ?? resume.Template);
+        var own = CvLanguages.Normalize(resume.Content.Language);
+        var lang = language.HasValue() ? CvLanguages.Normalize(language) : own;
+
+        // Dil istenmediyse ya da CV zaten o dildeyse içerik olduğu gibi basılır; yalnızca başlıklar CV'nin diline göre seçilir.
+        var content = lang == own ? resume.Content : (await translator.TranslateAsync(resume.Content, lang, ct)).Content;
+        var bytes = pdf.Render(content, template ?? resume.Template, lang);
         var name = (resume.Content.Personal.FullName ?? resume.Title).ToSlug();
-        return (bytes, $"{(name.Length > 0 ? name : "cv")}-cv.pdf");
+        var suffix = lang == own ? "cv" : $"cv-{lang}";
+        return (bytes, $"{(name.Length > 0 ? name : "cv")}-{suffix}.pdf");
+    }
+
+    public TranslationOptionsDto GetTranslationOptions() =>
+        new(CvLanguages.List(), translator.EngineName, translator.FullTranslationAvailable);
+
+    public async Task<ResumeTranslationResultDto> TranslateAsync(Guid id, ResumeTranslateRequest request, CancellationToken ct = default)
+    {
+        Guard.Against(!CvLanguages.IsSupported(request.Language), $"Desteklenmeyen dil: {request.Language}.");
+        var lang = CvLanguages.Normalize(request.Language);
+        var source = await LoadOwnedAsync(id, false, ct);
+        Guard.Against(lang == CvLanguages.Normalize(source.Content.Language), "CV zaten bu dilde; farklı bir hedef dil seçin.");
+        var outcome = await translator.TranslateAsync(source.Content, lang, ct);
+
+        string? note = null;
+        if (!outcome.Complete)
+        {
+            note = translator.FullTranslationAvailable
+                ? $"{outcome.TotalCount - outcome.TranslatedCount} metin parçası çevrilemedi (çeviri servisine ulaşılamamış olabilir). Kopyada bu alanları elle düzeltebilir ya da yeniden deneyebilirsiniz."
+                : "Yapay zeka veya LibreTranslate tanımlı olmadığı için yalnızca başlıklar, dil seviyeleri ve sözlükteki unvan/beceri/bölüm adları çevrildi. " +
+                  "Özet ve deneyim maddeleri için appsettings'te Ai (Gemini/Ollama) ya da Translation:LibreTranslateUrl tanımlayın veya kopyada elle çevirin.";
+        }
+
+        ResumeDto? copyDto = null;
+        if (request.SaveAsCopy)
+        {
+            var copy = new Resume
+            {
+                UserId = source.UserId,
+                Title = $"{source.Title} ({CvLanguages.DisplayName(lang)})".Truncate(150),
+                Template = source.Template,
+                Source = ResumeSource.Manual,
+                TargetProfessionId = source.TargetProfessionId,
+                Content = Sanitize(outcome.Content)
+            };
+            await Resumes.AddAsync(copy, ct);
+            await uow.SaveChangesAsync(ct);
+            copyDto = copy.ToDto();
+        }
+
+        return new ResumeTranslationResultDto(lang, outcome.Engine, outcome.Complete, outcome.TranslatedCount, outcome.TotalCount, note, copyDto);
     }
 
     public async Task<TailorResultDto> TailorAsync(Guid id, TailorRequest request, CancellationToken ct = default)
@@ -332,6 +381,9 @@ public sealed class ResumeService(
     /// <summary>Boş satırları ve fazlalıkları temizler, alan uzunluklarını sınırlar.</summary>
     private static ResumeContent Sanitize(ResumeContent c)
     {
+        c.Language = c.Language.HasValue() && CvLanguages.IsSupported(c.Language) && CvLanguages.Normalize(c.Language) != CvLanguages.Default
+            ? CvLanguages.Normalize(c.Language)
+            : null;
         c.Summary = c.Summary?.Trim().Truncate(3000);
         c.Experiences = c.Experiences.Where(e => e.Position.HasValue() || e.Company.HasValue()).Take(30).ToList();
         foreach (var e in c.Experiences)

@@ -19,7 +19,8 @@ Başvuru takip panosu,tracker,should,yes,yes,
 Mülakat tarihi kaydı,tracker,could,yes,yes,
 Başvuruya belge bağlama,tracker,could,yes,yes,uyarlanmış CV kopyası + ön yazı başvuruya bağlanır
 Haftalık otomatik iş önerisi e-postası,jobs,could,yes,no,
-Çoklu dil arayüzü,platform,could,yes,no,yalnızca Türkçe
+Çoklu dil arayüzü,platform,could,yes,no,arayüz yalnızca Türkçe
+CV'yi yabancı dile çevirme (PDF + düzenlenebilir kopya),resume,should,yes,yes,AI → LibreTranslate → TR-EN sözlük; 9 dil PDF başlıkları
 Ücretli abonelik,platform,could,yes,skip,platform ücretsiz
 56+ meslek için eksik beceri tespiti,analysis,must,no,yes,eklediğimiz özellik
 Kariyer yolu planlaması,analysis,should,no,yes,eklediğimiz özellik

@@ -75,6 +75,27 @@ public class TailorViewModel
     public TailorResultDto? Result { get; set; }
 }
 
+/// <summary>"CV'yi çevir": hedef dil seçilir, çevrilmiş PDF indirilir ya da düzenlenebilir kopya oluşturulur.</summary>
+public class TranslateViewModel
+{
+    public ResumeDto Resume { get; set; } = default!;
+    public TranslationOptionsDto Options { get; set; } = default!;
+    public string Language { get; set; } = "en";
+    public ResumeTemplate Template { get; set; } = ResumeTemplate.Modern;
+
+    /// <summary>Analiz sayfasından gelindiyse geri dönüş için.</summary>
+    public Guid? AnalysisId { get; set; }
+}
+
+public class TranslateFormModel
+{
+    public string Language { get; set; } = "en";
+    public ResumeTemplate Template { get; set; } = ResumeTemplate.Modern;
+
+    /// <summary>"pdf" ya da "copy".</summary>
+    public string? Output { get; set; }
+}
+
 public class ChatViewModel
 {
     public ResumeDto Resume { get; set; } = default!;

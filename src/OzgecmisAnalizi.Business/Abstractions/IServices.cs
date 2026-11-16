@@ -19,7 +19,14 @@ public interface IResumeService
     Task DeleteAsync(Guid id, CancellationToken ct = default);
     Task<ResumeDto> UploadAsync(Stream file, string fileName, string? title, CancellationToken ct = default);
     Task<ResumeDto> DuplicateAsync(Guid id, CancellationToken ct = default);
-    Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, CancellationToken ct = default);
+    /// <param name="language">Boş ya da "tr" ise CV olduğu gibi; aksi halde önce hedef dile çevrilir (örn. "en").</param>
+    Task<(byte[] Content, string FileName)> RenderPdfAsync(Guid id, ResumeTemplate? template, string? language = null, CancellationToken ct = default);
+
+    /// <summary>Desteklenen çıktı dilleri ve etkin çeviri motoru.</summary>
+    TranslationOptionsDto GetTranslationOptions();
+
+    /// <summary>CV'yi hedef dile çevirir; istenirse düzenlenebilir bir kopya olarak kaydeder.</summary>
+    Task<ResumeTranslationResultDto> TranslateAsync(Guid id, ResumeTranslateRequest request, CancellationToken ct = default);
     Task<TailorResultDto> TailorAsync(Guid id, TailorRequest request, CancellationToken ct = default);
     Task<TailorApplyResultDto> ApplyTailoringAsync(Guid id, TailorApplyRequest request, CancellationToken ct = default);
     Task<ResumeChatResponse> ChatAsync(Guid id, ResumeChatRequest request, CancellationToken ct = default);

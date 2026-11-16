@@ -53,14 +53,24 @@ public sealed class ResumesController(IResumeService resumes, IResumeImprovement
     public async Task<ActionResult<ApiResponse<ResumeDto>>> Duplicate(Guid id, CancellationToken ct) =>
         OkResponse(await resumes.DuplicateAsync(id, ct));
 
-    /// <summary>CV'yi seçilen şablonla PDF olarak indirir.</summary>
+    /// <summary>CV'yi seçilen şablonla PDF olarak indirir. <paramref name="language"/> verilirse (örn. "en") CV önce o dile çevrilir.</summary>
     [HttpGet("{id:guid}/pdf")]
     [Produces("application/pdf")]
-    public async Task<IActionResult> Pdf(Guid id, [FromQuery] ResumeTemplate? template, CancellationToken ct)
+    public async Task<IActionResult> Pdf(Guid id, [FromQuery] ResumeTemplate? template, [FromQuery] string? language, CancellationToken ct)
     {
-        var (content, fileName) = await resumes.RenderPdfAsync(id, template, ct);
+        var (content, fileName) = await resumes.RenderPdfAsync(id, template, language, ct);
         return File(content, "application/pdf", fileName);
     }
+
+    /// <summary>CV çıktısı için desteklenen diller ve etkin çeviri motoru.</summary>
+    [HttpGet("translation/languages")]
+    public ActionResult<ApiResponse<TranslationOptionsDto>> TranslationLanguages() =>
+        OkResponse(resumes.GetTranslationOptions());
+
+    /// <summary>CV'yi hedef dile çevirir; SaveAsCopy=true ise çevrilmiş, düzenlenebilir bir kopya oluşturur.</summary>
+    [HttpPost("{id:guid}/translate")]
+    public async Task<ActionResult<ApiResponse<ResumeTranslationResultDto>>> Translate(Guid id, ResumeTranslateRequest request, CancellationToken ct) =>
+        OkResponse(await resumes.TranslateAsync(id, request, ct), "CV çevrildi.");
 
     /// <summary>CV'yi bir iş ilanıyla karşılaştırır; eksik anahtar kelimeler ve öneriler döndürür.</summary>
     [HttpPost("{id:guid}/tailor")]
